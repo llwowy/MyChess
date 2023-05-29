@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="SFML">
-      <UniqueIdentifier>{7ce91b48-ab4d-443c-bea5-99d02cc45f6e}</UniqueIdentifier>
+      <UniqueIdentifier>{1aad5bb9-e35f-4666-8ceb-4812ef9a9de5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,28 +37,37 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="..\SFML\bin\openal32.dll">
+    <CopyFileToFolders Include="openal32.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-2.dll">
+    <CopyFileToFolders Include="sfml-audio-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-d-2.dll">
+    <CopyFileToFolders Include="sfml-audio-d-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-graphics-d-2.dll">
+    <CopyFileToFolders Include="sfml-graphics-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-network-2.dll">
+    <CopyFileToFolders Include="sfml-graphics-d-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-network-d-2.dll">
+    <CopyFileToFolders Include="sfml-network-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-system-d-2.dll">
+    <CopyFileToFolders Include="sfml-network-d-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-window-d-2.dll">
+    <CopyFileToFolders Include="sfml-system-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-system-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-window-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-window-d-2.dll">
       <Filter>SFML</Filter>
     </CopyFileToFolders>
   </ItemGroup>

@@ -164,28 +164,37 @@
     <ClInclude Include="Pawns.h" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="..\SFML\bin\openal32.dll">
+    <CopyFileToFolders Include="openal32.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-2.dll">
+    <CopyFileToFolders Include="sfml-audio-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-d-2.dll">
+    <CopyFileToFolders Include="sfml-audio-d-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-graphics-d-2.dll">
+    <CopyFileToFolders Include="sfml-graphics-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-network-2.dll">
+    <CopyFileToFolders Include="sfml-graphics-d-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-network-d-2.dll">
+    <CopyFileToFolders Include="sfml-network-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-system-d-2.dll">
+    <CopyFileToFolders Include="sfml-network-d-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\SFML\bin\sfml-window-d-2.dll">
+    <CopyFileToFolders Include="sfml-system-2.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-system-d-2.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-window-2.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="sfml-window-d-2.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>

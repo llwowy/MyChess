@@ -91,8 +91,8 @@ void DrawBoard(sf::RenderWindow& window, Board& board) {
 
 int main() {
 
-    auto Window_width = 1200;
-    auto Window_height = 1000;
+    auto Window_width = 1000;
+    auto Window_height = 1200;
 
     sf::RenderWindow window(sf::VideoMode(Window_width, Window_height), "MyChess");
 
