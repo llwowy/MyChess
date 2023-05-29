@@ -2,6 +2,8 @@
 #include <memory>
 #include <iostream>
 
+//uwagatutajjestzmiana
+
 using Board = std::vector<BoardTile*>;
 //chhhhhhhhhhhhhhuj cIPA DUPA
 //LEGIA TO STARA KURWA

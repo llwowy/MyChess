@@ -75,16 +75,16 @@
     <LibraryPath>D:\SFML\SFML-2.5.1\lib;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\SFML\SFML-2.5.1\include;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SFML\SFML-2.5.1\lib;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\wluzp\Desktop\SFML-2.5.1\include;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\wluzp\Desktop\SFML-2.5.1\lib;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\SFML\SFML-2.5.1\include;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SFML\SFML-2.5.1\lib;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\SFML\SFML-2.5.1\include;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SFML\SFML-2.5.1\lib;C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Tomek\Desktop\SFML-2.5.1-windows-vc15-64-bit\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,10 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoardTile.cpp" />
+    <ClCompile Include="Pawns.cpp" />
     <ClCompile Include="SZASZKII.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoardTile.h" />
+    <ClInclude Include="Pawns.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
