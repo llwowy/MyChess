@@ -2,11 +2,9 @@
 #include <memory>
 #include <iostream>
 
-//uwagatutajjestzmiana
 
 using Board = std::vector<BoardTile*>;
-//chhhhhhhhhhhhhhuj cIPA DUPA
-//LEGIA TO STARA KURWA
+
 void CreateBoard(Board& board) {
     sf::Color white = sf::Color(255, 255, 255);
     sf::Color black = sf::Color(0, 0, 0);
@@ -80,8 +78,6 @@ void CreateBoard(Board& board) {
     }
 }
 
-//niggggggggggge
-// niggerrro Chołota
 
 void DrawBoard(sf::RenderWindow& window, Board& board) {
     for (BoardTile*& el : board) {
@@ -99,6 +95,15 @@ int main() {
     Board board;
     CreateBoard(board);
 
+    sf::Texture chessBoard;
+    if (!chessBoard.loadFromFile("D:/Users/lambl/source/repos/Chess/MyChess/Grafika/chessboard.png")) {
+        std::cout << "load chessBoard failed" << std::endl;
+        system("pause");
+    }
+    chessBoard.setRepeated(true);
+    sf::Sprite sprite;
+    sprite.setTexture(chessBoard);
+    sprite.setTextureRect(sf::IntRect(0, 100, 875, 875));
 
 
     while (window.isOpen()) {
@@ -110,6 +115,10 @@ int main() {
         window.clear(sf::Color::Red);
 
         DrawBoard(window, board);
+
+
+        window.draw(sprite);
+
 
 
         window.display();
