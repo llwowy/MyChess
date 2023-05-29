@@ -1,6 +1,8 @@
 ﻿#include "BoardTile.h"
 #include <memory>
 
+//uwagatutajjestzmiana
+
 using Board = std::vector<BoardTile*>;
 
 void CreateBoard(Board& board) {
