@@ -1,10 +1,11 @@
 ﻿#include "BoardTile.h"
 #include <memory>
+#include <iostream>
 
 //uwagatutajjestzmiana
 
 using Board = std::vector<BoardTile*>;
-
+//chhhhhhhhhhhhhhuj cIPA DUPA
 void CreateBoard(Board& board) {
     sf::Color white = sf::Color(255, 255, 255);
     sf::Color black = sf::Color(0, 0, 0);
@@ -78,6 +79,9 @@ void CreateBoard(Board& board) {
     }
 }
 
+//niggggggggggge
+// niggerrro Chołota
+
 void DrawBoard(sf::RenderWindow& window, Board& board) {
     for (BoardTile*& el : board) {
         window.draw(*el);
@@ -86,18 +90,13 @@ void DrawBoard(sf::RenderWindow& window, Board& board) {
 
 int main() {
 
-    auto Window_width = 1000;
-    auto Window_height = 1200;
+    auto Window_width = 1200;
+    auto Window_height = 1000;
 
     sf::RenderWindow window(sf::VideoMode(Window_width, Window_height), "MyChess");
 
     Board board;
     CreateBoard(board);
-
-
-
-
-
 
 
 
@@ -110,6 +109,7 @@ int main() {
         window.clear(sf::Color::Red);
 
         DrawBoard(window, board);
+
 
         window.display();
     }
