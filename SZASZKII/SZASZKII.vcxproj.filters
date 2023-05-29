@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SFML">
+      <UniqueIdentifier>{7ce91b48-ab4d-443c-bea5-99d02cc45f6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SZASZKII.cpp">
@@ -32,5 +35,31 @@
     <ClInclude Include="Pawns.h">
       <Filter>Pliki źródłowe</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\SFML\bin\openal32.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-audio-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-graphics-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-network-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-network-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-system-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\SFML\bin\sfml-window-d-2.dll">
+      <Filter>SFML</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
