@@ -95,8 +95,12 @@ int main() {
     Board board;
     CreateBoard(board);
 
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
     sf::Texture chessBoard;
-    if (!chessBoard.loadFromFile("D:/Users/lambl/source/repos/Chess/MyChess/Grafika/chessboard.png")) {
+    if (!chessBoard.loadFromFile("Grafika/chessboard.png")) {
         std::cout << "load chessBoard failed" << std::endl;
         system("pause");
     }
@@ -105,6 +109,8 @@ int main() {
     sprite.setTexture(chessBoard);
     sprite.setTextureRect(sf::IntRect(0, 100, 875, 875));
 
+    ///////////////////////////////////////
+    ///////////////////////////////////////
 
     while (window.isOpen()) {
         sf::Event event;
@@ -116,9 +122,9 @@ int main() {
 
         DrawBoard(window, board);
 
-
+        ////////////////////
         window.draw(sprite);
-
+        ////////////////////
 
 
         window.display();
