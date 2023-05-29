@@ -4,6 +4,7 @@
 
 using Board = std::vector<BoardTile*>;
 //chhhhhhhhhhhhhhuj cIPA DUPA
+//LEGIA TO STARA KURWA
 void CreateBoard(Board& board) {
     sf::Color white = sf::Color(255, 255, 255);
     sf::Color black = sf::Color(0, 0, 0);
