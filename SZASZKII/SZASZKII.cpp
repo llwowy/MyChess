@@ -76,6 +76,9 @@ void CreateBoard(Board& board) {
     }
 }
 
+//niggggggggggge
+// niggerrro Chołota
+
 void DrawBoard(sf::RenderWindow& window, Board& board) {
     for (BoardTile*& el : board) {
         window.draw(*el);
