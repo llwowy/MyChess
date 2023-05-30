@@ -104,7 +104,7 @@ int main() {
 
     Pawn a2;
     a2.Create_black_pawn();
-    a2.set_Piece(*board[5]);
+    a2.set_Piece(*board[9]);
 
     ///////////////////////////////////////
     ///////////////////////////////////////

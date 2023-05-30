@@ -5,6 +5,7 @@
 #include "BoardTile.h"
 
 
+
 class Piece : public sf::RectangleShape
 {
 private:
@@ -23,8 +24,8 @@ public:
 	std::string get_Piece_id();
 	sf::Texture get_Piece_texture();
 	sf::Sprite get_Piece_sprite();
-	 void set_Piece();
-	 void move();
+	void set_Piece();
+	void move();
 	
 	
 };
