@@ -100,7 +100,7 @@ int main() {
     ///////////////////////////////////////
 
     sf::Texture chessBoard;
-    if (!chessBoard.loadFromFile("Grafika/ChessTextures/chessBoardsWithBorder4.png")) {
+    if (!chessBoard.loadFromFile("Grafika/ChessTextures/chessBoardsWithBorder2.png")) {
         std::cout << "load chessBoard failed" << std::endl;
         system("pause");
     }
