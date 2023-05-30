@@ -14,6 +14,7 @@ private:
 	std::string Tile_id;
 
 public:
+
 	sf::Vector2f get_Tile_size();
 	sf::Vector2f get_Tile_position();
 	sf::Color get_Tile_color();
