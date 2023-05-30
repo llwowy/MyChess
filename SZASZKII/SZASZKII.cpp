@@ -87,8 +87,8 @@ void DrawBoard(sf::RenderWindow& window, Board& board) {
 
 int main() {
 
-    auto Window_width = 1024;
-    auto Window_height = 1024;
+    auto Window_width = 1120;
+    auto Window_height = 1120;
 
     sf::RenderWindow window(sf::VideoMode(Window_width, Window_height), "MyChess");
 
@@ -100,14 +100,14 @@ int main() {
     ///////////////////////////////////////
 
     sf::Texture chessBoard;
-    if (!chessBoard.loadFromFile("Grafika/ChessTextures/chessBoard4.png")) {
+    if (!chessBoard.loadFromFile("Grafika/ChessTextures/chessBoardsWithBorder4.png")) {
         std::cout << "load chessBoard failed" << std::endl;
         system("pause");
     }
     //chessBoard.setRepeated(true);//to też do wyjebki
     sf::Sprite sprite;
     sprite.setTexture(chessBoard);
-    sprite.setScale(8, 8);
+    sprite.setScale(7, 7);
     //sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));//do wyjebki
 
     ///////////////////////////////////////
