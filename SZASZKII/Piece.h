@@ -24,8 +24,8 @@ public:
 	std::string get_Piece_id();
 	sf::Texture get_Piece_texture();
 	sf::Sprite get_Piece_sprite();
-	void set_Piece();
-	void move();
+	virtual void set_Piece();
+	virtual void move();
 	
 	
 };
