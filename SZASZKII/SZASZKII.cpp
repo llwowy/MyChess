@@ -1,6 +1,8 @@
 ﻿#include "BoardTile.h"
+#include "Pawn.h"
 #include <memory>
 #include <iostream>
+
 
 float skalaX = 7;
 float skalaY = 7;
@@ -81,6 +83,8 @@ void CreateBoard(Board& board) {
 }
 
 
+
+
 void DrawBoard(sf::RenderWindow& window, Board& board) {
     for (BoardTile*& el : board) {
         window.draw(*el);
@@ -97,6 +101,9 @@ int main() {
     Board board;
     CreateBoard(board);
 
+    Pawn a2;
+    a2.Create_black_pawn();
+    a2.set_Piece(*board[5]);
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -127,6 +134,10 @@ int main() {
 
         ////////////////////
         window.draw(sprite);
+        
+
+        window.draw(a2);
+        window.draw(a2.get_Piece_sprite());
         ////////////////////
 
 
