@@ -87,8 +87,8 @@ void DrawBoard(sf::RenderWindow& window, Board& board) {
 
 int main() {
 
-    auto Window_width = 1280;
-    auto Window_height = 1280;
+    auto Window_width = 1024;
+    auto Window_height = 1024;
 
     sf::RenderWindow window(sf::VideoMode(Window_width, Window_height), "MyChess");
 
@@ -107,7 +107,7 @@ int main() {
     //chessBoard.setRepeated(true);//to też do wyjebki
     sf::Sprite sprite;
     sprite.setTexture(chessBoard);
-    sprite.setScale(10, 10);
+    sprite.setScale(8, 8);
     //sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));//do wyjebki
 
     ///////////////////////////////////////
