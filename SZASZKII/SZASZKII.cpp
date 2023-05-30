@@ -2,6 +2,9 @@
 #include <memory>
 #include <iostream>
 
+float skalaX = 7;
+float skalaY = 7;
+
 
 using Board = std::vector<BoardTile*>;
 
