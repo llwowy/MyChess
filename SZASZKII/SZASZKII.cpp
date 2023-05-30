@@ -2,13 +2,15 @@
 #include <memory>
 #include <iostream>
 
+float skalaX = 7;
+float skalaY = 7;
 
 using Board = std::vector<BoardTile*>;
 
 void CreateBoard(Board& board) {
     sf::Color white = sf::Color(255, 255, 255);
     sf::Color black = sf::Color(0, 0, 0);
-    board.push_back(new BoardTile(0, 100, white, "a8"));
+    board.push_back(new BoardTile(16*skalaX, 128, white, "a8"));
     board.push_back(new BoardTile(125, 100, black, "b8"));
     board.push_back(new BoardTile(250, 100, white, "c8"));
     board.push_back(new BoardTile(375, 100, black, "d8"));
@@ -107,7 +109,7 @@ int main() {
     //chessBoard.setRepeated(true);//to też do wyjebki
     sf::Sprite sprite;
     sprite.setTexture(chessBoard);
-    sprite.setScale(7, 7);
+    sprite.setScale(skalaX, skalaY);
     //sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));//do wyjebki
 
     ///////////////////////////////////////
