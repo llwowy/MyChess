@@ -11,7 +11,7 @@ public:
 
 	void Create_white_pawn(Pawn());
 	void Create_black_pawn();
-	void set_Piece(const BoardTile& tile);
+	void set_Piece(std::vector<BoardTile*>, std::string Tile_id);
 
 };
 

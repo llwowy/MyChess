@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "BoardTile.h"
+#include <algorithm>
+
 
 
 class Piece : public sf::RectangleShape
