@@ -9,3 +9,5 @@ sf::Vector2f Piece::get_Piece_position() { return Piece_position; }
 std::string Piece::get_Piece_id() { return Piece_id; }
 sf::Texture Piece::get_Piece_texture() { return Piece_texture; }
 sf::Sprite Piece::get_Piece_sprite() { return Piece_sprite; }
+void Piece::set_Piece() {};
+void Piece::move() {};
