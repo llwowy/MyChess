@@ -156,11 +156,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoardTile.cpp" />
+    <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="SZASZKII.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoardTile.h" />
+    <ClInclude Include="Pawn.h" />
     <ClInclude Include="Piece.h" />
   </ItemGroup>
   <ItemGroup>
