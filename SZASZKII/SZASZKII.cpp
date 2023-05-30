@@ -107,7 +107,7 @@ int main() {
     chessBoard.setRepeated(true);
     sf::Sprite sprite;
     sprite.setTexture(chessBoard);
-    sprite.setTextureRect(sf::IntRect(0, 100, 875, 875));
+    sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));
 
     ///////////////////////////////////////
     ///////////////////////////////////////
