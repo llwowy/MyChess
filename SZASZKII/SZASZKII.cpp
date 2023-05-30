@@ -85,7 +85,6 @@ void CreateBoard(Board& board) {
 
 
 
-
 void DrawBoard(sf::RenderWindow& window, Board& board) {
     for (BoardTile*& el : board) {
         window.draw(*el);
@@ -101,11 +100,11 @@ int main() {
 
     Board board;
     CreateBoard(board);
-
+    /////////////////////////////////////
     Pawn a2;
     a2.Create_black_pawn();
-    a2.set_Piece(*board[9]);
-
+    a2.set_Piece(board, "a5");
+    ///////////////////////////////////////
     ///////////////////////////////////////
     ///////////////////////////////////////
 
