@@ -1,22 +1,26 @@
 #include "Pawn.h"
 
-//Pawn::Pawn(const double& x_pos, const double& y_pos, const std::string& _Piece_id) :
-//Piece(x_pos, y_pos, _Piece_id) {}
-
-Pawn::Pawn(){}
+Pawn::Pawn(const std::string& _id, const std::vector<BoardTile*> board) : Piece(_id){
+	auto it = std::find_if(board.begin(), board.end(), [_id](BoardTile* Tile) {
+		return Tile->get_Tile_id() == _id; });
+	setPosition((*it)->get_Tile_position());
+	Create_black_pawn();
+}
 
 void Pawn::Create_white_pawn(Pawn()) {
-	get_Piece_texture().loadFromFile("");
+	if (Piece_texture.loadFromFile("")) {
+		std::cout << "dupa";
+	}
+	setTexture(Piece_texture);
 }
 
 void Pawn::Create_black_pawn() {
-	get_Piece_texture().loadFromFile("Grafika/ChessTextures/chessBoardsWithBorder2.png");
+	if (Piece_texture.loadFromFile("Grafika/ChessTextures/chessBoardsWithBorder3.png")) {
+		std::cout << "dupa";
+	}
+	setTexture(Piece_texture);
+	
 }
 
-void Pawn::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
-	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
-		return Tile->get_Tile_id() == Tile_id;});
-	setPosition((*it)->get_Tile_position());
-	setSize((*it)->get_Tile_size());
-	get_Piece_sprite().setTexture(get_Piece_texture());
-}
+
+
