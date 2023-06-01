@@ -101,9 +101,11 @@ int main() {
     Board board;
     CreateBoard(board);
     /////////////////////////////////////
-    Pawn a2;
-    a2.Create_black_pawn();
-    a2.set_Piece(board, "a5");
+    
+    Pawn a2("c6", board);
+    
+    
+   
     ///////////////////////////////////////
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -134,10 +136,7 @@ int main() {
 
         ////////////////////
         window.draw(sprite);
-        
-
         window.draw(a2);
-        window.draw(a2.get_Piece_sprite());
         ////////////////////
 
 
