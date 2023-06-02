@@ -14,7 +14,9 @@ private:
 	std::string Piece_id;
 	
 protected:
+
 	sf::Texture Piece_texture;
+
 public:
 
 	Piece(const std::string& _id);
