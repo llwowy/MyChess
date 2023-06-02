@@ -102,8 +102,14 @@ int main() {
     CreateBoard(board);
     /////////////////////////////////////
     
-    Pawn a2("c6", board);
-    
+    Pawn a2("a2", board);
+    Pawn b2("b2", board);
+    Pawn c2("c2", board);
+    Pawn d2("d2", board);
+    Pawn e2("e2", board);
+    Pawn f2("f2", board);
+    Pawn g2("g2", board);
+    Pawn h2("h2", board);
    
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -114,11 +120,10 @@ int main() {
         std::cout << "load chessBoard failed" << std::endl;
         system("pause");
     }
-    //chessBoard.setRepeated(true);//to też do wyjebki
+    
     sf::Sprite sprite;
     sprite.setTexture(chessBoard);
     sprite.setScale(skalaX, skalaY);
-    //sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));//do wyjebki
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -136,6 +141,13 @@ int main() {
         ////////////////////
         window.draw(sprite);
         window.draw(a2);
+        window.draw(b2);
+        window.draw(c2);
+        window.draw(d2);
+        window.draw(e2);
+        window.draw(f2);
+        window.draw(g2);
+        window.draw(h2);
         ////////////////////
 
 
