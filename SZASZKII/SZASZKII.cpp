@@ -102,8 +102,8 @@ int main() {
     CreateBoard(board);
     /////////////////////////////////////
     
-    Pawn a2("c6", board);
-    
+    Pawn pion1("b2", board);
+    //trzeba zrobić funkcję która ustawia te pionki na planszy ale nie w mainie czy w tym cpp tylko w klasie pawn albo piece, nwm która jest czym i zrobić to na wskaźniku new i this->
     
    
     ///////////////////////////////////////
@@ -115,11 +115,11 @@ int main() {
         std::cout << "load chessBoard failed" << std::endl;
         system("pause");
     }
-    //chessBoard.setRepeated(true);//to też do wyjebki
-    sf::Sprite sprite;
-    sprite.setTexture(chessBoard);
-    sprite.setScale(skalaX, skalaY);
-    //sprite.setTextureRect(sf::IntRect(0, 125, 1000, 1125));//do wyjebki
+
+    sf::Sprite spriteBoard;
+    spriteBoard.setTexture(chessBoard);
+    spriteBoard.setScale(skalaX, skalaY);
+
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -135,8 +135,8 @@ int main() {
         DrawBoard(window, board);
 
         ////////////////////
-        window.draw(sprite);
-        window.draw(a2);
+        window.draw(spriteBoard);
+        window.draw(pion1);
         ////////////////////
 
 
