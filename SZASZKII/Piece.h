@@ -10,7 +10,6 @@
 class Piece : public sf::Sprite
 {
 private:
-	//bool colour;
 	std::string Piece_id;
 	
 protected:

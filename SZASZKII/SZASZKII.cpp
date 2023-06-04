@@ -1,5 +1,10 @@
 ﻿#include "BoardTile.h"
 #include "Pawn.h"
+#include "Rook.h"
+#include "Knight.h"
+#include "Bishop.h"
+#include "King.h";
+#include "Queen.h"
 #include <memory>
 #include <iostream>
 
@@ -111,6 +116,19 @@ int main() {
     Pawn g2("g2", board);
     Pawn h2("h2", board);
    
+    Rook a1("a1", board, "black");
+    Rook h1("h1", board, "black");
+
+    Knight b1("b1", board, "black");
+    Knight g1("g1", board, "black");
+
+    Bishop c1("c1", board, "black");
+    Bishop f1("f1", board, "black");
+
+    King d1("d1", board, "black");
+
+    Queen e1("e1", board, "black");
+
     ///////////////////////////////////////
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -140,7 +158,7 @@ int main() {
 
         ////////////////////
         window.draw(sprite);
-        window.draw(a2);
+        window.draw(a2);//pawn
         window.draw(b2);
         window.draw(c2);
         window.draw(d2);
@@ -148,6 +166,14 @@ int main() {
         window.draw(f2);
         window.draw(g2);
         window.draw(h2);
+        window.draw(a1);//rook
+        window.draw(h1);
+        window.draw(b1);//knight
+        window.draw(g1);
+        window.draw(c1);//bishop
+        window.draw(f1);
+        window.draw(d1);//king
+        window.draw(e1);//queen
         ////////////////////
 
 

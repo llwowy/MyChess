@@ -15,7 +15,7 @@ void Pawn::Create_white_pawn(Pawn()) {
 }
 
 void Pawn::Create_black_pawn() {
-	if (Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 		std::cout << "dupa";
 	}
 	setTexture(Piece_texture);
