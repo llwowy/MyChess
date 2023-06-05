@@ -17,11 +17,10 @@ protected:
 	sf::Texture Piece_texture;
 
 public:
-
-	Piece(const std::string& _id);
+	Piece(const std::string _id);
 	std::string get_Piece_id();
 	virtual void set_Piece();
-	
-	
+	sf::Vector2f position; // pozycja ka¿dego pionka
+	//bool first_generate; // do pierwszego ustawienia pionków
 };
 
