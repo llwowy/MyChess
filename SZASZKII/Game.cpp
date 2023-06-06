@@ -1,17 +1,15 @@
 #include "Game.h"
-#include "Pawn.h"
-#include "Rook.h"
-#include "Knight.h"
-#include "Bishop.h"
-#include "King.h";
-#include "Queen.h"
+
 
 void Game::play(){
 	readyGame();
-    loadPawns();
+    while (window->isOpen())
+    {
+        allEvents();
 
-    drawAll(window);
-    window->display();
+        drawAll(window);
+        window->display();
+    }
 }
 
 
@@ -30,6 +28,7 @@ void Game::readyBackground() {
 void Game::readyGame() {
     readyBackground();
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
+        loadPawns();
 }
 
 
@@ -49,5 +48,12 @@ void Game::drawAll(sf::RenderWindow *window) {
     window->draw(BoardSprite);
     for (auto& paw_and_fig : PawnsVec) {
         window->draw(*paw_and_fig);
+    }
+}
+
+void Game::allEvents() {
+    while (window->pollEvent(eventy)) {
+        if (eventy.type == sf::Event::Closed)
+            window->close();
     }
 }

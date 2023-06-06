@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include "Pawn.h"
 #include "Rook.h"
@@ -6,14 +7,18 @@
 #include "Bishop.h"
 #include "King.h";
 #include "Queen.h"
+#include <memory>
+#include <iostream>
+
 class Game
 {public:
-	Game();
+	Game() {};
 	void drawAll(sf::RenderWindow* window);
 	void loadPawns();
 	void readyBackground();
 	void readyGame(); // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
 	void play();
+	void allEvents();
 	void GenerateBoard();
 	void GeneratePawns();
 private:
@@ -21,6 +26,7 @@ private:
 	float Window_height = 1120;
 
 	sf::RenderWindow *window;
+	sf::Event eventy;
 	sf::Texture teksturaTla;
 	sf::Sprite BoardSprite;
 	std::vector<Piece*> PawnsVec;
