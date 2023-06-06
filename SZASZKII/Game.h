@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include "Pawn.h"
 #include "Rook.h"
@@ -9,9 +8,32 @@
 #include "Queen.h"
 #include <memory>
 #include <iostream>
+#include "BoardTile.h"
+#include <vector>
+
+using Board = std::vector<BoardTile*>;
 
 class Game
-{public:
+{
+private:
+
+	float Window_width = 1120;
+	float Window_height = 1120;
+
+	float skalaX = 7;
+	float skalaY = 7;
+
+	Board board;
+
+	sf::RenderWindow* window = NULL;
+	sf::Event eventy;
+	sf::Texture teksturaTla;
+	sf::Sprite BoardSprite;
+	std::vector<Piece*> PawnsVec;
+	
+	
+
+public:
 	Game() {};
 	void drawAll(sf::RenderWindow* window);
 	void loadPawns();
@@ -21,15 +43,7 @@ class Game
 	void allEvents();
 	void GenerateBoard();
 	void GeneratePawns();
-private:
-	float Window_width = 1120;
-	float Window_height = 1120;
+	void LoadBoard(Board& board);
 
-	sf::RenderWindow *window;
-	sf::Event eventy;
-	sf::Texture teksturaTla;
-	sf::Sprite BoardSprite;
-	std::vector<Piece*> PawnsVec;
-	// std::vector<BoardTile*>BoardVec;
 };
 
