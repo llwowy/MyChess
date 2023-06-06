@@ -7,7 +7,7 @@
 #include "Queen.h"
 
 //void Game::GeneratePawns() {
-//	Pionki.emplace_back(new Pawn a2("a2", board), new Pawn b2("b2", board), new Pawn c2("c2", board),
+//	Pionki.emplace_back(new Pawn a2("a2", board), new Pawn b2("b2", board), new Pawn c2("c2", board), // generowanie pionków
 //		new Pawn d2("d2", board), new Pawn e2("e2", board), new Pawn f2("f2", board),
 //		new Pawn g2("g2", board), new Pawn h2("h2", board), new Rook a1("a1", board,
 //			"black"), new Rook h1("h1", board, "black"), new Knight b1("b1", board, "black"),

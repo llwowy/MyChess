@@ -9,9 +9,13 @@
 class Game
 {public:
 	Game() {};
+	void readyBackground() {};
+	void radyGame() {}; // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
+	void play() {};
 	void GenerateBoard() {};
 	void GeneratePawns() {};
 private:
+	sf::Texture teksturaTla;
 	std::vector<Piece*>PawnsVec;
 	// std::vector<BoardTile*>BoardVec;
 };
