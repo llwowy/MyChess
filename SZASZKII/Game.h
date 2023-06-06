@@ -22,7 +22,8 @@ private:
 
 	sf::RenderWindow *window;
 	sf::Texture teksturaTla;
-	std::vector<Piece*>PawnsVec;
+	sf::Sprite BoardSprite;
+	std::vector<Piece*> PawnsVec;
 	// std::vector<BoardTile*>BoardVec;
 };
 

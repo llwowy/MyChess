@@ -1,5 +1,6 @@
 ﻿#include "BoardTile.h"
 #include "Board.h"
+#include "game.h"
 #include "Pawn.h"
 #include "Rook.h"
 #include "Knight.h"
@@ -97,6 +98,9 @@
 //}
 
 int main() {
+
+    //Game kurwadzialaj;
+    //kurwadzialaj.play();
 
     auto Window_width = 1120;
     auto Window_height = 1120;
