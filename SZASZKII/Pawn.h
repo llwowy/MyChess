@@ -13,5 +13,6 @@ public:
 	void Create_white_pawn();
 	void Create_black_pawn();
 	void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
+	
 };
 

@@ -9,6 +9,7 @@ void Game::play(){
         allEvents();
 
         drawAll(window);
+        Pressed();
         window->display();
     }
 }
@@ -126,3 +127,27 @@ void Game::LoadBoard(Board& board) {
     board.push_back(new BoardTile(128 * skalaX, 128 * skalaY,  "h1"));
 }
 
+
+void Game::Pressed() {
+    if (eventy.type == sf::Event::MouseButtonPressed) {
+        if (eventy.mouseButton.button == sf::Mouse::Left) {
+            Mouse_pos = sf::Mouse::getPosition(*window);
+            for (auto& el : PawnsVec) {
+                el->chosen(Mouse_pos);
+            }
+        }
+    }
+    if (eventy.type == sf::Event::MouseMoved) {
+        Mouse_pos = sf::Mouse::getPosition(*window);
+        for (auto& el : PawnsVec) {
+            el->Pick_up(Mouse_pos);
+        }
+    }
+    if (eventy.type == sf::Event::MouseButtonReleased) {
+        if (eventy.mouseButton.button == sf::Mouse::Left) {
+            for (auto& el : PawnsVec) {
+                el->unchosen(Mouse_pos);
+            }
+        }
+    }
+}
