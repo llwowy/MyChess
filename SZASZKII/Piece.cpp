@@ -40,3 +40,13 @@ void::Piece::Pick_up(const sf::Vector2i& mouse_position) {
 
 	}
 }
+
+void::Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position) {
+	if (is_selected) {
+		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
+			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
+				Tile->get_Tile_position().y <= mouse_position.y && Tile->get_Tile_position().y + Tile->get_Tile_size().y >= mouse_position.y); });
+
+		setPosition((*it)->get_Tile_position());
+	}
+}
