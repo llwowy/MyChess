@@ -10,6 +10,6 @@ int main() {
 
     Game mamyto;
     mamyto.play();
-
+        
     return 0;
 }

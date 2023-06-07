@@ -1,11 +1,9 @@
 #include "Pawn.h"
 #include "Board.h"
 
-Pawn::Pawn(const std::string& _id, sf::Vector2f pos) : Piece(_id){
-	/*auto it = std::find_if(board.BoardVec.begin(), board.BoardVec.end(), [_id](BoardTile* Tile) {
-		return Tile->get_Tile_id() == _id; });*/
-	setPosition(pos);
-	//Create_black_pawn();
+Pawn::Pawn(const std::string& _id, std::vector<BoardTile*>& board) : Piece(_id){
+	set_Piece(board, _id);
+
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 		std::cout << "dupa";
 	}
@@ -18,7 +16,12 @@ void Pawn::Create_white_pawn() {
 		std::cout << "dupa";
 	}
 	setTexture(Piece_texture);
-	
+}
+
+void Pawn::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
+	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
+		return Tile->get_Tile_id() == Tile_id; });
+	setPosition((*it)->get_Tile_position());
 }
 
 //void Pawn::Create_black_pawn() {

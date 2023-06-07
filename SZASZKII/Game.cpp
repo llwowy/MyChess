@@ -2,8 +2,8 @@
 
 
 void Game::play(){
-	readyGame();
     LoadBoard(board);
+	readyGame();
     while (window->isOpen())
     {
         allEvents();
@@ -34,14 +34,14 @@ void Game::readyGame() {
 
 
 void Game::loadPawns() {
-    PawnsVec.push_back(new Pawn("a2", sf::Vector2f(200, 100)));
-    PawnsVec.push_back(new Pawn("b2", sf::Vector2f(300, 100)));
-    PawnsVec.push_back(new Pawn("c2", sf::Vector2f(400, 100)));
-    PawnsVec.push_back(new Pawn("d2", sf::Vector2f(500, 100)));
-    PawnsVec.push_back(new Pawn("e2", sf::Vector2f(600, 100)));
-    PawnsVec.push_back(new Pawn("f2", sf::Vector2f(700, 100)));
-    PawnsVec.push_back(new Pawn("g2", sf::Vector2f(800, 100)));
-    PawnsVec.push_back(new Pawn("h2", sf::Vector2f(900, 100)));
+    PawnsVec.push_back(new Pawn("a7", board));
+    PawnsVec.push_back(new Pawn("b7", board));
+    PawnsVec.push_back(new Pawn("c7", board));
+    PawnsVec.push_back(new Pawn("d7", board));
+    PawnsVec.push_back(new Pawn("e7", board));
+    PawnsVec.push_back(new Pawn("f7", board));
+    PawnsVec.push_back(new Pawn("g7", board));
+    PawnsVec.push_back(new Pawn("h7", board));
 }
 
 
