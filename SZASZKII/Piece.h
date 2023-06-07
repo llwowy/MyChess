@@ -29,6 +29,5 @@ public:
 	void chosen(const sf::Vector2i& mouse_position);
 	void unchosen(const sf::Vector2i& mouse_position);
 	void Pick_up(const sf::Vector2i& mouse_position);
-	void Landing(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position);
 };
 
