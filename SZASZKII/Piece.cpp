@@ -5,7 +5,12 @@ Piece::Piece(const std::string _id) : Piece_id(_id) {
 	std::cout << "chuj";
 }
 std::string Piece::get_Piece_id() { return Piece_id; }
-void Piece::set_Piece() {};
+
+void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
+	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
+		return Tile->get_Tile_id() == Tile_id; });
+	setPosition((*it)->get_Tile_position());
+}
 
 void::Piece::select() {
 	is_selected = true;

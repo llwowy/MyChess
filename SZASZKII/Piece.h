@@ -23,7 +23,7 @@ public:
 	std::string get_Piece_id();
 	void select();
 	void unselect();
-	virtual void set_Piece();
+	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
 
 	//bool first_generate; // do pierwszego ustawienia pionków
 	void chosen(const sf::Vector2i& mouse_position);
