@@ -30,7 +30,6 @@ private:
 	sf::Texture teksturaTla;
 	sf::Sprite BoardSprite;
 	std::vector<Piece*> PawnsVec;
-	sf::Vector2i Mouse_pos;
 	
 	
 
@@ -45,8 +44,6 @@ public:
 	void GenerateBoard();
 	void GeneratePawns();
 	void LoadBoard(Board& board);
-	void Pressed();
-	
 
 };
 
