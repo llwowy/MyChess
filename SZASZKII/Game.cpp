@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <SFML/Main.hpp>
 
 void Game::play(){
 	readyGame();
@@ -52,8 +52,9 @@ void Game::drawAll(sf::RenderWindow *window) {
 }
 
 void Game::allEvents() {
-    while (window->pollEvent(eventy)) {
+   while (window->pollEvent(eventy)) {
         if (eventy.type == sf::Event::Closed)
             window->close();
+        
     }
 }
