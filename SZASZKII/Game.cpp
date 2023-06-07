@@ -147,7 +147,9 @@ void Game::Pressed() {
     }
     if (eventy.type == sf::Event::MouseButtonReleased) {
         if (eventy.mouseButton.button == sf::Mouse::Left) {
+            Mouse_pos = sf::Mouse::getPosition(*window);
             for (auto& el : PawnsVec) {
+                el->Landing(board, Mouse_pos);
                 el->unchosen(Mouse_pos);
             }
         }
