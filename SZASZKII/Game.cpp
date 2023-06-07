@@ -33,7 +33,6 @@ void Game::readyGame() {
         loadPawns();
 }
 
-
 void Game::loadPawns() {
     PawnsVec.push_back(new Pawn("a7", board));
     PawnsVec.push_back(new Pawn("b7", board));
