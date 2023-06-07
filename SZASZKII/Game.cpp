@@ -44,6 +44,14 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Pawn("f7", board));
     PawnsVec.push_back(new Pawn("g7", board));
     PawnsVec.push_back(new Pawn("h7", board));
+    PawnsVec.push_back(new Rook("a8", board));
+    PawnsVec.push_back(new Rook("h8", board));
+    PawnsVec.push_back(new Knight("b8", board));
+    PawnsVec.push_back(new Knight("g8", board));
+    PawnsVec.push_back(new Bishop("c8", board));
+    PawnsVec.push_back(new Bishop("f8", board));
+    PawnsVec.push_back(new King("d8", board));
+    PawnsVec.push_back(new Queen("e8", board));
 }
 
 
