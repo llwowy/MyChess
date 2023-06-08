@@ -19,28 +19,29 @@ void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_pos
 				Tile->get_Tile_position().y <= mouse_position.y && Tile->get_Tile_position().y + Tile->get_Tile_size().y >= mouse_position.y); 
 			});
 
-		if (it != board.end() && ((*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(112, 112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2*112, 2*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(3*112, 3*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(4*112, 4*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(5*112, 5*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(6*112, 6*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(7*112, 7*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-112, -112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2*112, -2*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-3*112, -3*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-4*112, -4*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-5*112, -5*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-6*112, -6*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-7*112, -7*112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(112, -112) ||
+		if (it != board.end() && (
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 5 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 6 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 7 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -2 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, -3 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, -4 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, -5 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, -6 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, -7 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -2 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, -3 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, -4 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, -5 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, -6 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, -7 * 112) ||
-			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-112, 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 2 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 3 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||

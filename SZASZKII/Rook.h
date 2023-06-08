@@ -5,9 +5,9 @@
 class Rook : public Piece
 {
 private:
-	//std::string color;//mo¿e lepiej jak dodamy kolor jako atrybut
+	
 
 public:
 	Rook(const std::string& _id, std::vector<BoardTile*>& board);
-	//void Create_Rook();
+	void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position);
 };
