@@ -7,6 +7,5 @@ private:
 
 public:
 	King(const std::string& _id, std::string _color, std::vector<BoardTile*>& board);
-	//void Create_King();
-	//std::string GetColorr(); // i wtedy getter do koloru
+	void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position);
 };
