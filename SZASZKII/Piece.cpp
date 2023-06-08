@@ -1,11 +1,13 @@
 
 #include "Piece.h"
 
-Piece::Piece(const std::string _id) : Piece_id(_id) {
-	std::cout << "chuj";
+Piece::Piece(const std::string _id, std::string _color) : Piece_id(_id) , Piece_color(_color){
+	std::cout << "piece\n";
 }
 
 std::string Piece::get_Piece_id() { return Piece_id; }
+
+std::string Piece::get_Piece_color() { return Piece_color; }
 
 bool Piece::get_is_selected() { return is_selected; }
 

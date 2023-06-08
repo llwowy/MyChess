@@ -2,14 +2,18 @@
 #include "Pawn.h"
 #include "Board.h"
 
-Pawn::Pawn(const std::string& _id, std::vector<BoardTile*>& board) : Piece(_id) {
+Pawn::Pawn(const std::string& _id, std::string _color, std::vector<BoardTile*>& board) : Piece(_id, _color) {
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
-	setTextureRect(sf::IntRect(0, 0, 16, 16));
+
+	if (_color == "B") { setTextureRect(sf::IntRect(0, 0, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == "G") { setTextureRect(sf::IntRect(79, 0, 16, 16)); }
+	if (_color == "Wh") { setTextureRect(sf::IntRect(0, 96, 16, 16)); }
+	if (_color == "Bl") { setTextureRect(sf::IntRect(80, 96, 16, 16)); }
 	setScale(7, 7);
 }
 //void Pawn::Create_white_pawn() {
