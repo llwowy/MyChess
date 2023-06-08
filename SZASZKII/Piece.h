@@ -7,13 +7,19 @@
 #include <iostream>
 #include "BoardTile.h"
 
-
+	enum Piece_colors {
+		White,
+		Black,
+		Green,
+		Blue
+	};
 
 class Piece : public sf::Sprite
 {
 private:
+
 	std::string Piece_id;
-	std::string Piece_color;
+	Piece_colors Piece_color;
 	bool is_selected = false;
 	sf::Vector2f position;
 	sf::Vector2f Starting_Piece_pos;
@@ -22,8 +28,9 @@ protected:
 	//std::map <std::string, sf::Vector2f > plansza{ {"a1", }}; chuj wie gówno cipsko
 	sf::Texture Piece_texture;
 public:
-	Piece(const std::string _id, std::string _color);
-	std::string get_Piece_color();
+
+	Piece(const std::string _id, Piece_colors _color);
+	Piece_colors get_Piece_color();
 	std::string get_Piece_id();
 	sf::Vector2f get_Starting_Piece_pos();
 	bool get_is_selected();

@@ -37,39 +37,39 @@ void Game::readyGame() {
 
 void Game::loadPawns() {
     //domyslnie czarne
-    PawnsVec.push_back(new Pawn("a7", "B", board));
-    PawnsVec.push_back(new Pawn("b7", "B", board));
-    PawnsVec.push_back(new Pawn("c7", "B", board));
-    PawnsVec.push_back(new Pawn("d7", "B", board));
-    PawnsVec.push_back(new Pawn("e7", "B", board));
-    PawnsVec.push_back(new Pawn("f7", "B", board));
-    PawnsVec.push_back(new Pawn("g7", "B", board));
-    PawnsVec.push_back(new Pawn("h7", "B", board));
-    PawnsVec.push_back(new Rook("a8", "B", board));
-    PawnsVec.push_back(new Rook("h8", "B", board));
-    PawnsVec.push_back(new Knight("b8", "B", board));
-    PawnsVec.push_back(new Knight("g8", "B", board));
-    PawnsVec.push_back(new Bishop("c8", "B", board));
-    PawnsVec.push_back(new Bishop("f8", "B", board));
-    PawnsVec.push_back(new King("d8", "B", board));
-    PawnsVec.push_back(new Queen("e8", "B", board));
+    PawnsVec.push_back(new Pawn("a7", Black, board));
+    PawnsVec.push_back(new Pawn("b7", Black, board));
+    PawnsVec.push_back(new Pawn("c7", Black, board));
+    PawnsVec.push_back(new Pawn("d7", Black, board));
+    PawnsVec.push_back(new Pawn("e7", Black, board));
+    PawnsVec.push_back(new Pawn("f7", Black, board));
+    PawnsVec.push_back(new Pawn("g7", Black, board));
+    PawnsVec.push_back(new Pawn("h7", Black, board));
+    PawnsVec.push_back(new Rook("a8", Black, board));
+    PawnsVec.push_back(new Rook("h8", Black, board));
+    PawnsVec.push_back(new Knight("b8", Black, board));
+    PawnsVec.push_back(new Knight("g8", Black, board));
+    PawnsVec.push_back(new Bishop("c8", Black, board));
+    PawnsVec.push_back(new Bishop("f8", Black, board));
+    PawnsVec.push_back(new King("d8", Black, board));
+    PawnsVec.push_back(new Queen("e8", Black, board));
     //domyslnie biale
-    PawnsVec.push_back(new Pawn("a2", "Wh", board));
-    PawnsVec.push_back(new Pawn("b2", "Wh", board));
-    PawnsVec.push_back(new Pawn("c2", "Wh", board));
-    PawnsVec.push_back(new Pawn("d2", "Wh", board));
-    PawnsVec.push_back(new Pawn("e2", "Wh", board));
-    PawnsVec.push_back(new Pawn("f2", "Wh", board));
-    PawnsVec.push_back(new Pawn("g2", "Wh", board));
-    PawnsVec.push_back(new Pawn("h2", "Wh", board));
-    PawnsVec.push_back(new Rook("a1", "Wh", board));
-    PawnsVec.push_back(new Rook("h1", "Wh", board));
-    PawnsVec.push_back(new Knight("b1", "G", board));
-    PawnsVec.push_back(new Knight("g1", "Wh", board));
-    PawnsVec.push_back(new Bishop("c1", "Wh", board));
-    PawnsVec.push_back(new Bishop("f1", "Bl", board));
-    PawnsVec.push_back(new King("d1", "Wh", board));
-    PawnsVec.push_back(new Queen("e1", "Wh", board));
+    PawnsVec.push_back(new Pawn("a2", White, board));
+    PawnsVec.push_back(new Pawn("b2", White, board));
+    PawnsVec.push_back(new Pawn("c2", White, board));
+    PawnsVec.push_back(new Pawn("d2", White, board));
+    PawnsVec.push_back(new Pawn("e2", White, board));
+    PawnsVec.push_back(new Pawn("f2", White, board));
+    PawnsVec.push_back(new Pawn("g2", White, board));
+    PawnsVec.push_back(new Pawn("h2", White, board));
+    PawnsVec.push_back(new Rook("a1", White, board));
+    PawnsVec.push_back(new Rook("h1", White, board));
+    PawnsVec.push_back(new Knight("b1", White, board));
+    PawnsVec.push_back(new Knight("g1", White, board));
+    PawnsVec.push_back(new Bishop("c1", White, board));
+    PawnsVec.push_back(new Bishop("f1", White, board));
+    PawnsVec.push_back(new King("d1", White, board));
+    PawnsVec.push_back(new Queen("e1", White, board));
 }
 
 

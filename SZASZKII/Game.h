@@ -24,7 +24,7 @@ private:
 	float skalaY = 7;
 
 	Board board; // == std::vector<BoardTile*>& board
-	std::pair<std::string, std::string> Pieces_colours;
+	std::pair<std::string, std::string> Choosed_colors;
 	sf::RenderWindow* window = NULL;
 	sf::Event eventy;
 	sf::Texture teksturaTla;

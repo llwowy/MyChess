@@ -1,13 +1,15 @@
 
 #include "Piece.h"
 
-Piece::Piece(const std::string _id, std::string _color) : Piece_id(_id) , Piece_color(_color){
+
+
+Piece::Piece(const std::string _id, Piece_colors _color) : Piece_id(_id), Piece_color(_color){
 	std::cout << "piece\n";
 }
 
 std::string Piece::get_Piece_id() { return Piece_id; }
 
-std::string Piece::get_Piece_color() { return Piece_color; }
+Piece_colors Piece::get_Piece_color() { return Piece_color; };
 
 bool Piece::get_is_selected() { return is_selected; }
 
@@ -19,11 +21,11 @@ void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) 
 	setPosition((*it)->get_Tile_position());
 }
 
-void::Piece::select() {
+void  Piece::select() {
 	is_selected = true;
 }
 
-void::Piece::unselect() {
+void  Piece::unselect() {
 	is_selected = false;
 }
 
@@ -36,20 +38,20 @@ void Piece::chosen(const sf::Vector2i& mouse_position) {
 	}
 }
 
-void::Piece::unchosen(const sf::Vector2i& mouse_position) {
+void Piece::unchosen(const sf::Vector2i& mouse_position) {
 	unselect();
 }
 
 
 
-void::Piece::Pick_up(const sf::Vector2i& mouse_position) {
+void Piece::Pick_up(const sf::Vector2i& mouse_position) {
 	if (is_selected) {
 		setPosition(mouse_position.x - 56, mouse_position.y - 56);
 
 	}
 }
 
-void::Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position) {
+void Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position) {
 	if (is_selected) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&

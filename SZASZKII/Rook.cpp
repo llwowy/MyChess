@@ -1,17 +1,17 @@
 #include "Rook.h"
 #include "Board.h"
 
-Rook::Rook(const std::string& _id, std::string _color, std::vector<BoardTile*>& board) : Piece(_id, _color) {
+Rook::Rook(const std::string& _id, const Piece_colors _color, std::vector<BoardTile*>& board) : Piece(_id, _color) {
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 		std::cout << "duparook";
 	}
 	setTexture(Piece_texture);
-	if (_color == "B") { setTextureRect(sf::IntRect(16, 16, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == "G") { setTextureRect(sf::IntRect(95, 16, 16, 16)); }
-	if (_color == "Wh") { setTextureRect(sf::IntRect(16, 112, 16, 16)); }
-	if (_color == "Bl") { setTextureRect(sf::IntRect(96, 11, 16, 16)); }
+	if (_color == Blue) { setTextureRect(sf::IntRect(16, 16, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Green) { setTextureRect(sf::IntRect(95, 16, 16, 16)); }
+	if (_color == White) { setTextureRect(sf::IntRect(16, 112, 16, 16)); }
+	if (_color == Black) { setTextureRect(sf::IntRect(96, 112, 16, 16)); }
 	setScale(7, 7);
 }
 
