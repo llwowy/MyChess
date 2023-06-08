@@ -117,8 +117,8 @@ void Game::LoadBoard(Board& board) {
     board.push_back(new BoardTile(64 * skalaX, 96 * skalaY, "d3"));
     board.push_back(new BoardTile(80 * skalaX, 96 * skalaY, "e3"));
     board.push_back(new BoardTile(96 * skalaX, 96 * skalaY, "f3"));
-    board.push_back(new BoardTile(750 * skalaX, 96 * skalaY, "g3"));
-    board.push_back(new BoardTile(875 * skalaX, 96 * skalaY, "h3"));
+    board.push_back(new BoardTile(112 * skalaX, 96 * skalaY, "g3"));
+    board.push_back(new BoardTile(128 * skalaX, 96 * skalaY, "h3"));
     board.push_back(new BoardTile(16 * skalaX, 112 * skalaY, "a2"));
     board.push_back(new BoardTile(32 * skalaX, 112 * skalaY, "b2"));
     board.push_back(new BoardTile(48 * skalaX, 112 * skalaY, "c2"));
@@ -152,6 +152,11 @@ void Game::Pressed() {
         for (auto& el : PawnsVec) {
             el->Pick_up(Mouse_pos);
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false) {
+            for (auto& el : PawnsVec) {
+                el->Landing(board, Mouse_pos);
+            }
+        }
     }
     if (eventy.type == sf::Event::MouseButtonReleased) {
         if (eventy.mouseButton.button == sf::Mouse::Left) {
@@ -162,4 +167,5 @@ void Game::Pressed() {
             }
         }
     }
+    
 }

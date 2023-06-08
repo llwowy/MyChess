@@ -15,6 +15,7 @@ private:
 	std::string Piece_id;
 	bool is_selected = false;
 	sf::Vector2f position;
+	sf::Vector2f Starting_Piece_pos;
 protected:
 	//std::map <std::string, sf::Vector2f > plansza{ {"a1", }}; chuj wie gówno cipsko
 	sf::Texture Piece_texture;

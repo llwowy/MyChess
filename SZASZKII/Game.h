@@ -31,6 +31,7 @@ private:
 	sf::Sprite BoardSprite;
 	std::vector<Piece*> PawnsVec;
 	sf::Vector2i Mouse_pos;
+	
 
 
 
