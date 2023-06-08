@@ -3,7 +3,7 @@
 class Queen : public Piece
 {
 private:
-	std::string color;//mo¿e lepiej jak dodamy kolor jako atrybut
+	
 
 public:
 	Queen(const std::string& _id, const Piece_colors _color, std::vector<BoardTile*>& board);
