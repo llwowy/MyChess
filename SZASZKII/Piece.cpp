@@ -4,7 +4,12 @@
 Piece::Piece(const std::string _id) : Piece_id(_id) {
 	std::cout << "chuj";
 }
+
 std::string Piece::get_Piece_id() { return Piece_id; }
+
+bool Piece::get_is_selected() { return is_selected; }
+
+sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {

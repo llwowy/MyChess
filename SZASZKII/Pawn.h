@@ -12,6 +12,6 @@ public:
 	Pawn(const std::string& _id, std::vector<BoardTile*>& board);
 //	void Create_white_pawn();
 //	void Create_black_pawn();
-
+	void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position);
 };
 

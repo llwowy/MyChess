@@ -23,7 +23,7 @@ private:
 	float skalaX = 7;
 	float skalaY = 7;
 
-	Board board;
+	Board board; // == std::vector<BoardTile*>& board
 
 	sf::RenderWindow* window = NULL;
 	sf::Event eventy;

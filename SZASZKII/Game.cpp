@@ -154,7 +154,7 @@ void Game::Pressed() {
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false) {
             for (auto& el : PawnsVec) {
-                el->Landing(board, Mouse_pos);
+                el->move(board, Mouse_pos);
                 el->unchosen(Mouse_pos);
             }
         }
@@ -163,7 +163,7 @@ void Game::Pressed() {
         if (eventy.mouseButton.button == sf::Mouse::Left) {
             Mouse_pos = sf::Mouse::getPosition(*window);
             for (auto& el : PawnsVec) {
-                el->Landing(board, Mouse_pos);
+                el->move(board, Mouse_pos);
                 el->unchosen(Mouse_pos);
             }
         }
