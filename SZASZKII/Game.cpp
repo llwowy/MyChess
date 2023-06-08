@@ -155,6 +155,7 @@ void Game::Pressed() {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false) {
             for (auto& el : PawnsVec) {
                 el->Landing(board, Mouse_pos);
+                el->unchosen(Mouse_pos);
             }
         }
     }
