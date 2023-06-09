@@ -47,6 +47,4 @@ public:
 	void GeneratePawns();
 	void LoadBoard(Board& board);
 	void Pressed();
-
-
 };

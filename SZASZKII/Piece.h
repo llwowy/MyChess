@@ -37,13 +37,13 @@ public:
 	void select();
 	void unselect();
 	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
-
-	//bool first_generate; // do pierwszego ustawienia pionków
 	void chosen(const sf::Vector2i& mouse_position);
 	void unchosen(const sf::Vector2i& mouse_position);
 	void Pick_up(const sf::Vector2i& mouse_position);
 	void Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position);
-	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position) {};
-	
+	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
+	virtual bool collider_for_Black(std::vector<Piece*> PawnsVec, sf::Vector2f selected_Tile_pos) { return 1; };
+	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
+	virtual ~Piece() { std::cout << "usun¹³em figure" << std::endl; };
 };
 

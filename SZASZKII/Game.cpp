@@ -51,8 +51,8 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Knight("g8", Black, board));
     PawnsVec.push_back(new Bishop("c8", Black, board));
     PawnsVec.push_back(new Bishop("f8", Black, board));
-    PawnsVec.push_back(new King("d8", Black, board));
-    PawnsVec.push_back(new Queen("e8", Black, board));
+    PawnsVec.push_back(new King("e8", Black, board));
+    PawnsVec.push_back(new Queen("d8", Black, board));
     //domyslnie biale
     PawnsVec.push_back(new Pawn("a2", White, board));
     PawnsVec.push_back(new Pawn("b2", White, board));
@@ -68,8 +68,9 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Knight("g1", White, board));
     PawnsVec.push_back(new Bishop("c1", White, board));
     PawnsVec.push_back(new Bishop("f1", White, board));
-    PawnsVec.push_back(new King("d1", White, board));
-    PawnsVec.push_back(new Queen("e1", White, board));
+    PawnsVec.push_back(new King("e1", White, board));
+    PawnsVec.push_back(new Queen("d1", White, board));
+
 }
 
 
@@ -172,7 +173,8 @@ void Game::Pressed() {
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false) {
             for (auto& el : PawnsVec) {
-                el->move(board, Mouse_pos);
+                el->move(board, Mouse_pos, PawnsVec);
+                el->take(board, Mouse_pos, PawnsVec);
                 el->unchosen(Mouse_pos);
             }
         }
@@ -181,7 +183,8 @@ void Game::Pressed() {
         if (eventy.mouseButton.button == sf::Mouse::Left) {
             Mouse_pos = sf::Mouse::getPosition(*window);
             for (auto& el : PawnsVec) {
-                el->move(board, Mouse_pos);
+                el->move(board, Mouse_pos, PawnsVec);
+                el->take(board, Mouse_pos, PawnsVec);
                 el->unchosen(Mouse_pos);
             }
         }
