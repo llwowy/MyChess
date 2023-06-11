@@ -23,6 +23,8 @@ private:
 	float skalaX = 7;
 	float skalaY = 7;
 
+	bool last_move_was_Black = true;
+
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
 	sf::RenderWindow* window = NULL;
@@ -31,12 +33,6 @@ private:
 	sf::Sprite BoardSprite;
 	std::vector<Piece*> PawnsVec;
 	sf::Vector2i Mouse_pos;
-
-	bool last_move_was_Black = true;
-	bool last_move_was_White = false;
-	
-
-
 
 public:
 	Game() {};
@@ -50,4 +46,6 @@ public:
 	void GeneratePawns();
 	void LoadBoard(Board& board);
 	void Pressed();
+
+	
 };

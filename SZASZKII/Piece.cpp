@@ -8,13 +8,16 @@ Piece::Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type
 
 std::string Piece::get_Piece_id() { return Piece_id; }
 
-Piece_colors Piece::get_Piece_color() { return Piece_color; };
+Piece_colors Piece::get_Piece_color() { return Piece_color; }
+
+bool Piece::last_move_was_Black = true;
 
 bool Piece::get_is_selected() { return is_selected; }
 
 sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 Piece_types Piece::get_Piece_type() { return Piece_type; }
+
 
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
@@ -23,11 +26,29 @@ void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) 
 }
 
 void  Piece::select() {
-	is_selected = true;
+	if (get_Piece_color() == Black && last_move_was_Black == false) {
+		is_selected = true;
+	}
+	else if (get_Piece_color() == White && last_move_was_Black == true) {
+		is_selected = true;
+	}
 }
 
-void  Piece::unselect() {
-	is_selected = false;
+
+void  Piece::unselect(const sf::Vector2i& mouse_position) {
+	if (is_selected) {
+		if (get_Piece_color() == Black) {
+			if (get_Starting_Piece_pos() != getPosition()) {
+				last_move_was_Black = true;
+			}
+		}
+		else if (get_Piece_color() == White) {
+			if (get_Starting_Piece_pos() != getPosition()) {
+				last_move_was_Black = false;
+			}
+		}
+		is_selected = false;
+	}
 }
 
 void Piece::chosen(const sf::Vector2i& mouse_position) {
@@ -40,7 +61,7 @@ void Piece::chosen(const sf::Vector2i& mouse_position) {
 }
 
 void Piece::unchosen(const sf::Vector2i& mouse_position) {
-	unselect();
+	unselect(mouse_position);
 }
 
 
