@@ -122,7 +122,7 @@ bool Pawn::take_Left_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vect
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
-	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == White) {
+	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(-112, 112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0,0);
@@ -142,7 +142,7 @@ bool Pawn::take_Right_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vec
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
-	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == White) {
+	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(112, 112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);
@@ -162,7 +162,7 @@ bool Pawn::take_Left_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vect
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
-	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == Black) {
+	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(-112, -112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);
@@ -182,7 +182,7 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
-	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == Black) {
+	if (itr != _PawnsVec.end() && (*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(112, -112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);

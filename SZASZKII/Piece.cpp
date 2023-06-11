@@ -122,7 +122,7 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
 		)) {
-		if (itr != _PawnsVec.end()) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
 			sf::Vector2f chosen_pos = selected_Tile_pos;
 			sf::Vector2f starting_pos = get_Starting_Piece_pos();
 			bool found_obstacle = false;
@@ -263,7 +263,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
 		)) {
-		if (itr != _PawnsVec.end()) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
 			sf::Vector2f chosen_pos = selected_Tile_pos;
 			sf::Vector2f starting_pos = get_Starting_Piece_pos();
 			bool found_obstacle = false;
@@ -404,7 +404,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vec
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
 		)) {
-		if (itr != _PawnsVec.end()) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
 			sf::Vector2f chosen_pos = selected_Tile_pos;
 			sf::Vector2f starting_pos = get_Starting_Piece_pos();
 			bool found_obstacle = false;
@@ -546,7 +546,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vec
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
 		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
 		)) {
-		if (itr != _PawnsVec.end()) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
 			sf::Vector2f chosen_pos = selected_Tile_pos;
 			sf::Vector2f starting_pos = get_Starting_Piece_pos();
 			bool found_obstacle = false;

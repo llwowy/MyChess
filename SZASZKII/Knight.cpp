@@ -53,7 +53,7 @@ bool Knight::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 		});
 	if (itr != _PawnsVec.end()) {
 		if (get_Piece_color() == Black) {
-			if ((*itr)->get_Piece_color() == White) {
+			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
 				_PawnsVec.erase(itr);
@@ -64,7 +64,7 @@ bool Knight::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 			}
 		}
 		else if (get_Piece_color() == White) {
-			if ((*itr)->get_Piece_color() == Black) {
+			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
 				_PawnsVec.erase(itr);
