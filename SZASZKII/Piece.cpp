@@ -2,7 +2,7 @@
 
 
 
-Piece::Piece(const std::string _id, Piece_colors _color) : Piece_id(_id), Piece_color(_color){
+Piece::Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type) : Piece_id(_id), Piece_color(_color), Piece_type(_Piece_type){
 	std::cout << "piece\n";
 }
 
@@ -13,6 +13,8 @@ Piece_colors Piece::get_Piece_color() { return Piece_color; };
 bool Piece::get_is_selected() { return is_selected; }
 
 sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
+
+Piece_types Piece::get_Piece_type() { return Piece_type; }
 
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {

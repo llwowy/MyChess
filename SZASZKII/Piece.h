@@ -7,12 +7,8 @@
 #include <iostream>
 #include "BoardTile.h"
 
-	enum Piece_colors {
-		White,
-		Black,
-		Green,
-		Blue
-	};
+	enum Piece_colors {White, Black, Green, Blue};
+	enum Piece_types {P,R,N,B,Q,K};
 
 class Piece : public sf::Sprite
 {
@@ -20,6 +16,7 @@ private:
 
 	std::string Piece_id;
 	Piece_colors Piece_color;
+	Piece_types Piece_type;
 	bool is_selected = false;
 	sf::Vector2f position;
 	sf::Vector2f Starting_Piece_pos;
@@ -29,7 +26,8 @@ protected:
 	sf::Texture Piece_texture;
 public:
 
-	Piece(const std::string _id, Piece_colors _color);
+	Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type);
+	Piece_types get_Piece_type();
 	Piece_colors get_Piece_color();
 	std::string get_Piece_id();
 	sf::Vector2f get_Starting_Piece_pos();
