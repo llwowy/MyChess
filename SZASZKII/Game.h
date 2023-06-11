@@ -31,6 +31,9 @@ private:
 	sf::Sprite BoardSprite;
 	std::vector<Piece*> PawnsVec;
 	sf::Vector2i Mouse_pos;
+
+	bool last_move_was_Black = true;
+	bool last_move_was_White = false;
 	
 
 
