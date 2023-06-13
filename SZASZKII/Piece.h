@@ -56,5 +56,7 @@ public:
 
 	bool take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
+
+	virtual void mark_Tiles(std::vector<BoardTile*>& board) {};
 };
 

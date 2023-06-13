@@ -21,7 +21,7 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				Tile->get_Tile_position().y <= mouse_position.y && Tile->get_Tile_position().y + Tile->get_Tile_size().y >= mouse_position.y);
 			});
 
-		if (it != board.end() && collider(_PawnsVec, (*it)->get_Tile_position()) && (
+		if (it != board.end() && get_Piece_color() == Black && (*it)->get_Tile_marked_for_White() == false && collider(_PawnsVec, (*it)->get_Tile_position()) && (
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
@@ -32,6 +32,18 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, -1 * 112)
 			
 			)) {
+			setPosition((*it)->get_Tile_position());
+		}
+		else if(it != board.end() && get_Piece_color() == White && (*it)->get_Tile_marked_for_Black() == false && collider(_PawnsVec, (*it)->get_Tile_position()) && (
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, 1 * 112) ||
+			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, -1 * 112)
+			)){
 			setPosition((*it)->get_Tile_position());
 		}
 		else {

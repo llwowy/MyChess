@@ -197,3 +197,44 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 		return false;
 	}
 }
+
+void Pawn::mark_Tiles(std::vector<BoardTile*>& board) {
+	if (get_Piece_color() == White) {
+
+		sf::Vector2f Piece_pos = getPosition();
+
+
+		auto it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(112, -112); });
+
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-112, -112); });
+
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+	}
+	if (get_Piece_color() == Black) {
+
+		sf::Vector2f Piece_pos = getPosition();
+
+
+		auto it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(112, 112); });
+
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-112, 112); });
+
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+	}
+}

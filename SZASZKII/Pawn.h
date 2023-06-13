@@ -19,6 +19,7 @@ public:
 	bool take_Right_collider_for_Black(std::vector<Piece*>& PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_Left_collider_for_White(std::vector<Piece*>& PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_Right_collider_for_White(std::vector<Piece*>& PawnsVec, sf::Vector2f selected_Tile_pos);
+	void mark_Tiles(std::vector<BoardTile*>& board);
 	~Pawn() { std::cout << "usun¹³em piona" << std::endl; };
 };
 

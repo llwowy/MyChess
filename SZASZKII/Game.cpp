@@ -70,7 +70,6 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Bishop("f1", White, B, board));
     PawnsVec.push_back(new King("e1", White, K, board));
     PawnsVec.push_back(new Queen("d1", White, Q, board));
-
 }
 
 
@@ -85,7 +84,6 @@ void Game::allEvents() {
     while (window->pollEvent(eventy)) {
         if (eventy.type == sf::Event::Closed)
             window->close();
-
     }
 }
 
@@ -158,6 +156,14 @@ void Game::LoadBoard(Board& board) {
 
 
 void Game::Pressed() {
+    for (auto& el : board) {
+        el->set_Tile_marked_for_Black(false);
+        el->set_Tile_marked_for_White(false);
+    }
+    for (auto& el : PawnsVec) {
+        el->mark_Tiles(board);
+    }
+
     if (eventy.type == sf::Event::MouseButtonPressed) {
         if (eventy.mouseButton.button == sf::Mouse::Left) {
             Mouse_pos = sf::Mouse::getPosition(*window);
