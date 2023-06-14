@@ -79,3 +79,109 @@ bool Knight::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 		return true;
 	}
 }
+
+void Knight::mark_Tiles(std::vector<BoardTile*>& board) {
+
+	sf::Vector2f Piece_pos = getPosition();
+
+	if (get_Piece_color() == White) {
+
+		auto it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(2 * 112, 1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(2 * 112, -1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-2 * 112, 1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-2 * 112, -1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(1 * 112, 2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-1 * 112, 2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(1 * 112, -2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-1 * 112, -2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_White(true);
+		}
+	}
+	if (get_Piece_color() == Black) {
+
+		auto it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(2 * 112, 1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(2 * 112, -1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-2 * 112, 1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-2 * 112, -1 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(1 * 112, 2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-1 * 112, 2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(1 * 112, -2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+
+		it = std::find_if(board.begin(), board.end(), [Piece_pos](BoardTile* Tile) {
+			return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-1 * 112, -2 * 112); });
+		if (it != board.end()) {
+			(*it)->set_Tile_marked_for_Black(true);
+		}
+	}
+}
