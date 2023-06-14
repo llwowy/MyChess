@@ -164,38 +164,38 @@ bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 	}
 }
 
-//void Bishop::mark_Tiles(std::vector<BoardTile*>& board) {
-//	
-//	sf::Vector2f Piece_pos = getPosition();
-//
-//	if (get_Piece_color() == White) {
-//		bool found_obstacle_ = false;
-//		
-//		for (int i = 112; i != 8 * 112;) {
-//			
-//			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-//				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, i); });
-//			if (it != board.end()) {
-//				(*it)->set_Tile_marked_for_White(true);
-//			}
-//
-//			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-//				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
-//			if (it != board.end()) {
-//				(*it)->set_Tile_marked_for_White(true);
-//			}
-//
-//			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-//				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, i); });
-//			if (it != board.end()) {
-//				(*it)->set_Tile_marked_for_White(true);
-//			}
-//
-//			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-//				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, -i); });
-//			if (it != board.end()) {
-//				(*it)->set_Tile_marked_for_White(true);
-//			}
-//		}
-//	}
-//}
+void Bishop::mark_Tiles(std::vector<BoardTile*>& board) {
+	
+	/*sf::Vector2f Piece_pos = getPosition();
+
+	if (get_Piece_color() == White) {
+		bool found_obstacle_ = false;
+		
+		for (int i = 112; i != 8 * 112;) {
+			
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, i); });
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+			}
+
+			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+			}
+
+			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, i); });
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+			}
+
+			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, -i); });
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+			}
+		}
+	}*/
+}
