@@ -210,7 +210,7 @@ void Game::Pressed() {//do pionkow
         el->set_Tile_marked_for_White(false);
     }
     for (auto& el : PawnsVec) {
-        el->mark_Tiles(board);
+        el->mark_Tiles(board, PawnsVec);
     }
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {

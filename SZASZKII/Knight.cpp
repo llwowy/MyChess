@@ -80,7 +80,7 @@ bool Knight::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 	}
 }
 
-void Knight::mark_Tiles(std::vector<BoardTile*>& board) {
+void Knight::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
 
 	sf::Vector2f Piece_pos = getPosition();
 
