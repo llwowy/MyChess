@@ -48,16 +48,20 @@ private:
 	sf::Sprite upperScrollSprite;
 	sf::Texture lowerScroll;
 	sf::Sprite lowerScrollSprite;
+	sf::Font Menufont;
+	sf::Text Text;//sprite
+//	sf::Color colours;
 
+	//GRA
 	std::vector<Piece*> PawnsVec;
 	sf::Vector2i Mouse_pos;
 
 	sf::Clock clockMenu;//zegar do animacji
 
 public:
-	Game() {};
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
+	void readyFonsts();
 	void loadPawns();
 	void readyBackground();
 	void readyGame(); // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
@@ -70,6 +74,10 @@ public:
 	void GeneratePawns();
 	void LoadBoard(Board& board);
 	void Pressed();
-
+	Game() {
+		readyMenu();
+		readyFonsts();
+	};
+	void getStartMenu(sf::Event& e, sf::RenderWindow* window);
 	
 };

@@ -4,22 +4,26 @@
 
 void Game::play() {
     //MENU
-    readyMenu();
-    while (MenuWindow->isOpen()) {
-        allMenuEvents();
-        drawAllOnMenu(MenuWindow);
-    }
-  //  //SZASZKII
-  //LoadBoard(board);
-  //  readyGame();
-  //  while (MenuWindow->isOpen())
-  //  {
-  //      allGameEvents();
 
-  //      drawAllOnBoard(window);
-  //      Pressed();
-  //      window->display();
-  //  }
+    /*
+        while (menuwindow->isopen()) {
+        allmenuevents();
+        drawallonmenu(menuwindow);
+        menuwindow->display();
+    }    
+    */
+
+    //SZASZKII
+  LoadBoard(board);
+    readyGame();
+    while (MenuWindow->isOpen())
+    {
+        allGameEvents();
+
+        drawAllOnBoard(window);
+        Pressed();
+        window->display();
+    }
 }
 
 void Game::readyMenuBackground() {
@@ -67,6 +71,22 @@ void Game::readyGame() {
     readyBackground();
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
+
+}
+
+
+
+void Game::readyFonsts() {
+    if (!Menufont.loadFromFile("Fonts/amontesa/Amontesa.ttf")) { //czcionka menu
+        std::cout << "load font failed" << std::endl;
+        system("pause");
+    }
+    else { std::cout << "Loaded\n"; }
+    Text.setFont(Menufont);
+    Text.setString("Play");
+    Text.setFillColor(sf::Color::Black);
+    Text.setCharacterSize(60);
+    Text.setPosition(1120/2 - 65 ,1120/2 - 50);
 }
 
 
@@ -109,7 +129,8 @@ void Game::loadPawns() {
 
 void Game::drawAllOnMenu(sf::RenderWindow* window) {
     window->draw(MenuSprite);
-    //for (auto& paw_and_fig : PawnsVec) {
+    window-> draw(Text);
+        //for (auto& paw_and_fig : PawnsVec) {
     //    window->draw(*paw_and_fig);
     //}
 }
@@ -130,11 +151,23 @@ void Game::allGameEvents() {
 }
 
 void Game::allMenuEvents() {
+    sf::Event MenuEventy;
+
     while (MenuWindow->pollEvent(MenuEventy)) {
-        if (MenuEventy.type == sf::Event::Closed)
+        if (MenuEventy.type == sf::Event::Closed) {
             MenuWindow->close();
+        }
+
+        if (MenuEventy.type == sf::Event::MouseButtonPressed) {
+            if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
+                if (Text.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
+                    std::cout << "Pressed\n";
+                }
+            }
+        }
     }
 }
+
 
 void Game::LoadBoard(Board& board) {
     board.push_back(new BoardTile(16 * skalaXBoard, 16 * skalaYBoard, "a8"));
@@ -245,4 +278,9 @@ void Game::Pressed() {//do pionkow
         }
     }
     
+}
+
+void Game::getStartMenu(sf::Event& e, sf::RenderWindow* window)
+{
+
 }
