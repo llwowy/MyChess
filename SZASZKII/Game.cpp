@@ -3,19 +3,54 @@
 #include <SFML/Main.hpp>
 
 void Game::play() {
-    LoadBoard(board);
-    readyGame();
-    while (window->isOpen())
-    {
-        allEvents();
-
-        drawAll(window);
-        Pressed();
-        window->display();
+    //MENU
+    readyMenu();
+    while (MenuWindow->isOpen()) {
+        allMenuEvents();
+        drawAllOnMenu(MenuWindow);
     }
+  //  //SZASZKII
+  //LoadBoard(board);
+  //  readyGame();
+  //  while (MenuWindow->isOpen())
+  //  {
+  //      allGameEvents();
+
+  //      drawAllOnBoard(window);
+  //      Pressed();
+  //      window->display();
+  //  }
+}
+
+void Game::readyMenuBackground() {
+    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/parts/paper.png")) { //tekstura menu
+        std::cout << "load Menu Texture failed" << std::endl;
+        system("pause");
+    }
+    MenuSprite.setTexture(teksturaMenu);
+    MenuSprite.setScale(skalaXMenu, skalaYMenu);
+
+    if (!upperScroll.loadFromFile("Grafika/scroll/pngs/parts/upper.png")) { //tekstura gornego zwoju
+        std::cout << "load upperscroll Texture failed" << std::endl;
+        system("pause");
+    }
+    upperScrollSprite.setTexture(upperScroll);
+    //MenuSprite.setScale(skalaXMenu, skalaYMenu);
+
+    if (!lowerScroll.loadFromFile("Grafika/scroll/pngs/parts/lower.png")) { //tekstura dolnego zwoju
+        std::cout << "load lowerscroll Texture failed" << std::endl;
+        system("pause");
+    }
+    lowerScrollSprite.setTexture(lowerScroll);
+   // MenuSprite.setScale(skalaXMenu, skalaYMenu);
 }
 
 
+void Game::readyMenu() {
+    readyMenuBackground();
+    MenuWindow = new sf::RenderWindow(sf::VideoMode(MenuWindow_width, MenuWindow_height), "ChessMenu");
+
+}
 
 
 void Game::readyBackground() {
@@ -24,7 +59,7 @@ void Game::readyBackground() {
         system("pause");
     }
     BoardSprite.setTexture(teksturaTla);
-    BoardSprite.setScale(7, 7);
+    BoardSprite.setScale(skalaXBoard, skalaYBoard);
 }
 
 
@@ -72,90 +107,104 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Queen("d1", White, Q, board));
 }
 
+void Game::drawAllOnMenu(sf::RenderWindow* window) {
+    window->draw(MenuSprite);
+    //for (auto& paw_and_fig : PawnsVec) {
+    //    window->draw(*paw_and_fig);
+    //}
+}
 
-void Game::drawAll(sf::RenderWindow* window) {
+
+void Game::drawAllOnBoard(sf::RenderWindow* window) {
     window->draw(BoardSprite);
     for (auto& paw_and_fig : PawnsVec) {
         window->draw(*paw_and_fig);
     }
 }
 
-void Game::allEvents() {
-    while (window->pollEvent(eventy)) {
-        if (eventy.type == sf::Event::Closed)
+void Game::allGameEvents() {
+    while (window->pollEvent(BoardEventy)) {
+        if (BoardEventy.type == sf::Event::Closed)
             window->close();
     }
 }
 
+void Game::allMenuEvents() {
+    while (MenuWindow->pollEvent(MenuEventy)) {
+        if (MenuEventy.type == sf::Event::Closed)
+            MenuWindow->close();
+    }
+}
+
 void Game::LoadBoard(Board& board) {
-    board.push_back(new BoardTile(16 * skalaX, 16 * skalaY, "a8"));
-    board.push_back(new BoardTile(32 * skalaX, 16 * skalaY, "b8"));
-    board.push_back(new BoardTile(48 * skalaX, 16 * skalaY, "c8"));
-    board.push_back(new BoardTile(64 * skalaX, 16 * skalaY, "d8"));
-    board.push_back(new BoardTile(80 * skalaX, 16 * skalaY, "e8"));
-    board.push_back(new BoardTile(96 * skalaX, 16 * skalaY, "f8"));
-    board.push_back(new BoardTile(112 * skalaX, 16 * skalaY, "g8"));
-    board.push_back(new BoardTile(128 * skalaX, 16 * skalaY, "h8"));
-    board.push_back(new BoardTile(16 * skalaX, 32 * skalaY, "a7"));
-    board.push_back(new BoardTile(32 * skalaX, 32 * skalaY, "b7"));
-    board.push_back(new BoardTile(48 * skalaX, 32 * skalaY, "c7"));
-    board.push_back(new BoardTile(64 * skalaX, 32 * skalaY, "d7"));
-    board.push_back(new BoardTile(80 * skalaX, 32 * skalaY, "e7"));
-    board.push_back(new BoardTile(96 * skalaX, 32 * skalaY, "f7"));
-    board.push_back(new BoardTile(112 * skalaX, 32 * skalaY, "g7"));
-    board.push_back(new BoardTile(128 * skalaX, 32 * skalaY, "h7"));
-    board.push_back(new BoardTile(16 * skalaX, 48 * skalaY, "a6"));
-    board.push_back(new BoardTile(32 * skalaX, 48 * skalaY, "b6"));
-    board.push_back(new BoardTile(48 * skalaX, 48 * skalaY, "c6"));
-    board.push_back(new BoardTile(64 * skalaX, 48 * skalaY, "d6"));
-    board.push_back(new BoardTile(80 * skalaX, 48 * skalaY, "e6"));
-    board.push_back(new BoardTile(96 * skalaX, 48 * skalaY, "f6"));
-    board.push_back(new BoardTile(112 * skalaX, 48 * skalaY, "g6"));
-    board.push_back(new BoardTile(128 * skalaX, 48 * skalaY, "h6"));
-    board.push_back(new BoardTile(16 * skalaX, 64 * skalaY, "a5"));
-    board.push_back(new BoardTile(32 * skalaX, 64 * skalaY, "b5"));
-    board.push_back(new BoardTile(48 * skalaX, 64 * skalaY, "c5"));
-    board.push_back(new BoardTile(64 * skalaX, 64 * skalaY, "d5"));
-    board.push_back(new BoardTile(80 * skalaX, 64 * skalaY, "e5"));
-    board.push_back(new BoardTile(96 * skalaX, 64 * skalaY, "f5"));
-    board.push_back(new BoardTile(112 * skalaX, 64 * skalaY, "g5"));
-    board.push_back(new BoardTile(128 * skalaX, 64 * skalaY, "h5"));
-    board.push_back(new BoardTile(16 * skalaX, 80 * skalaY, "a4"));
-    board.push_back(new BoardTile(32 * skalaX, 80 * skalaY, "b4"));
-    board.push_back(new BoardTile(48 * skalaX, 80 * skalaY, "c4"));
-    board.push_back(new BoardTile(64 * skalaX, 80 * skalaY, "d4"));
-    board.push_back(new BoardTile(80 * skalaX, 80 * skalaY, "e4"));
-    board.push_back(new BoardTile(96 * skalaX, 80 * skalaY, "f4"));
-    board.push_back(new BoardTile(112 * skalaX, 80 * skalaY, "g4"));
-    board.push_back(new BoardTile(128 * skalaX, 80 * skalaY, "h4"));
-    board.push_back(new BoardTile(16 * skalaX, 96 * skalaY, "a3"));
-    board.push_back(new BoardTile(32 * skalaX, 96 * skalaY, "b3"));
-    board.push_back(new BoardTile(48 * skalaX, 96 * skalaY, "c3"));
-    board.push_back(new BoardTile(64 * skalaX, 96 * skalaY, "d3"));
-    board.push_back(new BoardTile(80 * skalaX, 96 * skalaY, "e3"));
-    board.push_back(new BoardTile(96 * skalaX, 96 * skalaY, "f3"));
-    board.push_back(new BoardTile(112 * skalaX, 96 * skalaY, "g3"));
-    board.push_back(new BoardTile(128 * skalaX, 96 * skalaY, "h3"));
-    board.push_back(new BoardTile(16 * skalaX, 112 * skalaY, "a2"));
-    board.push_back(new BoardTile(32 * skalaX, 112 * skalaY, "b2"));
-    board.push_back(new BoardTile(48 * skalaX, 112 * skalaY, "c2"));
-    board.push_back(new BoardTile(64 * skalaX, 112 * skalaY, "d2"));
-    board.push_back(new BoardTile(80 * skalaX, 112 * skalaY, "e2"));
-    board.push_back(new BoardTile(96 * skalaX, 112 * skalaY, "f2"));
-    board.push_back(new BoardTile(112 * skalaX, 112 * skalaY, "g2"));
-    board.push_back(new BoardTile(128 * skalaX, 112 * skalaY, "h2"));
-    board.push_back(new BoardTile(16 * skalaX, 128 * skalaY, "a1"));
-    board.push_back(new BoardTile(32 * skalaX, 128 * skalaY, "b1"));
-    board.push_back(new BoardTile(48 * skalaX, 128 * skalaY, "c1"));
-    board.push_back(new BoardTile(64 * skalaX, 128 * skalaY, "d1"));
-    board.push_back(new BoardTile(80 * skalaX, 128 * skalaY, "e1"));
-    board.push_back(new BoardTile(96 * skalaX, 128 * skalaY, "f1"));
-    board.push_back(new BoardTile(112 * skalaX, 128 * skalaY, "g1"));
-    board.push_back(new BoardTile(128 * skalaX, 128 * skalaY, "h1"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 16 * skalaYBoard, "a8"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 16 * skalaYBoard, "b8"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 16 * skalaYBoard, "c8"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 16 * skalaYBoard, "d8"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 16 * skalaYBoard, "e8"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 16 * skalaYBoard, "f8"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 16 * skalaYBoard, "g8"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 16 * skalaYBoard, "h8"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 32 * skalaYBoard, "a7"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 32 * skalaYBoard, "b7"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 32 * skalaYBoard, "c7"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 32 * skalaYBoard, "d7"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 32 * skalaYBoard, "e7"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 32 * skalaYBoard, "f7"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 32 * skalaYBoard, "g7"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 32 * skalaYBoard, "h7"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 48 * skalaYBoard, "a6"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 48 * skalaYBoard, "b6"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 48 * skalaYBoard, "c6"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 48 * skalaYBoard, "d6"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 48 * skalaYBoard, "e6"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 48 * skalaYBoard, "f6"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 48 * skalaYBoard, "g6"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 48 * skalaYBoard, "h6"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 64 * skalaYBoard, "a5"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 64 * skalaYBoard, "b5"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 64 * skalaYBoard, "c5"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 64 * skalaYBoard, "d5"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 64 * skalaYBoard, "e5"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 64 * skalaYBoard, "f5"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 64 * skalaYBoard, "g5"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 64 * skalaYBoard, "h5"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 80 * skalaYBoard, "a4"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 80 * skalaYBoard, "b4"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 80 * skalaYBoard, "c4"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 80 * skalaYBoard, "d4"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 80 * skalaYBoard, "e4"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 80 * skalaYBoard, "f4"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 80 * skalaYBoard, "g4"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 80 * skalaYBoard, "h4"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 96 * skalaYBoard, "a3"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 96 * skalaYBoard, "b3"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 96 * skalaYBoard, "c3"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 96 * skalaYBoard, "d3"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 96 * skalaYBoard, "e3"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 96 * skalaYBoard, "f3"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 96 * skalaYBoard, "g3"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 96 * skalaYBoard, "h3"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 112 * skalaYBoard, "a2"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 112 * skalaYBoard, "b2"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 112 * skalaYBoard, "c2"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 112 * skalaYBoard, "d2"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 112 * skalaYBoard, "e2"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 112 * skalaYBoard, "f2"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 112 * skalaYBoard, "g2"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 112 * skalaYBoard, "h2"));
+    board.push_back(new BoardTile(16 * skalaXBoard, 128 * skalaYBoard, "a1"));
+    board.push_back(new BoardTile(32 * skalaXBoard, 128 * skalaYBoard, "b1"));
+    board.push_back(new BoardTile(48 * skalaXBoard, 128 * skalaYBoard, "c1"));
+    board.push_back(new BoardTile(64 * skalaXBoard, 128 * skalaYBoard, "d1"));
+    board.push_back(new BoardTile(80 * skalaXBoard, 128 * skalaYBoard, "e1"));
+    board.push_back(new BoardTile(96 * skalaXBoard, 128 * skalaYBoard, "f1"));
+    board.push_back(new BoardTile(112 * skalaXBoard, 128 * skalaYBoard, "g1"));
+    board.push_back(new BoardTile(128 * skalaXBoard, 128 * skalaYBoard, "h1"));
 }
 
 
-void Game::Pressed() {
+void Game::Pressed() {//do pionkow
     for (auto& el : board) {
         el->set_Tile_marked_for_Black(false);
         el->set_Tile_marked_for_White(false);
@@ -164,15 +213,15 @@ void Game::Pressed() {
         el->mark_Tiles(board);
     }
 
-    if (eventy.type == sf::Event::MouseButtonPressed) {
-        if (eventy.mouseButton.button == sf::Mouse::Left) {
+    if (BoardEventy.type == sf::Event::MouseButtonPressed) {
+        if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
             Mouse_pos = sf::Mouse::getPosition(*window);
             for (auto& el : PawnsVec) {
                 el->chosen(Mouse_pos);
             }
         }
     }
-    if (eventy.type == sf::Event::MouseMoved) {
+    if (BoardEventy.type == sf::Event::MouseMoved) {
         Mouse_pos = sf::Mouse::getPosition(*window);
         for (auto& el : PawnsVec) {
             el->Pick_up(Mouse_pos);
@@ -185,8 +234,8 @@ void Game::Pressed() {
             }
         }
     }
-    if (eventy.type == sf::Event::MouseButtonReleased) {
-        if (eventy.mouseButton.button == sf::Mouse::Left) {
+    if (BoardEventy.type == sf::Event::MouseButtonReleased) {
+        if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
             Mouse_pos = sf::Mouse::getPosition(*window);
             for (auto& el : PawnsVec) {
                 el->move(board, Mouse_pos, PawnsVec);
