@@ -164,38 +164,134 @@ bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 	}
 }
 
-void Bishop::mark_Tiles(std::vector<BoardTile*>& board) {
+void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
 	
-	/*sf::Vector2f Piece_pos = getPosition();
+	sf::Vector2f Piece_pos = getPosition();
 
 	if (get_Piece_color() == White) {
-		bool found_obstacle_ = false;
 		
 		for (int i = 112; i != 8 * 112;) {
-			
 			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
 				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, i); });
-			if (it != board.end()) {
-				(*it)->set_Tile_marked_for_White(true);
-			}
 
-			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
 			if (it != board.end()) {
 				(*it)->set_Tile_marked_for_White(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
 			}
-
-			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, i); });
-			if (it != board.end()) {
-				(*it)->set_Tile_marked_for_White(true);
-			}
-
-			it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
-				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, -i); });
-			if (it != board.end()) {
-				(*it)->set_Tile_marked_for_White(true);
-			}
+			i += 112;
 		}
-	}*/
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, -i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_White(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+	}
+	if (get_Piece_color() == Black) {
+
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_Black(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_Black(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_Black(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+		for (int i = 112; i != 8 * 112;) {
+			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
+				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(-i, -i); });
+
+			if (it != board.end()) {
+				(*it)->set_Tile_marked_for_Black(true);
+				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {
+					return (*it)->get_Tile_position() == _piece->getPosition();
+					});
+				if (itr != _PawnsVec.end()) {
+					break;
+				}
+			}
+			i += 112;
+		}
+	}
 }

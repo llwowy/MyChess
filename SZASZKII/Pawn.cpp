@@ -198,7 +198,7 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 	}
 }
 
-void Pawn::mark_Tiles(std::vector<BoardTile*>& board) {
+void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
 	if (get_Piece_color() == White) {
 
 		sf::Vector2f Piece_pos = getPosition();
