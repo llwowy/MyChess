@@ -88,7 +88,20 @@ void Game::readyFonsts() {
     Text.setString("Play Chess");
     Text.setFillColor(sf::Color::Black);
     Text.setCharacterSize(60);
-    Text.setPosition(1120/2 - 200 ,1120/2 - 50);
+    Text.setPosition(1120/2 - 200 ,1120/2 - 150);
+
+    Conf1.setFont(Menufont);
+    Conf1.setString("Black&White");
+    Conf1.setFillColor(sf::Color::White);
+    Conf1.setCharacterSize(60);
+    Conf1.setPosition(1120 / 2 - 240, 1120 / 2 +10);
+
+    Conf2.setFont(Menufont);
+    Conf2.setString("Green&Blue");
+    Conf2.setFillColor(sf::Color::Blue);
+    Conf2.setCharacterSize(60);
+    Conf2.setPosition(1120 / 2 - 210, 1120 / 2 + 150);
+
 }
 
 
@@ -132,6 +145,8 @@ void Game::loadPawns() {
 void Game::drawAllOnMenu(sf::RenderWindow* window) {
     window->draw(MenuSprite);
     window-> draw(Text);
+    window->draw(Conf1);
+    window->draw(Conf2);
         //for (auto& paw_and_fig : PawnsVec) {
     //    window->draw(*paw_and_fig);
     //}
@@ -163,11 +178,34 @@ void Game::allMenuEvents() {
         if (MenuEventy.type == sf::Event::MouseButtonPressed) {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Text.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
+                 //   Text.setFillColor(sf::Color::Blue);}
                     std::cout << "Pressed\n";
-                    bool PlayChess = true;
+                     PlayChess = true;
                     if (PlayChess = true) {
                         MenuWindow->close();
                     }
+                }
+            }
+        }
+
+        if (MenuEventy.type == sf::Event::MouseButtonPressed) {
+            if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
+                if (Conf1.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
+                    //   Text.setFillColor(sf::Color::Blue);}
+                    std::cout << "Pressed conf1\n";
+                    GreenAndBlue = false;
+                    BlackAndWhite = true;
+                }
+            }
+        }
+
+        if (MenuEventy.type == sf::Event::MouseButtonPressed) {
+            if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
+                if (Conf2.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
+                    //   Text.setFillColor(sf::Color::Blue);}
+                    std::cout << "Pressed conf2\n";
+                  GreenAndBlue = true;
+                  BlackAndWhite = false;
                 }
             }
         }

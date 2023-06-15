@@ -50,8 +50,12 @@ private:
 	sf::Sprite lowerScrollSprite;
 	sf::Font Menufont;
 	sf::Text Text;//sprite
+	sf::Text Conf1;//sprite
+	sf::Text Conf2;//sprite
 //	sf::Color colours;
 	bool PlayChess = false;
+	bool BlackAndWhite = true;
+	bool GreenAndBlue = false;
 
 	//GRA
 	std::vector<Piece*> PawnsVec;
