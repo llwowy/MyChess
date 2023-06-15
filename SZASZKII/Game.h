@@ -30,6 +30,8 @@ private:
 	float skalaYMenu = 1.175;//1.13937 tak dokladnie
 
 	bool last_move_was_Black = true;
+	bool King_White_checked = false;
+	bool King_Black_checked = false;
 
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
@@ -87,5 +89,6 @@ public:
 		readyFonsts();
 	};
 	void getStartMenu(sf::Event& e, sf::RenderWindow* window);
+	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	
 };

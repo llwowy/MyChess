@@ -5,8 +5,8 @@
 
 int main() {
 
-    Game mamyto;
-    mamyto.play();
+    Game game;
+    game.play();
         
     return 0;
 }

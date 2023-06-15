@@ -203,7 +203,6 @@ void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _Paw
 		for (int i = 112; i != 8 * 112;) {
 			auto it = std::find_if(board.begin(), board.end(), [Piece_pos, i](BoardTile* Tile) {
 				return Tile->get_Tile_position() == Piece_pos + sf::Vector2f(i, -i); });
-
 			if (it != board.end()) {
 				(*it)->set_Tile_marked_for_White(true);
 				auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* _piece) {

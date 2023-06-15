@@ -46,13 +46,14 @@ public:
 	void unselect(const sf::Vector2i& mouse_position);
 	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
 
-	void chosen(const sf::Vector2i& mouse_position);
+	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
+	void King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	
 	void unchosen(const sf::Vector2i& mouse_position);
 	void Pick_up(const sf::Vector2i& mouse_position);
 	void Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position);
 	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
-	virtual bool collider_for_Black(std::vector<Piece*> PawnsVec, sf::Vector2f selected_Tile_pos) { return 1; };
+	//virtual bool collider_for_Black(std::vector<Piece*> PawnsVec, sf::Vector2f selected_Tile_pos) { return 1; };
 	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
 	virtual ~Piece() { std::cout << "usun¹³em figure" << std::endl; };
 
@@ -61,6 +62,8 @@ public:
 
 	bool take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
+
+	bool collider_for_King(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
 
 	virtual void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {};
 };

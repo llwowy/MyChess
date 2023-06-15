@@ -52,12 +52,44 @@ void  Piece::unselect(const sf::Vector2i& mouse_position) {
 	}
 }
 
-void Piece::chosen(const sf::Vector2i& mouse_position) {
+void Piece::chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 	sf::FloatRect rectangle_bounds = getGlobalBounds();
 	if (rectangle_bounds.left <= mouse_position.x && rectangle_bounds.left + rectangle_bounds.width >= mouse_position.x &&
 		rectangle_bounds.top <= mouse_position.y && rectangle_bounds.top + rectangle_bounds.height >= mouse_position.y) {
 		select();
 		Starting_Piece_pos = getPosition();
+	}
+}
+
+void Piece::King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+	
+	if (get_Piece_color() == Black && get_Piece_type() == K) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_type() == K && _piece->get_Piece_color() == Black; });
+
+		auto it = std::find_if(_board.begin(), _board.end(), [itr](BoardTile* Tile) {
+			return Tile->get_Tile_position() == (*itr)->getPosition(); });
+
+		if ((*it)->get_Tile_position().x <= mouse_position.x && (*it)->get_Tile_position().x + (*it)->get_Tile_size().x >= mouse_position.x &&
+			(*it)->get_Tile_position().y <= mouse_position.y && (*it)->get_Tile_position().y + (*it)->get_Tile_size().y >= mouse_position.y) {
+			std::cout << (*it)->get_Tile_position().x << std::endl << (*it)->get_Tile_position().y << std::endl;
+			select();
+			Starting_Piece_pos = getPosition();
+		}
+	}
+	else if (get_Piece_color() == White && get_Piece_type() == K) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_type() == K && _piece->get_Piece_color() == White; });
+
+		auto it = std::find_if(_board.begin(), _board.end(), [itr](BoardTile* Tile) {
+			return Tile->get_Tile_position() == (*itr)->getPosition(); });
+
+		if ((*it)->get_Tile_position().x <= mouse_position.x && (*it)->get_Tile_position().x + (*it)->get_Tile_size().x >= mouse_position.x &&
+			(*it)->get_Tile_position().y <= mouse_position.y && (*it)->get_Tile_position().y + (*it)->get_Tile_size().y >= mouse_position.y) {
+			std::cout << (*it)->get_Tile_position().x << std::endl << (*it)->get_Tile_position().y << std::endl;
+			select();
+			Starting_Piece_pos = getPosition();
+		}
 	}
 }
 
@@ -652,5 +684,32 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vec
 	}
 	else {
 		return false;
+	}
+}
+
+bool Piece::collider_for_King(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if (itr != _PawnsVec.end()) {
+		if (get_Piece_color() == Black) {
+			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (get_Piece_color() == White) {
+			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	else {
+		return true;
 	}
 }
