@@ -46,6 +46,38 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 			)){
 			setPosition((*it)->get_Tile_position());
 		}
+		else if (it != board.end() && right_castling_condition(board,_PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0 * 112) && get_Piece_color() == White) {
+			setPosition((*it)->get_Tile_position());
+			auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+				return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R; });
+			if (itr != _PawnsVec.end()) {
+				(*itr)->setPosition((*it)->get_Tile_position() + sf::Vector2f(-1 * 112, 0));
+			}
+		}
+		else if (it != board.end() && right_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0 * 112) && get_Piece_color() == Black) {
+			setPosition((*it)->get_Tile_position());
+			auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+				return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R; });
+			if (itr1 != _PawnsVec.end()) {
+				(*itr1)->setPosition((*it)->get_Tile_position() + sf::Vector2f(-1 * 112, 0));
+			}
+		}
+		else if (it != board.end() && left_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0 * 112) && get_Piece_color() == White) {
+			setPosition((*it)->get_Tile_position());
+			auto itr2 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+				return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R1; });
+			if (itr2 != _PawnsVec.end()) {
+				(*itr2)->setPosition((*it)->get_Tile_position() + sf::Vector2f(1 * 112, 0));
+			}
+		}
+		else if (it != board.end() && left_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0 * 112) && get_Piece_color() == Black) {
+			setPosition((*it)->get_Tile_position());
+			auto itr3 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+				return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R1; });
+			if (itr3 != _PawnsVec.end()) {
+				(*itr3)->setPosition((*it)->get_Tile_position() + sf::Vector2f(1 * 112, 0));
+			}
+		}
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}
@@ -187,5 +219,199 @@ void King::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _Pawns
 		if (it != board.end()) {
 			(*it)->set_Tile_marked_for_Black(true);
 		}
+	}
+}
+
+bool King::right_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+
+	if (get_Piece_color() == White && get_Starting_Piece_pos() == sf::Vector2f(560, 896)) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R; });
+
+		sf::Vector2f king_pos = get_Starting_Piece_pos();
+
+		if (itr != _PawnsVec.end()) {
+			auto it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+				return Tile->get_Tile_position() == king_pos + sf::Vector2f(112, 0); });
+			
+			if (it != board.end()) {
+				if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_Black() == false) {
+					it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+						return Tile->get_Tile_position() == king_pos + sf::Vector2f(2 * 112, 0); });
+					if (it != board.end()) {
+						if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_Black() == false) {
+							return true;
+						}
+						else {
+							return false;
+						}
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+	if (get_Piece_color() == Black && get_Starting_Piece_pos() == sf::Vector2f(560, 112)) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R; });
+
+		sf::Vector2f king_pos = get_Starting_Piece_pos();
+
+		if (itr != _PawnsVec.end()) {
+			auto it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+				return Tile->get_Tile_position() == king_pos + sf::Vector2f(112, 0); });
+
+			if (it != board.end()) {
+				if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_White() == false) {
+					it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+						return Tile->get_Tile_position() == king_pos + sf::Vector2f(2 * 112, 0); });
+					if (it != board.end()) {
+						if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_White() == false) {
+							return true;
+						}
+						else {
+							return false;
+						}
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool King::left_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+
+	if (get_Piece_color() == White && get_Starting_Piece_pos() == sf::Vector2f(560, 896)) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R1; });
+
+		sf::Vector2f king_pos = get_Starting_Piece_pos();
+
+		if (itr != _PawnsVec.end()) {
+			auto it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+				return Tile->get_Tile_position() == king_pos + sf::Vector2f(-1 * 112, 0); });
+
+			if (it != board.end()) {
+				if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_Black() == false) {
+					it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+						return Tile->get_Tile_position() == king_pos + sf::Vector2f(-2 * 112, 0); });
+					if (it != board.end()) {
+						if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_Black() == false) {
+							it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+								return Tile->get_Tile_position() == king_pos + sf::Vector2f(-3 * 112, 0); });
+							if (it != board.end()) {
+								if (collider_for_King(_PawnsVec, (*it)->get_Tile_position())) {
+									return true;
+								}
+								else {
+									return false;
+								}
+							}
+							else {
+								return false;
+							}
+						}
+						else {
+							return false;
+						}
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+
+
+	if (get_Piece_color() == Black && get_Starting_Piece_pos() == sf::Vector2f(560, 112)) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R; });
+
+		sf::Vector2f king_pos = get_Starting_Piece_pos();
+
+		if (itr != _PawnsVec.end()) {
+			auto it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+				return Tile->get_Tile_position() == king_pos + sf::Vector2f(-1 * 112, 0); });
+
+			if (it != board.end()) {
+				if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_White() == false) {
+					it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+						return Tile->get_Tile_position() == king_pos + sf::Vector2f(-2 * 112, 0); });
+					if (it != board.end()) {
+						if (collider_for_King(_PawnsVec, (*it)->get_Tile_position()) == true && (*it)->get_Tile_marked_for_White() == false) {
+							it = std::find_if(board.begin(), board.end(), [king_pos](BoardTile* Tile) {
+								return Tile->get_Tile_position() == king_pos + sf::Vector2f(-3 * 112, 0); });
+							if (it != board.end()) {
+								if (collider_for_King(_PawnsVec, (*it)->get_Tile_position())) {
+									return true;
+								}
+								else {
+									return false;
+								}
+							}
+							else {
+								return false;
+							}
+						}
+						else {
+							return false;
+						}
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
 	}
 }

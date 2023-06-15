@@ -8,7 +8,7 @@
 #include "BoardTile.h"
 
 	enum Piece_colors {White, Black, Green, Blue};
-	enum Piece_types {P,R,N,B,Q,K};
+	enum Piece_types {P,R,R1,N,B,Q,K};
 
 class Piece : public sf::Sprite
 {

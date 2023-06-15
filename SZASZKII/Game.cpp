@@ -116,7 +116,7 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Pawn("f7", Black, P, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Pawn("g7", Black, P, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Pawn("h7", Black, P, board, BlackAndWhite, GreenAndBlue));
-    PawnsVec.push_back(new Rook("a8", Black, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("a8", Black, R1, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Rook("h8", Black, R, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Knight("b8", Black, N, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Knight("g8", Black, N, board, BlackAndWhite, GreenAndBlue));
@@ -133,7 +133,7 @@ void Game::loadPawns() {
     PawnsVec.push_back(new Pawn("f2", White, P, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Pawn("g2", White, P, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Pawn("h2", White, P, board, BlackAndWhite, GreenAndBlue));
-    PawnsVec.push_back(new Rook("a1", White, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("a1", White, R1, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Rook("h1", White, R, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Knight("b1", White, N, board, BlackAndWhite, GreenAndBlue));
     PawnsVec.push_back(new Knight("g1", White, N, board, BlackAndWhite, GreenAndBlue));
