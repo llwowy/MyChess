@@ -5,18 +5,18 @@
 void Game::play() {
     //MENU
 
-    /*
-        while (menuwindow->isopen()) {
-        allmenuevents();
-        drawallonmenu(menuwindow);
-        menuwindow->display();
-    }    
-    */
+
+        while (MenuWindow->isOpen()) {
+            allMenuEvents();
+            drawAllOnMenu(MenuWindow);
+            MenuWindow->display();
+        }
 
     //SZASZKII
+        if (PlayChess = true) {
   LoadBoard(board);
     readyGame();
-    while (MenuWindow->isOpen())
+    while (window->isOpen())
     {
         allGameEvents();
 
@@ -25,9 +25,11 @@ void Game::play() {
         window->display();
     }
 }
+}
+
 
 void Game::readyMenuBackground() {
-    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/parts/paper.png")) { //tekstura menu
+    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/square.png")) { //tekstura menu
         std::cout << "load Menu Texture failed" << std::endl;
         system("pause");
     }
@@ -83,10 +85,10 @@ void Game::readyFonsts() {
     }
     else { std::cout << "Loaded\n"; }
     Text.setFont(Menufont);
-    Text.setString("Play");
+    Text.setString("Play Chess");
     Text.setFillColor(sf::Color::Black);
     Text.setCharacterSize(60);
-    Text.setPosition(1120/2 - 65 ,1120/2 - 50);
+    Text.setPosition(1120/2 - 200 ,1120/2 - 50);
 }
 
 
@@ -162,6 +164,10 @@ void Game::allMenuEvents() {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Text.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
                     std::cout << "Pressed\n";
+                    bool PlayChess = true;
+                    if (PlayChess = true) {
+                        MenuWindow->close();
+                    }
                 }
             }
         }

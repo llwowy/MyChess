@@ -26,8 +26,8 @@ private:
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
 
-	float skalaXMenu = 1.34;//1.33971 tak dokladnie
-	float skalaYMenu = 1.39;//1.13937 tak dokladnie
+	float skalaXMenu = 1.14;//1.33971 tak dokladnie
+	float skalaYMenu = 1.175;//1.13937 tak dokladnie
 
 	bool last_move_was_Black = true;
 
@@ -51,6 +51,7 @@ private:
 	sf::Font Menufont;
 	sf::Text Text;//sprite
 //	sf::Color colours;
+	bool PlayChess = false;
 
 	//GRA
 	std::vector<Piece*> PawnsVec;
