@@ -2,9 +2,10 @@
 
 
 
-Piece::Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type) : Piece_id(_id), Piece_color(_color), Piece_type(_Piece_type){
+Piece::Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type, bool BandW, bool GandB) : Piece_id(_id), Piece_color(_color), Piece_type(_Piece_type), BandW(BandW), GandB(GandB) {
 	std::cout << "piece\n";
 }
+
 
 std::string Piece::get_Piece_id() { return Piece_id; }
 

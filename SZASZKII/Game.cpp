@@ -106,40 +106,41 @@ void Game::readyFonsts() {
 
 
 void Game::loadPawns() {
+
     //domyslnie czarne
-    PawnsVec.push_back(new Pawn("a7", Black, P, board));
-    PawnsVec.push_back(new Pawn("b7", Black, P, board));
-    PawnsVec.push_back(new Pawn("c7", Black, P, board));
-    PawnsVec.push_back(new Pawn("d7", Black, P, board));
-    PawnsVec.push_back(new Pawn("e7", Black, P, board));
-    PawnsVec.push_back(new Pawn("f7", Black, P, board));
-    PawnsVec.push_back(new Pawn("g7", Black, P, board));
-    PawnsVec.push_back(new Pawn("h7", Black, P, board));
-    PawnsVec.push_back(new Rook("a8", Black, R, board));
-    PawnsVec.push_back(new Rook("h8", Black, R, board));
-    PawnsVec.push_back(new Knight("b8", Black, N, board));
-    PawnsVec.push_back(new Knight("g8", Black, N, board));
-    PawnsVec.push_back(new Bishop("c8", Black, B, board));
-    PawnsVec.push_back(new Bishop("f8", Black, B, board));
-    PawnsVec.push_back(new King("e8", Black, K, board));
-    PawnsVec.push_back(new Queen("d8", Black, Q, board));
+    PawnsVec.push_back(new Pawn("a7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("b7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("c7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("d7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("e7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("f7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("g7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("h7", Black, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("a8", Black, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("h8", Black, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Knight("b8", Black, N, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Knight("g8", Black, N, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Bishop("c8", Black, B, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Bishop("f8", Black, B, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new King("e8", Black, K, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Queen("d8", Black, Q, board, BlackAndWhite, GreenAndBlue));
     //domyslnie biale
-    PawnsVec.push_back(new Pawn("a2", White, P, board));
-    PawnsVec.push_back(new Pawn("b2", White, P, board));
-    PawnsVec.push_back(new Pawn("c2", White, P, board));
-    PawnsVec.push_back(new Pawn("d2", White, P, board));
-    PawnsVec.push_back(new Pawn("e2", White, P, board));
-    PawnsVec.push_back(new Pawn("f2", White, P, board));
-    PawnsVec.push_back(new Pawn("g2", White, P, board));
-    PawnsVec.push_back(new Pawn("h2", White, P, board));
-    PawnsVec.push_back(new Rook("a1", White, R, board));
-    PawnsVec.push_back(new Rook("h1", White, R, board));
-    PawnsVec.push_back(new Knight("b1", White, N, board));
-    PawnsVec.push_back(new Knight("g1", White, N, board));
-    PawnsVec.push_back(new Bishop("c1", White, B, board));
-    PawnsVec.push_back(new Bishop("f1", White, B, board));
-    PawnsVec.push_back(new King("e1", White, K, board));
-    PawnsVec.push_back(new Queen("d1", White, Q, board));
+    PawnsVec.push_back(new Pawn("a2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("b2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("c2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("d2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("e2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("f2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("g2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Pawn("h2", White, P, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("a1", White, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Rook("h1", White, R, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Knight("b1", White, N, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Knight("g1", White, N, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Bishop("c1", White, B, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Bishop("f1", White, B, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new King("e1", White, K, board, BlackAndWhite, GreenAndBlue));
+    PawnsVec.push_back(new Queen("d1", White, Q, board, BlackAndWhite, GreenAndBlue));
 }
 
 void Game::drawAllOnMenu(sf::RenderWindow* window) {
@@ -178,7 +179,6 @@ void Game::allMenuEvents() {
         if (MenuEventy.type == sf::Event::MouseButtonPressed) {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Text.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
-                 //   Text.setFillColor(sf::Color::Blue);}
                     std::cout << "Pressed\n";
                      PlayChess = true;
                     if (PlayChess = true) {
@@ -191,7 +191,6 @@ void Game::allMenuEvents() {
         if (MenuEventy.type == sf::Event::MouseButtonPressed) {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Conf1.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
-                    //   Text.setFillColor(sf::Color::Blue);}
                     std::cout << "Pressed conf1\n";
                     GreenAndBlue = false;
                     BlackAndWhite = true;
@@ -202,7 +201,6 @@ void Game::allMenuEvents() {
         if (MenuEventy.type == sf::Event::MouseButtonPressed) {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Conf2.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
-                    //   Text.setFillColor(sf::Color::Blue);}
                     std::cout << "Pressed conf2\n";
                   GreenAndBlue = true;
                   BlackAndWhite = false;

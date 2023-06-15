@@ -1,6 +1,6 @@
 #include "Queen.h"
 
-Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board) : Piece(_id, _color, _Piece_type) {
+Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board, bool BandW, bool GandB) : Piece(_id, _color, _Piece_type, BandW, GandB) {
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
@@ -8,10 +8,10 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	}
 	setTexture(Piece_texture);
 	setTextureRect(sf::IntRect(16, 80, 16, 16));
-	if (_color == Blue) { setTextureRect(sf::IntRect(16, 80, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Green) { setTextureRect(sf::IntRect(95, 80, 16, 16)); }
-	if (_color == White) { setTextureRect(sf::IntRect(16, 176, 16, 16)); }
-	if (_color == Black) { setTextureRect(sf::IntRect(96, 176, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 80, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 80, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 176, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 176, 16, 16)); }
 	setScale(7, 7);
 }
 

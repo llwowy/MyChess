@@ -54,8 +54,7 @@ private:
 	sf::Text Conf2;//sprite
 //	sf::Color colours;
 	bool PlayChess = false;
-	bool BlackAndWhite = true;
-	bool GreenAndBlue = false;
+
 
 	//GRA
 	std::vector<Piece*> PawnsVec;
@@ -64,6 +63,10 @@ private:
 	sf::Clock clockMenu;//zegar do animacji
 
 public:
+
+	bool BlackAndWhite = true;
+	bool GreenAndBlue = false;
+
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
 	void readyFonsts();

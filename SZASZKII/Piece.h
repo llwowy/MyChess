@@ -21,6 +21,9 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f Starting_Piece_pos;
 
+	bool colorWhiteAndBlack = NULL;//do koloru
+	bool colorBlueAndGreen = NULL;//do koloru
+
 	static bool last_move_was_Black;
 	
 
@@ -29,7 +32,9 @@ protected:
 	sf::Texture Piece_texture;
 public:
 
-	Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type);
+	Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type, bool BandW, bool GandB);
+	bool BandW;
+	bool GandB;
 	Piece_types get_Piece_type();
 	Piece_colors get_Piece_color();
 	std::string get_Piece_id();

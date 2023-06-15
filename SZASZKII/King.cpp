@@ -1,17 +1,17 @@
 #include "King.h"
 
 
-King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board) : Piece(_id, _color, _Piece_type) {
+King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board, bool BandW, bool GandB) : Piece(_id, _color, _Piece_type, BandW, GandB) {
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
-	if (_color == Blue) { setTextureRect(sf::IntRect(16, 64, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Green) { setTextureRect(sf::IntRect(95, 64, 16, 16)); }
-	if (_color == White) { setTextureRect(sf::IntRect(16, 160, 16, 16)); }
-	if (_color == Black) { setTextureRect(sf::IntRect(96, 160, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 64, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 64, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 160, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 160, 16, 16)); }
 	setScale(7, 7);
 }
 void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
