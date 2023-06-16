@@ -3,7 +3,6 @@
 
 
 Piece::Piece(const std::string _id, Piece_colors _color, Piece_types _Piece_type, bool BandW, bool GandB) : Piece_id(_id), Piece_color(_color), Piece_type(_Piece_type), BandW(BandW), GandB(GandB) {
-	std::cout << "piece\n";
 }
 
 

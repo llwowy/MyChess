@@ -5,7 +5,6 @@ King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
 	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 64, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color

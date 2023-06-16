@@ -6,7 +6,6 @@ Knight::Knight(const std::string& _id, const Piece_colors _color, Piece_types _P
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupaknight";
 	}
 	setTexture(Piece_texture);
 	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 32, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color

@@ -6,7 +6,6 @@ Pawn::Pawn(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
 

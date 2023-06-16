@@ -4,7 +4,6 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
 	setTextureRect(sf::IntRect(16, 80, 16, 16));
