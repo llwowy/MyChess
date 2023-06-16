@@ -29,26 +29,25 @@ void Game::play() {
 
 
 void Game::readyMenuBackground() {
-    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/square.png")) { //tekstura menu
+    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/square.png")) {
         std::cout << "load Menu Texture failed" << std::endl;
         system("pause");
     }
     MenuSprite.setTexture(teksturaMenu);
     MenuSprite.setScale(skalaXMenu, skalaYMenu);
 
-    if (!upperScroll.loadFromFile("Grafika/scroll/pngs/parts/upper.png")) { //tekstura gornego zwoju
+    if (!upperScroll.loadFromFile("Grafika/scroll/pngs/parts/upper.png")) {
         std::cout << "load upperscroll Texture failed" << std::endl;
         system("pause");
     }
     upperScrollSprite.setTexture(upperScroll);
-    //MenuSprite.setScale(skalaXMenu, skalaYMenu);
+    
 
-    if (!lowerScroll.loadFromFile("Grafika/scroll/pngs/parts/lower.png")) { //tekstura dolnego zwoju
+    if (!lowerScroll.loadFromFile("Grafika/scroll/pngs/parts/lower.png")) {
         std::cout << "load lowerscroll Texture failed" << std::endl;
         system("pause");
     }
     lowerScrollSprite.setTexture(lowerScroll);
-   // MenuSprite.setScale(skalaXMenu, skalaYMenu);
 }
 
 
@@ -148,9 +147,6 @@ void Game::drawAllOnMenu(sf::RenderWindow* window) {
     window-> draw(Text);
     window->draw(Conf1);
     window->draw(Conf2);
-        //for (auto& paw_and_fig : PawnsVec) {
-    //    window->draw(*paw_and_fig);
-    //}
 }
 
 
@@ -279,7 +275,7 @@ void Game::LoadBoard(Board& board) {
 }
 
 
-void Game::Pressed() {//do pionkow
+void Game::Pressed() {
     for (auto& el : board) {
         el->set_Tile_marked_for_Black(false);
         el->set_Tile_marked_for_White(false);
@@ -324,12 +320,6 @@ void Game::Pressed() {//do pionkow
         }
     }
 }
-
-void Game::getStartMenu(sf::Event& e, sf::RenderWindow* window)
-{
-
-}
-
 
 void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 
@@ -446,7 +436,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         }
 
         if (counter == 8) {
-            std::cout << "mat   bia³e win";
+            std::cout << "Checkmate, White wins";
             counter = 0;
         }
     }
@@ -562,7 +552,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         }
 
         if (counterr == 8) {
-            std::cout << "mat   czorne win";
+            std::cout << "Checkmate, Black wins";
             counterr = 0;
         }
     }
@@ -784,6 +774,6 @@ void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
     auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
         return -_piece->get_Piece_type() != K; });
     if (itr == _PawnsVec.end()) {
-        std::cout << "pat";
+        std::cout << "Stalemate";
     }
 }

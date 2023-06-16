@@ -26,8 +26,8 @@ private:
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
 
-	float skalaXMenu = 1.14;//1.33971 tak dokladnie
-	float skalaYMenu = 1.175;//1.13937 tak dokladnie
+	float skalaXMenu = 1.14;
+	float skalaYMenu = 1.175;
 
 	bool last_move_was_Black = true;
 	bool King_White_checked = false;
@@ -72,7 +72,6 @@ private:
 	sf::Text Text;//sprite
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
-//	sf::Color colours;
 	bool PlayChess = false;
 
 
@@ -92,21 +91,18 @@ public:
 	void readyFonsts();
 	void loadPawns();
 	void readyBackground();
-	void readyGame(); // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
+	void readyGame();
 	void readyMenu();
 	void readyMenuBackground();
 	void play();
 	void allGameEvents();
 	void allMenuEvents();
-	void GenerateBoard();
-	void GeneratePawns();
 	void LoadBoard(Board& board);
 	void Pressed();
 	Game() {
 		readyMenu();
 		readyFonsts();
 	};
-	void getStartMenu(sf::Event& e, sf::RenderWindow* window);
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	void is_staleMate(std::vector<Piece*> _PawnsVec);
