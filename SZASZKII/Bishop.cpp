@@ -7,10 +7,10 @@ Bishop::Bishop(const std::string& _id, const Piece_colors _color, Piece_types _P
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 	}
 	setTexture(Piece_texture);
-	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 48, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 48, 16, 16)); }
-	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 144, 16, 16)); }
-	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 144, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(32, 48, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(112, 48, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(32, 144, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(112, 144, 16, 16)); }
 	setScale(7, 7);
 }
 

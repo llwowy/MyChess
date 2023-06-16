@@ -7,10 +7,10 @@ Rook::Rook(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
 	}
 	setTexture(Piece_texture);
-	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 16, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 16, 16, 16)); }
-	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 112, 16, 16)); }
-	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 112, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(32, 16, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(112, 16, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(32, 112, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(112, 112, 16, 16)); }
 	setScale(7, 7);
 }
 
