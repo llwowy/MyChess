@@ -41,8 +41,8 @@ public:
 	bool get_is_selected();
 
 	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
-	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {};
-	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {};
+	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
+	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
 	virtual void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {};
 	void select();
 	void unselect(const sf::Vector2i& mouse_position);
