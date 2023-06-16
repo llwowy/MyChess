@@ -15,7 +15,7 @@ Bishop::Bishop(const std::string& _id, const Piece_colors _color, Piece_types _P
 	setScale(7, 7);
 }
 
-void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -63,7 +63,7 @@ void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_pos
 
 
 
-void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -82,7 +82,7 @@ void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 	}
 }
 
-bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -164,7 +164,7 @@ bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 	}
 }
 
-void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	
 	sf::Vector2f Piece_pos = getPosition();
 

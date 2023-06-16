@@ -15,7 +15,7 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	setScale(7, 7);
 }
 
-void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -88,7 +88,7 @@ void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 	}
 }
 
-bool Queen::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -237,7 +237,7 @@ bool Queen::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_p
 	}
 }
 
-void Queen::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Queen::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -256,7 +256,7 @@ void Queen::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 	}
 }
 
-bool Queen::take_collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::take_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	if (take_collider_for_BlackBishop(_PawnsVec, selected_Tile_pos) == true || take_collider_for_BlackRook(_PawnsVec, selected_Tile_pos) == true) {
 		return true;
 	}
@@ -265,7 +265,7 @@ bool Queen::take_collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f 
 	}
 }
 
-bool Queen::take_collider_for_White(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::take_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	if (take_collider_for_WhiteBishop(_PawnsVec, selected_Tile_pos) == true || take_collider_for_WhiteRook(_PawnsVec, selected_Tile_pos) == true) {
 		return true;
 	}
@@ -275,7 +275,7 @@ bool Queen::take_collider_for_White(std::vector<Piece*> _PawnsVec, sf::Vector2f 
 }
 
 //rook marktiles + bishop marktiles
-void Queen::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Queen::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	sf::Vector2f Piece_pos = getPosition();
 
 	if (get_Piece_color() == White) {

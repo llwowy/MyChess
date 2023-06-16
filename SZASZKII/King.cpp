@@ -14,7 +14,7 @@ King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 160, 16, 16)); }
 	setScale(7, 7);
 }
-void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -84,7 +84,7 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 	}
 }
 
-bool King::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});

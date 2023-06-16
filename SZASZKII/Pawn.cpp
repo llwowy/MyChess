@@ -17,7 +17,7 @@ Pawn::Pawn(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	setScale(7, 7);
 }
 
-void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -73,7 +73,7 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 	}
 }
 
-bool Pawn::collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Pawn::collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -85,7 +85,7 @@ bool Pawn::collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f select
 	}
 }
 
-void Pawn::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Pawn::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -198,7 +198,7 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 	}
 }
 
-void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	if (get_Piece_color() == White) {
 
 		sf::Vector2f Piece_pos = getPosition();

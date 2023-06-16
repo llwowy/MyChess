@@ -52,9 +52,9 @@ public:
 	void unchosen(const sf::Vector2i& mouse_position);
 	void Pick_up(const sf::Vector2i& mouse_position);
 	void Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position);
-	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
+	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {};
 	//virtual bool collider_for_Black(std::vector<Piece*> PawnsVec, sf::Vector2f selected_Tile_pos) { return 1; };
-	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
+	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {};
 	virtual ~Piece() {};
 
 	bool take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
@@ -65,6 +65,6 @@ public:
 
 	bool collider_for_King(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
 
-	virtual void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {};
+	virtual void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {};
 };
 
