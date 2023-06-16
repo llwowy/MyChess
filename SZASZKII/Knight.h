@@ -10,5 +10,6 @@ public:
 	void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	bool collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
+	~Knight() {};
 };
 

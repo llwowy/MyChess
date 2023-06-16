@@ -289,6 +289,8 @@ void Game::Pressed() {//do pionkow
     }
 
     is_King_checked(board, Mouse_pos, PawnsVec);
+    is_Pawn_promoted(board, PawnsVec);
+    is_staleMate(PawnsVec);
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {
         if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
@@ -321,7 +323,6 @@ void Game::Pressed() {//do pionkow
             }
         }
     }
-    
 }
 
 void Game::getStartMenu(sf::Event& e, sf::RenderWindow* window)
@@ -565,4 +566,229 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counterr = 0;
         }
     }
+}
+
+void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*> _PawnsVec) {
+    auto it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "a8"; });
+    if (it != _board.end()){
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW1 == false) {
+            (*itr)->setPosition(0,0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW1 = true;
+            PawnsVec.push_back(new Queen("a8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "b8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW2 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW2 = true;
+            PawnsVec.push_back(new Queen("b8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "c8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW3 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW3 = true;
+            PawnsVec.push_back(new Queen("c8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "d8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW4 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW4 = true;
+            PawnsVec.push_back(new Queen("d8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "e8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW5 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW5 = true;
+            PawnsVec.push_back(new Queen("e8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "f8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW6 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW6 = true;
+            PawnsVec.push_back(new Queen("f8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "g8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW7 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW7 = true;
+            PawnsVec.push_back(new Queen("g8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "h8"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == White && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQW8 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQW8 = true;
+            PawnsVec.push_back(new Queen("h8", White, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "a1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB1 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB1 = true;
+            PawnsVec.push_back(new Queen("a1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "b1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB2 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB2 = true;
+            PawnsVec.push_back(new Queen("b1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "c1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB3 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB3 = true;
+            PawnsVec.push_back(new Queen("c1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "d1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB4 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB4 = true;
+            PawnsVec.push_back(new Queen("d1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "e1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB5 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB5 = true;
+            PawnsVec.push_back(new Queen("e1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "f1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB6 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB6 = true;
+            PawnsVec.push_back(new Queen("f1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "g1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB7 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB7 = true;
+            PawnsVec.push_back(new Queen("g1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+    it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
+        return Tile->get_Tile_id() == "h1"; });
+    if (it != _board.end()) {
+        auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it](Piece* piece) {
+            return piece->get_Starting_Piece_pos() == (*it)->get_Tile_position() && piece->get_Piece_color() == Black && piece->get_Piece_type() == P; });
+        if (itr != _PawnsVec.end() && madeQB8 == false) {
+            (*itr)->setPosition(0, 0);
+            (*itr)->scale(0, 0);
+            _PawnsVec.erase(itr);
+            madeQB8 = true;
+            PawnsVec.push_back(new Queen("h1", Black, Q, _board, BlackAndWhite, GreenAndBlue));
+        }
+    }
+}
+
+void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+        return -_piece->get_Piece_type() != K; });
+    if (itr == _PawnsVec.end()) {
+        std::cout << "pat";
+    }
+    std::cout << std::endl;
+    for (auto& el : _PawnsVec) {
+        std::cout << 3 << std:: endl;
+    }
+    std::cout << std::endl;
 }

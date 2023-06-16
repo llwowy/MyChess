@@ -29,4 +29,5 @@ public:
 
 	BoardTile(const double& x_pos, const double& y_pos, const std::string& _Tile_id);
 	void setTile();
+	~BoardTile() {};
 };

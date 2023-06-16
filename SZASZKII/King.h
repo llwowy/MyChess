@@ -12,4 +12,5 @@ public:
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	bool right_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	bool left_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
+	~King() {};
 };
