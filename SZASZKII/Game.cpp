@@ -786,9 +786,4 @@ void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
     if (itr == _PawnsVec.end()) {
         std::cout << "pat";
     }
-    std::cout << std::endl;
-    for (auto& el : _PawnsVec) {
-        std::cout << 3 << std:: endl;
-    }
-    std::cout << std::endl;
 }
