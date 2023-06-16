@@ -3,7 +3,6 @@
 class King : public Piece
 {
 private:
-	//std::string color;//mo¿e lepiej jak dodamy kolor jako atrybut
 
 public:
 	King(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board, bool BandW, bool GandB);
@@ -12,5 +11,6 @@ public:
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	bool right_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	bool left_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
+
 	~King() {};
 };

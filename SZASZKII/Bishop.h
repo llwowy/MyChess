@@ -4,7 +4,6 @@ class Bishop : public Piece
 {
 private:
 	
-
 public:
 	Bishop(const std::string& _id, const Piece_colors _color, Piece_types _Piece_type, std::vector<BoardTile*>& board, bool BandW, bool GandB);
 	void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
