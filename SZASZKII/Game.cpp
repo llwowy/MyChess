@@ -435,7 +435,8 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counter++;
         }
 
-        if (counter == 8) {
+        if (counter == 8 && WhiteWon == false) {
+            WhiteWon = true;
             std::cout << "Checkmate, White wins";
             counter = 0;
         }
@@ -551,7 +552,8 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counterr++;
         }
 
-        if (counterr == 8) {
+        if (counterr == 8 && BlackWon == false) {
+            BlackWon = true;
             std::cout << "Checkmate, Black wins";
             counterr = 0;
         }
