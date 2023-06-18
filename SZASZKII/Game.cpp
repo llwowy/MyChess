@@ -48,7 +48,7 @@ void Game::play() {
 
 
 void Game::readyMenuBackground() {
-    if (!teksturaMenu.loadFromFile("Grafika/scroll/pngs/square.png")) {
+    if (!teksturaMenu.loadFromFile("Grafika/bg1.png")) {
         std::cout << "load Menu Texture failed" << std::endl;
         system("pause");
     }
