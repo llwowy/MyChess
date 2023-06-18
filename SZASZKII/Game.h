@@ -39,7 +39,7 @@ private:
 	bool King_White_checked = false;
 	bool King_Black_checked = false;
 
-	bool madeQW1 = false;
+	bool madeQW1 = false; //do zmiany figur
 	bool madeQW2 = false;
 	bool madeQW3 = false;
 	bool madeQW4 = false;

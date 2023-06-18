@@ -303,6 +303,7 @@ void Game::allMenuEvents() {
     }
 }
 
+//zmaiana
 
 void Game::LoadBoard(Board& board) {
     board.push_back(new BoardTile(16 * skalaXBoard, 16 * skalaYBoard, "a8"));
