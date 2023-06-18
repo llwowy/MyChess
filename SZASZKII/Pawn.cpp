@@ -6,15 +6,66 @@ Pawn::Pawn(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
 
 	if (_color == White && GandB == true ) { setTextureRect(sf::IntRect(0, 0, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color //niebieski
-	if (_color == Black && GandB == true ) { setTextureRect(sf::IntRect(79, 0, 16, 16)); }//zielony
+	if (_color == Black && GandB == true ) { setTextureRect(sf::IntRect(80, 0, 16, 16)); }//zielony
 	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(0, 96, 16, 16)); }//bialy
 	if (_color == Black && BandW == true)  { setTextureRect(sf::IntRect(80, 96, 16, 16)); }//czarny
 	setScale(7, 7);
+}
+
+void Pawn::dance(int &counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 0, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(0, 0, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 0, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(80, 0, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 96, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(0, 96, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 96, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(80, 96, 16, 16));
+	}
+
 }
 
 void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
@@ -24,7 +75,7 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				Tile->get_Tile_position().y <= mouse_position.y && Tile->get_Tile_position().y + Tile->get_Tile_size().y >= mouse_position.y); });
 
 		if (it != board.end()) {
-			if (get_Piece_color()) {
+			if (get_Piece_color() == Black) {
 				
 				if (collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 					if (it != board.end() && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112)) {
@@ -73,7 +124,7 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 	}
 }
 
-bool Pawn::collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Pawn::collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -198,7 +249,7 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 	}
 }
 
-void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	if (get_Piece_color() == White) {
 
 		sf::Vector2f Piece_pos = getPosition();

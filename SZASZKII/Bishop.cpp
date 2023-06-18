@@ -5,14 +5,65 @@ Bishop::Bishop(const std::string& _id, const Piece_colors _color, Piece_types _P
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
-	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 48, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 48, 16, 16)); }
-	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 144, 16, 16)); }
-	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 144, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(32, 48, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(112, 48, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(32, 144, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(112, 144, 16, 16)); }
 	setScale(7, 7);
+}
+
+void Bishop::dance(int &counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 48, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 48, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 48, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 48, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 144, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 144, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 144, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 144, 16, 16));
+	}
+
 }
 
 void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
@@ -82,7 +133,7 @@ void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 	}
 }
 
-bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -164,7 +215,7 @@ bool Bishop::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_
 	}
 }
 
-void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	
 	sf::Vector2f Piece_pos = getPosition();
 

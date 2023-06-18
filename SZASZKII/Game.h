@@ -29,8 +29,8 @@ private:
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
 
-	float skalaXMenu = 1.14;//1.33971 tak dokladnie
-	float skalaYMenu = 1.175;//1.13937 tak dokladnie
+	float skalaXMenu = 1.14;
+	float skalaYMenu = 1.175;
 
 	float skalaXKoniec = 1.04;//1.039 tak dokladnie
 	float skalaYKoniec = 1.04;//1.13937 tak dokladnie
@@ -38,6 +38,27 @@ private:
 	bool last_move_was_Black = true;
 	bool King_White_checked = false;
 	bool King_Black_checked = false;
+
+	bool madeQW1 = false;
+	bool madeQW2 = false;
+	bool madeQW3 = false;
+	bool madeQW4 = false;
+	bool madeQW5 = false;
+	bool madeQW6 = false;
+	bool madeQW7 = false;
+	bool madeQW8 = false;
+
+	bool madeQB1 = false;
+	bool madeQB2 = false;
+	bool madeQB3 = false;
+	bool madeQB4 = false;
+	bool madeQB5 = false;
+	bool madeQB6 = false;
+	bool madeQB7 = false;
+	bool madeQB8 = false;
+
+	bool WhiteWon = false;
+	bool BlackWon = false;
 
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
@@ -80,6 +101,9 @@ private:
 	sf::Vector2i Mouse_pos;
 
 	sf::Clock clockMenu;//zegar do animacji
+	sf::Time timeMenu;
+	float timer;
+	int counter;
 
 public:
 
@@ -95,7 +119,7 @@ public:
 	void readyFonsts();
 	void loadPawns();
 	void readyBackground();
-	void readyGame(); // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
+	void readyGame();
 	void readyMenu();
 	void readyKoniec();
 	void readyMenuBackground();
@@ -112,7 +136,7 @@ public:
 		readyMenu();
 		readyFonsts();
 	};
-	void getStartMenu(sf::Event& e, sf::RenderWindow* window);
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
-	
+	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
+	void is_staleMate(std::vector<Piece*> _PawnsVec);
 };

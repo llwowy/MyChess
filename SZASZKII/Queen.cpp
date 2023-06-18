@@ -4,15 +4,66 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	set_Piece(board, _id);
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
-		std::cout << "dupapawn";
 	}
 	setTexture(Piece_texture);
 	setTextureRect(sf::IntRect(16, 80, 16, 16));
-	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 80, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 80, 16, 16)); }
-	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 176, 16, 16)); }
-	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 176, 16, 16)); }
+	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(32, 80, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(112, 80, 16, 16)); }
+	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(32, 176, 16, 16)); }
+	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(112, 176, 16, 16)); }
 	setScale(7, 7);
+}
+
+void Queen::dance(int &counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 80, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 80, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 80, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 80, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 176, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 176, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 176, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 176, 16, 16));
+	}
+
 }
 
 void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
@@ -88,7 +139,7 @@ void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 	}
 }
 
-bool Queen::collider(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -256,7 +307,7 @@ void Queen::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 	}
 }
 
-bool Queen::take_collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::take_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	if (take_collider_for_BlackBishop(_PawnsVec, selected_Tile_pos) == true || take_collider_for_BlackRook(_PawnsVec, selected_Tile_pos) == true) {
 		return true;
 	}
@@ -265,7 +316,7 @@ bool Queen::take_collider_for_Black(std::vector<Piece*> _PawnsVec, sf::Vector2f 
 	}
 }
 
-bool Queen::take_collider_for_White(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Queen::take_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	if (take_collider_for_WhiteBishop(_PawnsVec, selected_Tile_pos) == true || take_collider_for_WhiteRook(_PawnsVec, selected_Tile_pos) == true) {
 		return true;
 	}
@@ -275,7 +326,7 @@ bool Queen::take_collider_for_White(std::vector<Piece*> _PawnsVec, sf::Vector2f 
 }
 
 //rook marktiles + bishop marktiles
-void Queen::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void Queen::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	sf::Vector2f Piece_pos = getPosition();
 
 	if (get_Piece_color() == White) {
