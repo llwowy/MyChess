@@ -18,7 +18,7 @@ sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 Piece_types Piece::get_Piece_type() { return Piece_type; }
 
-void Piece::dance(int timer){};
+void Piece::dance(int &counter){};
 
 bool Piece::get_BandW() { return BandW; };
 

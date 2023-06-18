@@ -15,7 +15,7 @@ King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 }
 
 
-void King::dance(int counter) {
+void King::dance(int &counter) {
 
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}

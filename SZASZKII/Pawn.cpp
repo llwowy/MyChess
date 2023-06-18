@@ -16,7 +16,7 @@ Pawn::Pawn(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	setScale(7, 7);
 }
 
-void Pawn::dance(int counter) {
+void Pawn::dance(int &counter) {
 
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}

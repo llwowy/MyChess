@@ -14,7 +14,7 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	setScale(7, 7);
 }
 
-void Queen::dance(int counter) {
+void Queen::dance(int &counter) {
 
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}

@@ -47,7 +47,7 @@ public:
 	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
 	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
 	virtual void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {};
-	virtual void dance(int timer);
+	virtual void dance(int &counter);
 	void select();
 	void unselect(const sf::Vector2i& mouse_position);
 	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);

@@ -16,7 +16,7 @@ Knight::Knight(const std::string& _id, const Piece_colors _color, Piece_types _P
 
 }
 
-void Knight::dance(int counter) {
+void Knight::dance(int &counter) {
 
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}

@@ -14,7 +14,7 @@ Bishop::Bishop(const std::string& _id, const Piece_colors _color, Piece_types _P
 	setScale(7, 7);
 }
 
-void Bishop::dance(int counter) {
+void Bishop::dance(int &counter) {
 
 
 	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
