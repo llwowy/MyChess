@@ -84,9 +84,8 @@ private:
 
 	sf::Clock clockMenu;//zegar do animacji
 	sf::Time timeMenu;
-	float frame_time;
 	float timer;
-	int counter1;
+	int counter;
 
 public:
 
