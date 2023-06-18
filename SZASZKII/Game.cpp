@@ -44,23 +44,23 @@ void Game::play() {
 
     }
 }
-}
-            drawAllOnBoard(window);
-            Pressed();
-            window->display();
-        }
-    }
-    if (WhiteWin == true || BlackWin == true) {
-        PlayChess = false;
-        readyKoniec();
-        while (KoniecWindow->isOpen())
-        {
-            allKoniecEvents();
+//}
+        //    drawAllOnBoard(window);
+        //    Pressed();
+        //    window->display();
+        //}
+    //}
+    //if (WhiteWin == true || BlackWin == true) {
+    //    PlayChess = false;
+    //    readyKoniec();
+    //    while (KoniecWindow->isOpen())
+    //    {
+    //        allKoniecEvents();
 
-            drawAllOnKoniec(KoniecWindow);
-            KoniecWindow->display();
-        }
-    }
+    //        drawAllOnKoniec(KoniecWindow);
+    //        KoniecWindow->display();
+    //    }
+    //}
 }
 
 
