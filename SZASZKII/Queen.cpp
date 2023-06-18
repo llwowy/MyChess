@@ -14,6 +14,58 @@ Queen::Queen(const std::string& _id, const Piece_colors _color, Piece_types _Pie
 	setScale(7, 7);
 }
 
+void Queen::dance(int counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 80, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 80, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 80, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 80, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 176, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(32, 176, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 176, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(112, 176, 16, 16));
+	}
+
+}
+
 void::Queen::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {

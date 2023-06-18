@@ -83,6 +83,10 @@ private:
 	sf::Vector2i Mouse_pos;
 
 	sf::Clock clockMenu;//zegar do animacji
+	sf::Time timeMenu;
+	float frame_time;
+	float timer;
+	int counter1;
 
 public:
 

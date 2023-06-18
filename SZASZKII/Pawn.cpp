@@ -10,10 +10,62 @@ Pawn::Pawn(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	setTexture(Piece_texture);
 
 	if (_color == White && GandB == true ) { setTextureRect(sf::IntRect(0, 0, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color //niebieski
-	if (_color == Black && GandB == true ) { setTextureRect(sf::IntRect(79, 0, 16, 16)); }//zielony
+	if (_color == Black && GandB == true ) { setTextureRect(sf::IntRect(80, 0, 16, 16)); }//zielony
 	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(0, 96, 16, 16)); }//bialy
 	if (_color == Black && BandW == true)  { setTextureRect(sf::IntRect(80, 96, 16, 16)); }//czarny
 	setScale(7, 7);
+}
+
+void Pawn::dance(int counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 0, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(0, 0, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 0, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(80, 0, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(16, 96, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(0, 96, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(96, 96, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(80, 96, 16, 16));
+	}
+
 }
 
 void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {

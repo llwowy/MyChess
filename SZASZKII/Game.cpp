@@ -6,6 +6,12 @@ void Game::play() {
     //MENU
 
 
+    sf::Clock clock;
+    clockMenu = clock;
+
+    MenuWindow->setFramerateLimit(60);
+
+
         while (MenuWindow->isOpen()) {
             allMenuEvents();
             drawAllOnMenu(MenuWindow);
@@ -23,6 +29,26 @@ void Game::play() {
         drawAllOnBoard(window);
         Pressed();
         window->display();
+        clockMenu.restart();
+
+
+        sf::Time time = clock.getElapsedTime();
+
+        timeMenu = time;
+
+        auto czas_klatki = time.asSeconds();
+
+        frame_time = czas_klatki;
+
+        timer += clock.restart().asSeconds();
+
+        if (timer > 0.3) {
+            counter1++;
+           timer = 0;
+        } 
+        clock.restart();
+
+
     }
 }
 }
@@ -435,10 +461,18 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counter++;
         }
 
-        if (counter == 8 && WhiteWon == false) {
-            WhiteWon = true;
+        if (counter == 8 ) {
+         
             std::cout << "Checkmate, White wins";
-            counter = 0;
+            std::cout << counter1;
+          
+            for (auto el : _PawnsVec) {
+                if (el->get_Piece_color() == White)
+
+                    el->dance(counter1);
+                    
+            }
+           
         }
     }
 
@@ -552,9 +586,16 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counterr++;
         }
 
-        if (counterr == 8 && BlackWon == false) {
-            BlackWon = true;
+        if (counterr == 8) {
+         
             std::cout << "Checkmate, Black wins";
+
+            for (auto el : _PawnsVec) {
+                if (el->get_Piece_color() == Black)
+
+                    el->dance(counter1);
+
+            }
             counterr = 0;
         }
     }

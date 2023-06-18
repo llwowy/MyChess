@@ -18,6 +18,11 @@ sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 Piece_types Piece::get_Piece_type() { return Piece_type; }
 
+void Piece::dance(int timer){};
+
+bool Piece::get_BandW() { return BandW; };
+
+bool Piece::get_GandB() { return GandB; };
 
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {

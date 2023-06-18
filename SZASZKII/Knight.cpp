@@ -9,17 +9,65 @@ Knight::Knight(const std::string& _id, const Piece_colors _color, Piece_types _P
 	}
 	setTexture(Piece_texture);
 	if (_color == White && GandB == true) { setTextureRect(sf::IntRect(16, 32, 16, 16)); }	//zmiany kolorów zale¿nie od Pawn_color
-	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(95, 32, 16, 16)); }
+	if (_color == Black && GandB == true) { setTextureRect(sf::IntRect(96, 32, 16, 16)); }
 	if (_color == White && BandW == true) { setTextureRect(sf::IntRect(16, 128, 16, 16)); }
 	if (_color == Black && BandW == true) { setTextureRect(sf::IntRect(96, 128, 16, 16)); }
 	setScale(7, 7);
 
-	//auto it = std::find_if(board.begin(), board.end(), [_id](BoardTile* Tile) {
-	//	return Tile->get_Tile_id() == _id; });
-	//setPosition((*it)->get_Tile_position());
-	//color = color_;
-	//Create_Knight();
 }
+
+void Knight::dance(int counter) {
+
+
+	if (!Piece_texture.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {}
+	setTexture(Piece_texture);
+
+	if (get_Piece_color() == White && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(32, 32, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(16, 32, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_GandB() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(112, 32, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(96, 32, 16, 16));
+	}
+
+	if (get_Piece_color() == White && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(32, 128, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(16, 128, 16, 16));
+	}
+
+	if (get_Piece_color() == Black && get_BandW() == true) {
+
+		if (counter % 2 == 0) {
+
+			setTextureRect(sf::IntRect(112, 128, 16, 16));
+		}
+		else
+
+			setTextureRect(sf::IntRect(96, 128, 16, 16));
+	}
+
+}
+
 
 void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 	if (get_is_selected()) {
