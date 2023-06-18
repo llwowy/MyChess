@@ -23,11 +23,17 @@ private:
 	float MenuWindow_width = 1120;
 	float MenuWindow_height = 1120;
 
+	float KoniecWindow_width = 1120;
+	float KoniecWindow_height = 1397;
+
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
 
 	float skalaXMenu = 1.14;//1.33971 tak dokladnie
 	float skalaYMenu = 1.175;//1.13937 tak dokladnie
+
+	float skalaXKoniec = 1.04;//1.039 tak dokladnie
+	float skalaYKoniec = 1.04;//1.13937 tak dokladnie
 
 	bool last_move_was_Black = true;
 	bool King_White_checked = false;
@@ -37,8 +43,10 @@ private:
 	std::pair<std::string, std::string> Choosed_colors;
 	sf::RenderWindow* window = NULL;//okno gry
 	sf::RenderWindow* MenuWindow = NULL;//okno menu
+	sf::RenderWindow* KoniecWindow = NULL;//okno knieec
 	sf::Event BoardEventy;
 	sf::Event MenuEventy;
+	sf::Event KoniecEventy;
 	//GRA
 	sf::Texture teksturaTla;
 	sf::Sprite BoardSprite;
@@ -54,9 +62,18 @@ private:
 	sf::Text Text;//sprite
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
-//	sf::Color colours;
 	bool PlayChess = false;
+	//KONIEC
+	sf::Texture teksturaKoniec;
+	sf::Sprite KoniecSprite;
 
+	sf::Texture tekBialyPion;
+	sf::Sprite BialyPionSprite;
+
+	sf::Texture tekCzarnyPion;
+	sf::Sprite CzarnyPionSprite;
+
+	sf::Text KoniecText;//sprite
 
 	//GRA
 	std::vector<Piece*> PawnsVec;
@@ -69,17 +86,24 @@ public:
 	bool BlackAndWhite = true;
 	bool GreenAndBlue = false;
 
+	bool WhiteWin = false;
+	bool BlackWin = false;
+
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
+	void drawAllOnKoniec(sf::RenderWindow* window);
 	void readyFonsts();
 	void loadPawns();
 	void readyBackground();
 	void readyGame(); // za³adowanie wsystkich potrzebnych tekstur wektorów, itp
 	void readyMenu();
+	void readyKoniec();
 	void readyMenuBackground();
+	void readyKoniecBackground();
 	void play();
 	void allGameEvents();
 	void allMenuEvents();
+	void allKoniecEvents();
 	void GenerateBoard();
 	void GeneratePawns();
 	void LoadBoard(Board& board);

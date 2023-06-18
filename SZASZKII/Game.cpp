@@ -6,25 +6,36 @@ void Game::play() {
     //MENU
 
 
-        while (MenuWindow->isOpen()) {
-            allMenuEvents();
-            drawAllOnMenu(MenuWindow);
-            MenuWindow->display();
-        }
+    while (MenuWindow->isOpen()) {
+        allMenuEvents();
+        drawAllOnMenu(MenuWindow);
+        MenuWindow->display();
+    }
 
     //SZASZKII
-        if (PlayChess = true) {
-  LoadBoard(board);
-    readyGame();
-    while (window->isOpen())
-    {
-        allGameEvents();
+    if (PlayChess = true) {
+        LoadBoard(board);
+        readyGame();
+        while (window->isOpen())
+        {
+            allGameEvents();
 
-        drawAllOnBoard(window);
-        Pressed();
-        window->display();
+            drawAllOnBoard(window);
+            Pressed();
+            window->display();
+        }
     }
-}
+    if (WhiteWin == true || BlackWin == true) {
+        PlayChess = false;
+        readyKoniec();
+        while (KoniecWindow->isOpen())
+        {
+            allKoniecEvents();
+
+            drawAllOnKoniec(KoniecWindow);
+            KoniecWindow->display();
+        }
+    }
 }
 
 
@@ -51,10 +62,47 @@ void Game::readyMenuBackground() {
    // MenuSprite.setScale(skalaXMenu, skalaYMenu);
 }
 
+void Game::readyKoniecBackground()
+{
+    if (!teksturaKoniec.loadFromFile("Grafika/scroll/pngs/medium.png")) { //tekstura dolnego zwoju
+        std::cout << "load koniec tlo Texture failed" << std::endl;
+        system("pause");
+    }
+    KoniecSprite.setTexture(teksturaKoniec);
+
+
+    if (!tekBialyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
+        std::cout << "load koniec bialy pion Texture failed" << std::endl;
+        system("pause");
+    }
+    BialyPionSprite.setTexture(tekBialyPion);
+    BialyPionSprite.setTextureRect(sf::IntRect(0, 96, 16, 16)); //bialy
+    BialyPionSprite.setScale(-21, 21);
+    BialyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
+
+    if (!tekCzarnyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
+        std::cout << "load koniec czarny pion Texture failed" << std::endl;
+        system("pause");
+    }
+    CzarnyPionSprite.setTexture(tekCzarnyPion);
+    CzarnyPionSprite.setTextureRect(sf::IntRect(80, 96, 16, 16)); //czarny
+    CzarnyPionSprite.setScale(-21, 21);
+    CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
+
+    std::cout << "Tlo zaladowane" << std::endl;
+}
+
 
 void Game::readyMenu() {
     readyMenuBackground();
     MenuWindow = new sf::RenderWindow(sf::VideoMode(MenuWindow_width, MenuWindow_height), "ChessMenu");
+
+}
+
+
+void Game::readyKoniec() {
+    readyKoniecBackground();
+    KoniecWindow = new sf::RenderWindow(sf::VideoMode(KoniecWindow_width, KoniecWindow_height), "Congratulations!!");
 
 }
 
@@ -101,6 +149,13 @@ void Game::readyFonsts() {
     Conf2.setFillColor(sf::Color::Blue);
     Conf2.setCharacterSize(60);
     Conf2.setPosition(1120 / 2 - 210, 1120 / 2 + 150);
+
+    //Napis koñcowy
+    KoniecText.setFont(Menufont);
+    KoniecText.setString(";-; Better player wins ;-;");
+    KoniecText.setFillColor(sf::Color::Red);
+    KoniecText.setCharacterSize(80);
+    KoniecText.setPosition(KoniecWindow_width / 2 - 210, KoniecWindow_height / 2 + 150);
 
 }
 
@@ -153,11 +208,28 @@ void Game::drawAllOnMenu(sf::RenderWindow* window) {
     //}
 }
 
+void Game::drawAllOnKoniec(sf::RenderWindow* window) {
+    window->draw(KoniecSprite);
+    if (WhiteWin == true){ window->draw(BialyPionSprite); }
+    if (BlackWin == true){ window->draw(CzarnyPionSprite); }
+    window->draw(KoniecText);
+    //window->draw(Conf2);
+    //for (auto& paw_and_fig : PawnsVec) {
+//    window->draw(*paw_and_fig);
+//}
+}
 
 void Game::drawAllOnBoard(sf::RenderWindow* window) {
     window->draw(BoardSprite);
     for (auto& paw_and_fig : PawnsVec) {
         window->draw(*paw_and_fig);
+    }
+}
+
+void Game::allKoniecEvents() {
+    while (KoniecWindow->pollEvent(KoniecEventy)) {
+        if (KoniecEventy.type == sf::Event::Closed)
+            KoniecWindow->close();
     }
 }
 
@@ -446,6 +518,8 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
 
         if (counter == 8) {
             std::cout << "mat   bia³e win";
+            WhiteWin = true;
+            PlayChess = false;
             counter = 0;
         }
     }
@@ -562,6 +636,8 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
 
         if (counterr == 8) {
             std::cout << "mat   czorne win";
+            BlackWin = true;
+            PlayChess = false;
             counterr = 0;
         }
     }
