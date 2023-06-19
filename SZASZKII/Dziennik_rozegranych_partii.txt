@@ -1,13 +1,17 @@
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:54:38
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  19:07:26
+Przebieg partii: 
 wpe4
 bpf5
+wpa4
+bpb5
+wpb5
+bpa6
+wpa6
+bna6
+wra6
+bra6
 wqh5
 Wygra³y bia³e! 
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:54:38
-wpd4
-bpc5
-wph3
-bqa5
-Wygra³y czarne! 
+Koñcowa konfiguracja szachownicy: 
+  bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra6 brh8  bng8 bbc8 bbf8 bke8 bqd8  wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2  wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
 
