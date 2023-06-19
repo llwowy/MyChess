@@ -52,7 +52,7 @@ void King::dance(int &counter) {
 		else
 
 			setTextureRect(sf::IntRect(32, 160, 16, 16));
-
+	}
 
 		if (get_Piece_color() == Black && get_BandW() == true) {
 
@@ -64,7 +64,7 @@ void King::dance(int &counter) {
 
 				setTextureRect(sf::IntRect(96, 160, 16, 16));
 		}
-	}
+	
 }
 
 

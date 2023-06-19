@@ -62,7 +62,7 @@ void Game::start_txt() {
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
-    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl;
+    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl << "Przebieg partii: " << std::endl;
 
     partia.close();
 }
@@ -82,7 +82,7 @@ void Game::end_txt() {
         partia << "Remis! ";
     }
 
-    partia << std::endl << std::endl;
+    partia << std::endl <<"Koñcowa konfiguracja szachownicy: " << std::endl << PawnsVec << std::endl << std::endl;
     partia.close();
 }
 
@@ -328,8 +328,13 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
         else if (position.x == 896 && position.y == 896) {
             pos = "h1";
         }
-   
-        os << color + type + pos;
+
+        else if (pos.empty()) {
+            color = "";
+            type = "";
+        }
+
+        os << color + type + pos << " ";
 
     }
   return os;
@@ -889,17 +894,17 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counter++;
         }
 
-        if (counter == 8 ) {
+        if (counter == 8) {
 
             WhiteWin = true;
-
+            PlayChess == false;
             for (auto &el : _PawnsVec) {
                 if (el->get_Piece_color() == White)
 
                     el->dance(Game::counter);
-
+      
             }
-
+        
         }
  
     }
@@ -1017,7 +1022,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         if (counterr == 8) {
          
             BlackWin = true;
-
+            PlayChess == false;
             for (auto el : _PawnsVec) {
                 if (el->get_Piece_color() == Black)
 
