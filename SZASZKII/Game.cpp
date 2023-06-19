@@ -20,6 +20,7 @@ void Game::play() {
     //SZASZKII
         if (PlayChess = true) {
   LoadBoard(board);
+
     readyGame();
     while (window->isOpen())
     {
@@ -45,6 +46,269 @@ void Game::play() {
     }
 }
 }
+
+void Game::start_txt() {
+
+    std::ofstream partia;
+    partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
+
+    partia << std::endl << std::endl << "Partia szachowa z dnia: " << __DATE__ << __TIME__ << std::endl;
+
+    partia.close();
+}
+
+std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
+
+    for (const auto& el : PawnsVec) {
+
+        std::string color;
+
+        if (el->get_Piece_color() == 0 || el->get_Piece_color() == 2) {
+            color = "w";
+        }
+        else if (el->get_Piece_color() == 1 || el->get_Piece_color() == 3) {
+            color = "b";
+        }
+
+
+        std::string type;
+
+        if (el->get_Piece_type() == P) {
+            type = "p";
+        }
+        else if (el->get_Piece_type() == R || el->get_Piece_type() == R1) {
+            type = "r";
+        }
+        else if (el->get_Piece_type() == N) {
+            type = "n";
+        }
+        else if (el->get_Piece_type() == B) {
+            type = "b";
+        }
+        else if (el->get_Piece_type() == Q) {
+            type = "q";
+        }
+        else if (el->get_Piece_type() == K) {
+            type = "k";
+        }
+
+        std::string pos;
+
+        auto position = el->get_position();
+
+        if (position.x == 112 && position.y == 112) {
+            pos = "a8";
+        }
+        if (position.x == 112 && position.y == 224) {
+            pos = "a7";
+        }
+        if (position.x == 112 && position.y == 336) {
+            pos = "a6";
+        }
+        if (position.x == 112 && position.y == 448) {
+            pos = "a5";
+        }
+        if (position.x == 112 && position.y == 560) {
+            pos = "a4";
+        }
+        if (position.x == 112 && position.y == 672) {
+            pos = "a3";
+        }
+        if (position.x == 112 && position.y == 784) {
+            pos = "a2";
+        }
+        if (position.x == 112 && position.y == 896) {
+            pos = "a1";
+        }
+
+
+        if (position.x == 224 && position.y == 112) {
+            pos = "b8";
+        }
+        if (position.x == 224 && position.y == 224) {
+            pos = "b7";
+        }
+        if (position.x == 224 && position.y == 336) {
+            pos = "b6";
+        }
+        if (position.x == 224 && position.y == 448) {
+            pos = "b5";
+        }
+        if (position.x == 224 && position.y == 560) {
+            pos = "b4";
+        }
+        if (position.x == 224 && position.y == 672) {
+            pos = "b3";
+        }
+        if (position.x == 224 && position.y == 784) {
+            pos = "b2";
+        }
+        if (position.x == 224 && position.y == 896) {
+            pos = "b1";
+        }
+
+        if (position.x == 336 && position.y == 112) {
+            pos = "c8";
+        }
+        if (position.x == 336 && position.y == 224) {
+            pos = "c7";
+        }
+        if (position.x == 336 && position.y == 336) {
+            pos = "c6";
+        }
+        if (position.x == 336 && position.y == 448) {
+            pos = "c5";
+        }
+        if (position.x == 336 && position.y == 560) {
+            pos = "c4";
+        }
+        if (position.x == 336 && position.y == 672) {
+            pos = "c3";
+        }
+        if (position.x == 336 && position.y == 784) {
+            pos = "c2";
+        }
+        if (position.x == 336 && position.y == 896) {
+            pos = "c1";
+        }
+
+
+        if (position.x == 448 && position.y == 112) {
+            pos = "d8";
+        }
+        if (position.x == 448 && position.y == 224) {
+            pos = "d7";
+        }
+        if (position.x == 448 && position.y == 336) {
+            pos = "d6";
+        }
+        if (position.x == 448 && position.y == 448) {
+            pos = "d5";
+        }
+        if (position.x == 448 && position.y == 560) {
+            pos = "d4";
+        }
+        if (position.x == 448 && position.y == 672) {
+            pos = "d3";
+        }
+        if (position.x == 448 && position.y == 784) {
+            pos = "d2";
+        }
+        if (position.x == 448 && position.y == 896) {
+            pos = "d1";
+        }
+
+
+        if (position.x == 560 && position.y == 112) {
+            pos = "e8";
+        }
+        if (position.x == 560 && position.y == 224) {
+            pos = "e7";
+        }
+        if (position.x == 560 && position.y == 336) {
+            pos = "e6";
+        }
+        if (position.x == 560 && position.y == 448) {
+            pos = "e5";
+        }
+        if (position.x == 560 && position.y == 560) {
+            pos = "e4";
+        }
+        if (position.x == 560 && position.y == 672) {
+            pos = "e3";
+        }
+        if (position.x == 560 && position.y == 784) {
+            pos = "e2";
+        }
+        if (position.x == 560 && position.y == 896) {
+            pos = "e1";
+        }
+
+        if (position.x == 672 && position.y == 112) {
+            pos = "f8";
+        }
+        if (position.x == 672 && position.y == 224) {
+            pos = "f7";
+        }
+        if (position.x == 672 && position.y == 336) {
+            pos = "f6";
+        }
+        if (position.x == 672 && position.y == 448) {
+            pos = "f5";
+        }
+        if (position.x == 672 && position.y == 560) {
+            pos = "f4";
+        }
+        if (position.x == 672 && position.y == 672) {
+            pos = "f3";
+        }
+        if (position.x == 672 && position.y == 784) {
+            pos = "f2";
+        }
+        if (position.x == 672 && position.y == 896) {
+            pos = "f1";
+        }
+
+        if (position.x == 784 && position.y == 112) {
+            pos = "g8";
+        }
+        if (position.x == 784 && position.y == 224) {
+            pos = "g7";
+        }
+        if (position.x == 784 && position.y == 336) {
+            pos = "g6";
+        }
+        if (position.x == 784 && position.y == 448) {
+            pos = "g5";
+        }
+        if (position.x == 784 && position.y == 560) {
+            pos = "g4";
+        }
+        if (position.x == 784 && position.y == 672) {
+            pos = "g3";
+        }
+        if (position.x == 784 && position.y == 784) {
+            pos = "g2";
+        }
+        if (position.x == 784 && position.y == 896) {
+            pos = "g1";
+        }
+
+        if (position.x == 896 && position.y == 112) {
+            pos = "h8";
+        }
+        if (position.x == 896 && position.y == 224) {
+            pos = "h7";
+        }
+        if (position.x == 896 && position.y == 336) {
+            pos = "h6";
+        }
+        if (position.x == 896 && position.y == 448) {
+            pos = "h5";
+        }
+        if (position.x == 896 && position.y == 560) {
+            pos = "h4";
+        }
+        if (position.x == 896 && position.y == 672) {
+            pos = "h3";
+        }
+        if (position.x == 896 && position.y == 784) {
+            pos = "h2";
+        }
+        if (position.x == 896 && position.y == 896) {
+            pos = "h1";
+        }
+
+        std::string x;
+
+        x = color + type + pos;
+        os << x;
+
+        return os;
+    }
+
+}
+
 
 
 void Game::readyMenuBackground() {
@@ -91,6 +355,7 @@ void Game::readyGame() {
     readyBackground();
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
+    start_txt();
 
 }
 
@@ -458,14 +723,15 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
          
           //  std::cout << "Checkmate, White wins"; //WRZUCIC EKRAN WYGRANEJ DLA BIALEGO
           
-            for (auto el : _PawnsVec) {
+            for (auto &el : _PawnsVec) {
                 if (el->get_Piece_color() == White)
 
                     el->dance(Game::counter);
                     
             }
-           
+
         }
+ 
     }
 
 
@@ -812,3 +1078,4 @@ void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
         std::cout << "Stalemate";
     }
 }
+

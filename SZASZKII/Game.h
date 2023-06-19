@@ -9,6 +9,7 @@
 #include <memory>
 #include <iostream>
 #include "BoardTile.h"
+#include <fstream>
 
 
 using Board = std::vector<BoardTile*>;
@@ -112,4 +113,7 @@ public:
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	void is_staleMate(std::vector<Piece*> _PawnsVec);
+	void start_txt();
 };
+
+std::ostream& operator<<(std::ostream& os, std::vector<Piece*> PawnsVec);

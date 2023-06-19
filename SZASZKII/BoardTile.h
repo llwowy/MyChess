@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
-
+#include <fstream>
 class BoardTile : public sf::RectangleShape
 {
 private:
