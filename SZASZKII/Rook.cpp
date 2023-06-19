@@ -107,13 +107,14 @@ void Rook::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_positi
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
 			)) {
 			setPosition((*it)->get_Tile_position());
+			std::cout << print_move(getPosition()) << std::endl;
+			append_move(print_move(getPosition()));
 		}
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}
 			
-		std::cout << print_move(getPosition()) << std::endl;
-		append_move(print_move(getPosition()));
+
 		
 	}
 }
@@ -127,9 +128,13 @@ void Rook::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_positi
 		if (it != board.end()) {
 			if (get_Piece_color() == Black && take_collider_for_BlackRook(_PawnsVec, (*it)->get_Tile_position())) {
 				setPosition((*it)->get_Tile_position());
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 			if (get_Piece_color() == White && take_collider_for_WhiteRook(_PawnsVec, (*it)->get_Tile_position())) {
 				setPosition((*it)->get_Tile_position());
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else {

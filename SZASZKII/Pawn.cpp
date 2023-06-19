@@ -80,11 +80,15 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				if (collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 					if (it != board.end() && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112)) {
 						setPosition((*it)->get_Tile_position());
+						std::cout << print_move(getPosition()) << std::endl;
+						append_move(print_move(getPosition()));
 					}
 					else if (it != board.end() && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0, 2 * 112) && ((*it)->get_Tile_id() == "a5" ||
 						(*it)->get_Tile_id() == "b5" || (*it)->get_Tile_id() == "c5" || (*it)->get_Tile_id() == "d5" || (*it)->get_Tile_id() == "e5" ||
 						(*it)->get_Tile_id() == "f5" || (*it)->get_Tile_id() == "g5" || (*it)->get_Tile_id() == "h5")) {
 						setPosition((*it)->get_Tile_position());
+						std::cout << print_move(getPosition()) << std::endl;
+						append_move(print_move(getPosition()));
 					}
 					else {
 						setPosition(get_Starting_Piece_pos());
@@ -103,11 +107,15 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				if (collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 					if (it != board.end() && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112)) {
 						setPosition((*it)->get_Tile_position());
+						std::cout << print_move(getPosition()) << std::endl;
+						append_move(print_move(getPosition()));
 					}
 					else if (it != board.end() && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0, -2 * 112) && ((*it)->get_Tile_id() == "a4" ||
 						(*it)->get_Tile_id() == "b4" || (*it)->get_Tile_id() == "c4" || (*it)->get_Tile_id() == "d4" || (*it)->get_Tile_id() == "e4" ||
 						(*it)->get_Tile_id() == "f4" || (*it)->get_Tile_id() == "g4" || (*it)->get_Tile_id() == "h4")) {
 						setPosition((*it)->get_Tile_position());
+						std::cout << print_move(getPosition()) << std::endl;
+						append_move(print_move(getPosition()));
 					}
 					else {
 						setPosition(get_Starting_Piece_pos());
@@ -116,13 +124,13 @@ void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				else {
 					setPosition(get_Starting_Piece_pos());
 				}
+
 			}
 		}
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}
-		std::cout << print_move(getPosition()) << std::endl;
-		append_move(print_move(getPosition()));
+
 	}
 }
 
@@ -147,24 +155,33 @@ void Pawn::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_positi
 			if (get_Piece_color() == Black && take_Left_collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 				if ((*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112)) {
 					setPosition((*it)->get_Tile_position());
+					std::cout << print_move(getPosition()) << std::endl;
+					append_move(print_move(getPosition()));
 				}
 			}
 			if (get_Piece_color() == Black && take_Right_collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 				if ((*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112)) {
 					setPosition((*it)->get_Tile_position());
+					std::cout << print_move(getPosition()) << std::endl;
+					append_move(print_move(getPosition()));
 				}
 			}
 			if (get_Piece_color() == White && take_Left_collider_for_White(_PawnsVec, (*it)->get_Tile_position())) {
 				if ((*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112)) {
 					setPosition((*it)->get_Tile_position());
+					std::cout << print_move(getPosition()) << std::endl;
+					append_move(print_move(getPosition()));
 				}
 			}
 			if (get_Piece_color() == White && take_Right_collider_for_White(_PawnsVec, (*it)->get_Tile_position())) {
 				if ((*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112)) {
 					setPosition((*it)->get_Tile_position());
+					std::cout << print_move(getPosition()) << std::endl;
+					append_move(print_move(getPosition()));
 				}
 			}
 		}
+
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}

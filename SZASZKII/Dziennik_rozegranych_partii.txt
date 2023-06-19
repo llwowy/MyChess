@@ -1,171 +1,178 @@
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  03:28:15
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:02:56
 wpe4
 bpf5
 wqh5
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  11:00:08
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
 wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  11:02:45
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  11:03:19
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  11:11:19
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  11:12:02
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:46:14
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:47:12
-wpd2
-wpe4
-bpf5
-wpd3
-bpe4
-wpe4
-bpe7
 bpd5
+wpe4
+bpe6
 wpd5
-bbd7
-wqh5
+bpf7
+wpe6
+wpe7
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:52:25
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe4
+bpd5
+wpe4
+bpe6
+wpd5
+bpf7
+wpe7
+bbf8
+bbf8
+wbc4
+bpb5
+wbc4
+bbd6
+wbe6
+bnc6
+wba6
+bpb5
+brc8
+wba6
+bqf6
+wbb5
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
 wpe4
 bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:54:03
-wpe4
+wpg3
 bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:57:55
 wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  12:58:51
+wpe5
+bpe3
+wpd2
+bpe6
 wpe4
-bpf5
-wqh5
+bpg7
+bpg6
+wpe5
+wpe5
+wpe5
+wpe5
+wpe5
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  13:02:04
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  13:08:00
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
 wpe4
 wpe4
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  13:08:00
 wpe4
-bpf5
-wqg4
+wpe4
+wpe4
+wpe4
+wpe4
+wpe4
+wpd3
+wpd3
+wpd3
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe5
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpd4
+wpf4
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe3
+wpe4
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe3
+wpd4
+wpd5
+wpe4
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe3
+bpd5
+wpe4
+wpd3
+wpc3
+bpd2
+wbc1
+bbf8
+bbf8
+bbf8
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe3
+bpd5
+wbe2
 bnf6
 wnh3
-bkf7
-wrg1
+brg8
+wpb3
+bqd7
+wkf1
+bpc6
+wna3
+bqe6
+wbb2
+bpb6
+wrb1
+bna6
+wpg3
+bqe5
+wkg2
+bpg5
+wpe4
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe4
+bpd5
+
+
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe4
+wpe4
+bpd5
+bpd5
+wpd5
 bpe6
-wpd3
-bba3
+bpe6
+wpd6
+wpd6
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:37:07
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe4
+bpd5
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:37:33
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
+wpe4
+bpd5
+wpd5
+bpe6
+wpe6
+bpe6
 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:38:04
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:39:32
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:39:32
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:40:15
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:41:02
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:41:48
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:42:20
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:42:36
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:42:52
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  16:09:28
 wpe4
 bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:43:56
-wpe4
-bpf5
-wqh5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:44:43
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:45:08
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:45:30
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:45:50
-wpd4
-bpc5
-wph3
-bqa5
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:47:20
-
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  15:51:33
-wpe4
-bpf5
-wqh5
+wnf3
+bpe5
+wne5
+bpf4
+wng6
+bpg6
+wbc4
+bke7
+wbg8

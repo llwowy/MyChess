@@ -87,6 +87,8 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 			
 			)) {
 			setPosition((*it)->get_Tile_position());
+			std::cout << print_move(getPosition()) << std::endl;
+			append_move(print_move(getPosition()));
 		}
 		else if(it != board.end() && get_Piece_color() == White && (*it)->get_Tile_marked_for_Black() == false && collider(_PawnsVec, (*it)->get_Tile_position()) && (
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
@@ -99,6 +101,8 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, -1 * 112)
 			)){
 			setPosition((*it)->get_Tile_position());
+			std::cout << print_move(getPosition()) << std::endl;
+			append_move(print_move(getPosition()));
 		}
 		else if (it != board.end() && right_castling_condition(board,_PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0 * 112) && get_Piece_color() == White) {
 			setPosition((*it)->get_Tile_position());
@@ -106,6 +110,8 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R; });
 			if (itr != _PawnsVec.end()) {
 				(*itr)->setPosition((*it)->get_Tile_position() + sf::Vector2f(-1 * 112, 0));
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else if (it != board.end() && right_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0 * 112) && get_Piece_color() == Black) {
@@ -114,6 +120,8 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R; });
 			if (itr1 != _PawnsVec.end()) {
 				(*itr1)->setPosition((*it)->get_Tile_position() + sf::Vector2f(-1 * 112, 0));
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else if (it != board.end() && left_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0 * 112) && get_Piece_color() == White) {
@@ -122,6 +130,8 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 				return _piece->get_Piece_color() == White && _piece->get_Piece_type() == R1; });
 			if (itr2 != _PawnsVec.end()) {
 				(*itr2)->setPosition((*it)->get_Tile_position() + sf::Vector2f(1 * 112, 0));
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else if (it != board.end() && left_castling_condition(board, _PawnsVec) && (*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0 * 112) && get_Piece_color() == Black) {
@@ -129,15 +139,16 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 			auto itr3 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
 				return _piece->get_Piece_color() == Black && _piece->get_Piece_type() == R1; });
 			if (itr3 != _PawnsVec.end()) {
-				(*itr3)->setPosition((*it)->get_Tile_position() + sf::Vector2f(1 * 112, 0));
+				(*itr3)->setPosition((*it)->get_Tile_position() + sf::Vector2f(1 * 112, 0));	
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}
 
-		std::cout << print_move(getPosition()) << std::endl;
-		append_move(print_move(getPosition()));
+
 	}
 }
 
