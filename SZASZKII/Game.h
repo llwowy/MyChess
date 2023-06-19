@@ -79,6 +79,7 @@ private:
 	sf::Sprite lowerScrollSprite;
 	sf::Font Menufont;
 	sf::Text Text;//sprite
+	sf::Text Title;//sprite
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
 	bool PlayChess = false;

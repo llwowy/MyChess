@@ -414,34 +414,41 @@ void Game::readyGame() {
 
 
 void Game::readyFonsts() {
-    if (!Menufont.loadFromFile("Fonts/8bit/1.ttf")) { //czcionka menu
+    if (!Menufont.loadFromFile("Fonts/karma/KarmaFuture.ttf")) { //czcionka menu
         std::cout << "load font failed" << std::endl;
         system("pause");
     }
     else { std::cout << "Loaded\n"; }
+
+    Title.setFont(Menufont);
+    Title.setString("8-bit Chess");
+    Title.setFillColor(sf::Color::White);
+    Title.setCharacterSize(130);
+    Title.setPosition(1120 / 2 - 350, 1120 / 2 - 380);
+
     Text.setFont(Menufont);
-    Text.setString("Play Chess");
-    Text.setFillColor(sf::Color::Black);
+    Text.setString("- Play Chess");
+    Text.setFillColor(sf::Color::White);
     Text.setCharacterSize(80);
-    Text.setPosition(1120/2 - 200 ,1120/2 - 150);
+    Text.setPosition(1120/2 - 260 ,1120/2 - 150);
 
     Conf1.setFont(Menufont);
-    Conf1.setString("Black & White");
+    Conf1.setString("- Black & White");
     Conf1.setFillColor(sf::Color::White);
     Conf1.setCharacterSize(80);
-    Conf1.setPosition(1120 / 2 - 240, 1120 / 2 +10);
+    Conf1.setPosition(1120 / 2 - 260, 1120 / 2 );
 
     Conf2.setFont(Menufont);
-    Conf2.setString("Green & Blue");
-    Conf2.setFillColor(sf::Color::Blue);
+    Conf2.setString("- Green & Blue");
+    Conf2.setFillColor(sf::Color::White);
     Conf2.setCharacterSize(80);
-    Conf2.setPosition(1120 / 2 - 210, 1120 / 2 + 150);
+    Conf2.setPosition(1120 / 2 - 260, 1120 / 2 + 150);
 
     //Napis koñcowy
     KoniecText.setFont(Menufont);
     KoniecText.setString("Better player wins! ;)");
     KoniecText.setFillColor(sf::Color::White);
-    KoniecText.setCharacterSize(65);
+    KoniecText.setCharacterSize(70);
     KoniecText.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 + 150);
 
 }
@@ -488,19 +495,17 @@ void Game::loadPawns() {
 void Game::drawAllOnMenu(sf::RenderWindow* window) {
     window->draw(MenuSprite);
     window-> draw(Text);
+    window->draw(Title);
     window->draw(Conf1);
     window->draw(Conf2);
 }
 
 void Game::drawAllOnKoniec(sf::RenderWindow* window) {
     window->draw(KoniecSprite);
-    if (WhiteWin == true){ window->draw(BialyPionSprite); }
+    if (WhiteWin == true) { window->draw(BialyPionSprite); }
     if (BlackWin == true){ window->draw(CzarnyPionSprite); }
     window->draw(KoniecText);
-    //window->draw(Conf2);
-    //for (auto& paw_and_fig : PawnsVec) {
-//    window->draw(*paw_and_fig);
-//}
+
 }
 
 void Game::drawAllOnBoard(sf::RenderWindow* window) {
