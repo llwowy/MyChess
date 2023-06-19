@@ -62,6 +62,7 @@ void Game::play() {
             KoniecWindow->display();
         }
         std::cout<<PawnsVec;
+        end_txt();
     }
 }
 
@@ -70,8 +71,27 @@ void Game::start_txt() {
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
-    partia << std::endl << std::endl << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl;
+    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl;
 
+    partia.close();
+}
+
+void Game::end_txt() {
+
+    std::ofstream partia;
+    partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
+
+    if (WhiteWin == true) {
+        partia << "Wygra³y bia³e! ";
+    }
+    else if (BlackWin == true) {
+        partia << "Wygra³y czarne! ";
+    }
+    else  {
+        partia << "Remis! ";
+    }
+
+    partia << std::endl << std::endl;
     partia.close();
 }
 

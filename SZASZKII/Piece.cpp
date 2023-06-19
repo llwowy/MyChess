@@ -118,6 +118,7 @@ void Piece::append_move(std::string move) {
 	partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
 	partia <<  move << std::endl;
+	
 
 	partia.close();
 

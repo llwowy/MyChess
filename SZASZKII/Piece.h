@@ -7,16 +7,7 @@
 #include <iostream>
 #include "BoardTile.h"
 #include <fstream>
-#include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <windows.h>
-#include <cstdlib>
-#include <string>
-#include <vector>
-#include <conio.h>
-#include <chrono>
-#include <ctime>
+
 
 
 

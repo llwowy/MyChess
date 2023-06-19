@@ -139,6 +139,7 @@ public:
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	void is_staleMate(std::vector<Piece*> _PawnsVec);
 	void start_txt();
+	void end_txt();
 };
 
 std::ostream& operator<<(std::ostream& os, std::vector<Piece*> PawnsVec);
