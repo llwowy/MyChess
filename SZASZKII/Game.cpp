@@ -61,6 +61,7 @@ void Game::play() {
             drawAllOnKoniec(KoniecWindow);
             KoniecWindow->display();
         }
+        std::cout<<PawnsVec;
     }
 }
 
@@ -109,221 +110,218 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
             type = "k";
         }
 
+
         std::string pos;
 
-        auto position = el->get_position();
+        auto position = el->getPosition();
 
         if (position.x == 112 && position.y == 112) {
             pos = "a8";
         }
-        if (position.x == 112 && position.y == 224) {
+        else if (position.x == 112 && position.y == 224) {
             pos = "a7";
         }
-        if (position.x == 112 && position.y == 336) {
+        else if (position.x == 112 && position.y == 336) {
             pos = "a6";
         }
-        if (position.x == 112 && position.y == 448) {
+        else if (position.x == 112 && position.y == 448) {
             pos = "a5";
         }
-        if (position.x == 112 && position.y == 560) {
+        else if (position.x == 112 && position.y == 560) {
             pos = "a4";
         }
-        if (position.x == 112 && position.y == 672) {
+        else if (position.x == 112 && position.y == 672) {
             pos = "a3";
         }
-        if (position.x == 112 && position.y == 784) {
+        else if (position.x == 112 && position.y == 784) {
             pos = "a2";
         }
-        if (position.x == 112 && position.y == 896) {
+        else if (position.x == 112 && position.y == 896) {
             pos = "a1";
         }
 
 
-        if (position.x == 224 && position.y == 112) {
+        else if (position.x == 224 && position.y == 112) {
             pos = "b8";
         }
-        if (position.x == 224 && position.y == 224) {
+        else if (position.x == 224 && position.y == 224) {
             pos = "b7";
         }
-        if (position.x == 224 && position.y == 336) {
+        else if (position.x == 224 && position.y == 336) {
             pos = "b6";
         }
-        if (position.x == 224 && position.y == 448) {
+        else if (position.x == 224 && position.y == 448) {
             pos = "b5";
         }
-        if (position.x == 224 && position.y == 560) {
+        else if (position.x == 224 && position.y == 560) {
             pos = "b4";
         }
-        if (position.x == 224 && position.y == 672) {
+        else if (position.x == 224 && position.y == 672) {
             pos = "b3";
         }
-        if (position.x == 224 && position.y == 784) {
+        else if (position.x == 224 && position.y == 784) {
             pos = "b2";
         }
-        if (position.x == 224 && position.y == 896) {
+        else if (position.x == 224 && position.y == 896) {
             pos = "b1";
         }
 
-        if (position.x == 336 && position.y == 112) {
+        else if (position.x == 336 && position.y == 112) {
             pos = "c8";
         }
-        if (position.x == 336 && position.y == 224) {
+        else if (position.x == 336 && position.y == 224) {
             pos = "c7";
         }
-        if (position.x == 336 && position.y == 336) {
+        else if (position.x == 336 && position.y == 336) {
             pos = "c6";
         }
-        if (position.x == 336 && position.y == 448) {
+        else if (position.x == 336 && position.y == 448) {
             pos = "c5";
         }
-        if (position.x == 336 && position.y == 560) {
+        else if (position.x == 336 && position.y == 560) {
             pos = "c4";
         }
-        if (position.x == 336 && position.y == 672) {
+        else if (position.x == 336 && position.y == 672) {
             pos = "c3";
         }
-        if (position.x == 336 && position.y == 784) {
+        else if (position.x == 336 && position.y == 784) {
             pos = "c2";
         }
-        if (position.x == 336 && position.y == 896) {
+        else if (position.x == 336 && position.y == 896) {
             pos = "c1";
         }
 
 
-        if (position.x == 448 && position.y == 112) {
+        else if (position.x == 448 && position.y == 112) {
             pos = "d8";
         }
-        if (position.x == 448 && position.y == 224) {
+        else if (position.x == 448 && position.y == 224) {
             pos = "d7";
         }
-        if (position.x == 448 && position.y == 336) {
+        else if (position.x == 448 && position.y == 336) {
             pos = "d6";
         }
-        if (position.x == 448 && position.y == 448) {
+        else if (position.x == 448 && position.y == 448) {
             pos = "d5";
         }
-        if (position.x == 448 && position.y == 560) {
+        else if (position.x == 448 && position.y == 560) {
             pos = "d4";
         }
-        if (position.x == 448 && position.y == 672) {
+        else if (position.x == 448 && position.y == 672) {
             pos = "d3";
         }
-        if (position.x == 448 && position.y == 784) {
+        else if (position.x == 448 && position.y == 784) {
             pos = "d2";
         }
-        if (position.x == 448 && position.y == 896) {
+        else if (position.x == 448 && position.y == 896) {
             pos = "d1";
         }
 
 
-        if (position.x == 560 && position.y == 112) {
+        else if (position.x == 560 && position.y == 112) {
             pos = "e8";
         }
-        if (position.x == 560 && position.y == 224) {
+        else if (position.x == 560 && position.y == 224) {
             pos = "e7";
         }
-        if (position.x == 560 && position.y == 336) {
+        else if (position.x == 560 && position.y == 336) {
             pos = "e6";
         }
-        if (position.x == 560 && position.y == 448) {
+        else if (position.x == 560 && position.y == 448) {
             pos = "e5";
         }
-        if (position.x == 560 && position.y == 560) {
+        else if (position.x == 560 && position.y == 560) {
             pos = "e4";
         }
-        if (position.x == 560 && position.y == 672) {
+        else if (position.x == 560 && position.y == 672) {
             pos = "e3";
         }
-        if (position.x == 560 && position.y == 784) {
+        else if (position.x == 560 && position.y == 784) {
             pos = "e2";
         }
-        if (position.x == 560 && position.y == 896) {
+        else if (position.x == 560 && position.y == 896) {
             pos = "e1";
         }
 
-        if (position.x == 672 && position.y == 112) {
+        else if (position.x == 672 && position.y == 112) {
             pos = "f8";
         }
-        if (position.x == 672 && position.y == 224) {
+        else if (position.x == 672 && position.y == 224) {
             pos = "f7";
         }
-        if (position.x == 672 && position.y == 336) {
+        else if (position.x == 672 && position.y == 336) {
             pos = "f6";
         }
-        if (position.x == 672 && position.y == 448) {
+        else if (position.x == 672 && position.y == 448) {
             pos = "f5";
         }
-        if (position.x == 672 && position.y == 560) {
+        else if (position.x == 672 && position.y == 560) {
             pos = "f4";
         }
-        if (position.x == 672 && position.y == 672) {
+        else if (position.x == 672 && position.y == 672) {
             pos = "f3";
         }
-        if (position.x == 672 && position.y == 784) {
+        else if (position.x == 672 && position.y == 784) {
             pos = "f2";
         }
-        if (position.x == 672 && position.y == 896) {
+        else if (position.x == 672 && position.y == 896) {
             pos = "f1";
         }
 
-        if (position.x == 784 && position.y == 112) {
+        else if (position.x == 784 && position.y == 112) {
             pos = "g8";
         }
-        if (position.x == 784 && position.y == 224) {
+        else if (position.x == 784 && position.y == 224) {
             pos = "g7";
         }
-        if (position.x == 784 && position.y == 336) {
+        else if (position.x == 784 && position.y == 336) {
             pos = "g6";
         }
-        if (position.x == 784 && position.y == 448) {
+        else if (position.x == 784 && position.y == 448) {
             pos = "g5";
         }
-        if (position.x == 784 && position.y == 560) {
+        else if (position.x == 784 && position.y == 560) {
             pos = "g4";
         }
-        if (position.x == 784 && position.y == 672) {
+        else if (position.x == 784 && position.y == 672) {
             pos = "g3";
         }
-        if (position.x == 784 && position.y == 784) {
+        else if (position.x == 784 && position.y == 784) {
             pos = "g2";
         }
-        if (position.x == 784 && position.y == 896) {
+        else if (position.x == 784 && position.y == 896) {
             pos = "g1";
         }
 
-        if (position.x == 896 && position.y == 112) {
+        else if (position.x == 896 && position.y == 112) {
             pos = "h8";
         }
-        if (position.x == 896 && position.y == 224) {
+        else if (position.x == 896 && position.y == 224) {
             pos = "h7";
         }
-        if (position.x == 896 && position.y == 336) {
+        else if (position.x == 896 && position.y == 336) {
             pos = "h6";
         }
-        if (position.x == 896 && position.y == 448) {
+        else if (position.x == 896 && position.y == 448) {
             pos = "h5";
         }
-        if (position.x == 896 && position.y == 560) {
+        else if (position.x == 896 && position.y == 560) {
             pos = "h4";
         }
-        if (position.x == 896 && position.y == 672) {
+        else if (position.x == 896 && position.y == 672) {
             pos = "h3";
         }
-        if (position.x == 896 && position.y == 784) {
+        else if (position.x == 896 && position.y == 784) {
             pos = "h2";
         }
-        if (position.x == 896 && position.y == 896) {
+        else if (position.x == 896 && position.y == 896) {
             pos = "h1";
         }
+   
+        os << color + type + pos;
 
-        std::string x;
-
-        x = color + type + pos;
-        os << x;
-
-        return os;
     }
-
+  return os;
 }
 
 
@@ -363,19 +361,19 @@ void Game::readyKoniecBackground()
         std::cout << "load koniec bialy pion Texture failed" << std::endl;
         system("pause");
     }
+   
     BialyPionSprite.setTexture(tekBialyPion);
     BialyPionSprite.setTextureRect(sf::IntRect(0, 96, 16, 16)); //bialy
-    BialyPionSprite.setScale(-21, 21);
-    BialyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
-
+    BialyPionSprite.setScale(-19, 19);
+    BialyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
     if (!tekCzarnyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
         std::cout << "load koniec czarny pion Texture failed" << std::endl;
         system("pause");
     }
     CzarnyPionSprite.setTexture(tekCzarnyPion);
     CzarnyPionSprite.setTextureRect(sf::IntRect(80, 96, 16, 16)); //czarny
-    CzarnyPionSprite.setScale(-21, 21);
-    CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
+    CzarnyPionSprite.setScale(-19, 19);
+    CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
 
     std::cout << "Tlo zaladowane" << std::endl;
 }
@@ -443,8 +441,8 @@ void Game::readyFonsts() {
     KoniecText.setFont(Menufont);
     KoniecText.setString("Better player wins! ;)");
     KoniecText.setFillColor(sf::Color::White);
-    KoniecText.setCharacterSize(70);
-    KoniecText.setPosition(KoniecWindow_width / 2 - 290, KoniecWindow_height / 2 + 150);
+    KoniecText.setCharacterSize(65);
+    KoniecText.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 + 150);
 
 }
 
