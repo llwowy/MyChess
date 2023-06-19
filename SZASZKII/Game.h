@@ -9,6 +9,7 @@
 #include <memory>
 #include <iostream>
 #include "BoardTile.h"
+#include <fstream>
 
 
 using Board = std::vector<BoardTile*>;
@@ -24,7 +25,7 @@ private:
 	float MenuWindow_height = 1120;
 
 	float KoniecWindow_width = 1120;
-	float KoniecWindow_height = 1397;
+	float KoniecWindow_height = 1120;
 
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
@@ -56,9 +57,6 @@ private:
 	bool madeQB6 = false;
 	bool madeQB7 = false;
 	bool madeQB8 = false;
-
-	bool WhiteWon = false;
-	bool BlackWon = false;
 
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
@@ -139,4 +137,7 @@ public:
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
 	void is_staleMate(std::vector<Piece*> _PawnsVec);
+	void start_txt();
 };
+
+std::ostream& operator<<(std::ostream& os, std::vector<Piece*> PawnsVec);

@@ -135,6 +135,9 @@ void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 		else {
 			setPosition(get_Starting_Piece_pos());
 		}
+
+		std::cout << print_move(getPosition()) << std::endl;
+		append_move(print_move(getPosition()));
 	}
 }
 

@@ -18,12 +18,13 @@ void Game::play() {
         }
 
     //SZASZKII
-    if (PlayChess = true) {
-        LoadBoard(board);
-        readyGame();
-        while (window->isOpen())
-        {
-            allGameEvents();
+        if (PlayChess = true) {
+  LoadBoard(board);
+
+    readyGame();
+    while (window->isOpen())
+    {
+        allGameEvents();
 
         drawAllOnBoard(window);
         Pressed();
@@ -44,24 +45,285 @@ void Game::play() {
 
     }
 }
-//}
-        //    drawAllOnBoard(window);
-        //    Pressed();
-        //    window->display();
-        //}
-    //}
-    //if (WhiteWin == true || BlackWin == true) {
-    //    PlayChess = false;
-    //    readyKoniec();
-    //    while (KoniecWindow->isOpen())
-    //    {
-    //        allKoniecEvents();
+        
+            drawAllOnBoard(window);
+            Pressed();
+            window->display();
+        
+    
+    if (WhiteWin == true || BlackWin == true) {
+        PlayChess = false;
+        readyKoniec();
+        while (KoniecWindow->isOpen())
+        {
+            allKoniecEvents();
 
-    //        drawAllOnKoniec(KoniecWindow);
-    //        KoniecWindow->display();
-    //    }
-    //}
+            drawAllOnKoniec(KoniecWindow);
+            KoniecWindow->display();
+        }
+        std::cout<<PawnsVec;
+    }
 }
+
+void Game::start_txt() {
+
+    std::ofstream partia;
+    partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
+
+    partia << std::endl << std::endl << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl;
+
+    partia.close();
+}
+
+std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
+
+    for (const auto& el : PawnsVec) {
+
+        std::string color;
+
+        if (el->get_Piece_color() == 0 || el->get_Piece_color() == 2) {
+            color = "w";
+        }
+        else if (el->get_Piece_color() == 1 || el->get_Piece_color() == 3) {
+            color = "b";
+        }
+
+
+        std::string type;
+
+        if (el->get_Piece_type() == P) {
+            type = "p";
+        }
+        else if (el->get_Piece_type() == R || el->get_Piece_type() == R1) {
+            type = "r";
+        }
+        else if (el->get_Piece_type() == N) {
+            type = "n";
+        }
+        else if (el->get_Piece_type() == B) {
+            type = "b";
+        }
+        else if (el->get_Piece_type() == Q) {
+            type = "q";
+        }
+        else if (el->get_Piece_type() == K) {
+            type = "k";
+        }
+
+
+        std::string pos;
+
+        auto position = el->getPosition();
+
+        if (position.x == 112 && position.y == 112) {
+            pos = "a8";
+        }
+        else if (position.x == 112 && position.y == 224) {
+            pos = "a7";
+        }
+        else if (position.x == 112 && position.y == 336) {
+            pos = "a6";
+        }
+        else if (position.x == 112 && position.y == 448) {
+            pos = "a5";
+        }
+        else if (position.x == 112 && position.y == 560) {
+            pos = "a4";
+        }
+        else if (position.x == 112 && position.y == 672) {
+            pos = "a3";
+        }
+        else if (position.x == 112 && position.y == 784) {
+            pos = "a2";
+        }
+        else if (position.x == 112 && position.y == 896) {
+            pos = "a1";
+        }
+
+
+        else if (position.x == 224 && position.y == 112) {
+            pos = "b8";
+        }
+        else if (position.x == 224 && position.y == 224) {
+            pos = "b7";
+        }
+        else if (position.x == 224 && position.y == 336) {
+            pos = "b6";
+        }
+        else if (position.x == 224 && position.y == 448) {
+            pos = "b5";
+        }
+        else if (position.x == 224 && position.y == 560) {
+            pos = "b4";
+        }
+        else if (position.x == 224 && position.y == 672) {
+            pos = "b3";
+        }
+        else if (position.x == 224 && position.y == 784) {
+            pos = "b2";
+        }
+        else if (position.x == 224 && position.y == 896) {
+            pos = "b1";
+        }
+
+        else if (position.x == 336 && position.y == 112) {
+            pos = "c8";
+        }
+        else if (position.x == 336 && position.y == 224) {
+            pos = "c7";
+        }
+        else if (position.x == 336 && position.y == 336) {
+            pos = "c6";
+        }
+        else if (position.x == 336 && position.y == 448) {
+            pos = "c5";
+        }
+        else if (position.x == 336 && position.y == 560) {
+            pos = "c4";
+        }
+        else if (position.x == 336 && position.y == 672) {
+            pos = "c3";
+        }
+        else if (position.x == 336 && position.y == 784) {
+            pos = "c2";
+        }
+        else if (position.x == 336 && position.y == 896) {
+            pos = "c1";
+        }
+
+
+        else if (position.x == 448 && position.y == 112) {
+            pos = "d8";
+        }
+        else if (position.x == 448 && position.y == 224) {
+            pos = "d7";
+        }
+        else if (position.x == 448 && position.y == 336) {
+            pos = "d6";
+        }
+        else if (position.x == 448 && position.y == 448) {
+            pos = "d5";
+        }
+        else if (position.x == 448 && position.y == 560) {
+            pos = "d4";
+        }
+        else if (position.x == 448 && position.y == 672) {
+            pos = "d3";
+        }
+        else if (position.x == 448 && position.y == 784) {
+            pos = "d2";
+        }
+        else if (position.x == 448 && position.y == 896) {
+            pos = "d1";
+        }
+
+
+        else if (position.x == 560 && position.y == 112) {
+            pos = "e8";
+        }
+        else if (position.x == 560 && position.y == 224) {
+            pos = "e7";
+        }
+        else if (position.x == 560 && position.y == 336) {
+            pos = "e6";
+        }
+        else if (position.x == 560 && position.y == 448) {
+            pos = "e5";
+        }
+        else if (position.x == 560 && position.y == 560) {
+            pos = "e4";
+        }
+        else if (position.x == 560 && position.y == 672) {
+            pos = "e3";
+        }
+        else if (position.x == 560 && position.y == 784) {
+            pos = "e2";
+        }
+        else if (position.x == 560 && position.y == 896) {
+            pos = "e1";
+        }
+
+        else if (position.x == 672 && position.y == 112) {
+            pos = "f8";
+        }
+        else if (position.x == 672 && position.y == 224) {
+            pos = "f7";
+        }
+        else if (position.x == 672 && position.y == 336) {
+            pos = "f6";
+        }
+        else if (position.x == 672 && position.y == 448) {
+            pos = "f5";
+        }
+        else if (position.x == 672 && position.y == 560) {
+            pos = "f4";
+        }
+        else if (position.x == 672 && position.y == 672) {
+            pos = "f3";
+        }
+        else if (position.x == 672 && position.y == 784) {
+            pos = "f2";
+        }
+        else if (position.x == 672 && position.y == 896) {
+            pos = "f1";
+        }
+
+        else if (position.x == 784 && position.y == 112) {
+            pos = "g8";
+        }
+        else if (position.x == 784 && position.y == 224) {
+            pos = "g7";
+        }
+        else if (position.x == 784 && position.y == 336) {
+            pos = "g6";
+        }
+        else if (position.x == 784 && position.y == 448) {
+            pos = "g5";
+        }
+        else if (position.x == 784 && position.y == 560) {
+            pos = "g4";
+        }
+        else if (position.x == 784 && position.y == 672) {
+            pos = "g3";
+        }
+        else if (position.x == 784 && position.y == 784) {
+            pos = "g2";
+        }
+        else if (position.x == 784 && position.y == 896) {
+            pos = "g1";
+        }
+
+        else if (position.x == 896 && position.y == 112) {
+            pos = "h8";
+        }
+        else if (position.x == 896 && position.y == 224) {
+            pos = "h7";
+        }
+        else if (position.x == 896 && position.y == 336) {
+            pos = "h6";
+        }
+        else if (position.x == 896 && position.y == 448) {
+            pos = "h5";
+        }
+        else if (position.x == 896 && position.y == 560) {
+            pos = "h4";
+        }
+        else if (position.x == 896 && position.y == 672) {
+            pos = "h3";
+        }
+        else if (position.x == 896 && position.y == 784) {
+            pos = "h2";
+        }
+        else if (position.x == 896 && position.y == 896) {
+            pos = "h1";
+        }
+   
+        os << color + type + pos;
+
+    }
+  return os;
+}
+
 
 
 void Game::readyMenuBackground() {
@@ -88,7 +350,7 @@ void Game::readyMenuBackground() {
 
 void Game::readyKoniecBackground()
 {
-    if (!teksturaKoniec.loadFromFile("Grafika/scroll/pngs/medium.png")) { //tekstura dolnego zwoju
+    if (!teksturaKoniec.loadFromFile("Grafika/cat.jpg")) { //tekstura dolnego zwoju
         std::cout << "load koniec tlo Texture failed" << std::endl;
         system("pause");
     }
@@ -99,19 +361,19 @@ void Game::readyKoniecBackground()
         std::cout << "load koniec bialy pion Texture failed" << std::endl;
         system("pause");
     }
+   
     BialyPionSprite.setTexture(tekBialyPion);
     BialyPionSprite.setTextureRect(sf::IntRect(0, 96, 16, 16)); //bialy
-    BialyPionSprite.setScale(-21, 21);
-    BialyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
-
+    BialyPionSprite.setScale(-19, 19);
+    BialyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
     if (!tekCzarnyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
         std::cout << "load koniec czarny pion Texture failed" << std::endl;
         system("pause");
     }
     CzarnyPionSprite.setTexture(tekCzarnyPion);
     CzarnyPionSprite.setTextureRect(sf::IntRect(80, 96, 16, 16)); //czarny
-    CzarnyPionSprite.setScale(-21, 21);
-    CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 240, KoniecWindow_height / 2 + 10);
+    CzarnyPionSprite.setScale(-19, 19);
+    CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
 
     std::cout << "Tlo zaladowane" << std::endl;
 }
@@ -145,13 +407,14 @@ void Game::readyGame() {
     readyBackground();
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
+    start_txt();
 
 }
 
 
 
 void Game::readyFonsts() {
-    if (!Menufont.loadFromFile("Fonts/amontesa/Amontesa.ttf")) { //czcionka menu
+    if (!Menufont.loadFromFile("Fonts/8bit/1.ttf")) { //czcionka menu
         std::cout << "load font failed" << std::endl;
         system("pause");
     }
@@ -159,27 +422,27 @@ void Game::readyFonsts() {
     Text.setFont(Menufont);
     Text.setString("Play Chess");
     Text.setFillColor(sf::Color::Black);
-    Text.setCharacterSize(60);
+    Text.setCharacterSize(80);
     Text.setPosition(1120/2 - 200 ,1120/2 - 150);
 
     Conf1.setFont(Menufont);
-    Conf1.setString("Black&White");
+    Conf1.setString("Black & White");
     Conf1.setFillColor(sf::Color::White);
-    Conf1.setCharacterSize(60);
+    Conf1.setCharacterSize(80);
     Conf1.setPosition(1120 / 2 - 240, 1120 / 2 +10);
 
     Conf2.setFont(Menufont);
-    Conf2.setString("Green&Blue");
+    Conf2.setString("Green & Blue");
     Conf2.setFillColor(sf::Color::Blue);
-    Conf2.setCharacterSize(60);
+    Conf2.setCharacterSize(80);
     Conf2.setPosition(1120 / 2 - 210, 1120 / 2 + 150);
 
     //Napis koñcowy
     KoniecText.setFont(Menufont);
-    KoniecText.setString(";-; Better player wins ;-;");
-    KoniecText.setFillColor(sf::Color::Red);
-    KoniecText.setCharacterSize(80);
-    KoniecText.setPosition(KoniecWindow_width / 2 - 210, KoniecWindow_height / 2 + 150);
+    KoniecText.setString("Better player wins! ;)");
+    KoniecText.setFillColor(sf::Color::White);
+    KoniecText.setCharacterSize(65);
+    KoniecText.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 + 150);
 
 }
 
@@ -572,12 +835,19 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counter++;
         }
 
-        if (counter == 8) {
-            std::cout << "mat   bia³e win";
+        if (counter == 8 ) {
+
             WhiteWin = true;
-            PlayChess = false;
-            counter = 0;
+
+            for (auto &el : _PawnsVec) {
+                if (el->get_Piece_color() == White)
+
+                    el->dance(Game::counter);
+
+            }
+
         }
+ 
     }
 
 
@@ -692,7 +962,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
 
         if (counterr == 8) {
          
-          //  std::cout << "Checkmate, Black wins"; //WRZUCIC EKRAN WYGRANEJ DLA CZARNEGO
+            BlackWin = true;
 
             for (auto el : _PawnsVec) {
                 if (el->get_Piece_color() == Black)
@@ -700,9 +970,6 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
                     el->dance(Game::counter);
 
             }
-            std::cout << "mat   czorne win";
-            BlackWin = true;
-            PlayChess = false;
             counterr = 0;
         }
     }
