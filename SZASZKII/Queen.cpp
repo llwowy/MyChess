@@ -300,9 +300,13 @@ void Queen::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posit
 		if (it != board.end()) {
 			if (get_Piece_color() == Black && take_collider_for_Black(_PawnsVec, (*it)->get_Tile_position())) {
 				setPosition((*it)->get_Tile_position());
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 			if (get_Piece_color() == White && take_collider_for_White(_PawnsVec, (*it)->get_Tile_position())) {
 				setPosition((*it)->get_Tile_position());
+				std::cout << print_move(getPosition()) << std::endl;
+				append_move(print_move(getPosition()));
 			}
 		}
 		else {
