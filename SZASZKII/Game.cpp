@@ -12,7 +12,7 @@ void Game::play() {
             MenuWindow->display();
         }
     //SZASZKII
-//        if (Restart == true) {}
+        if (Restart == true) {
         if (PlayChess ==  true) {
   LoadBoard(board);
     readyGame();
