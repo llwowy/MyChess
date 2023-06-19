@@ -84,3 +84,44 @@ wpd3
 bpc6
 wpa3
 bqa5
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:22:33
+Przebieg partii: 
+wpe3
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:22:33
+Przebieg partii: 
+wpd4
+bpe5
+wpd5
+bpe4
+wpd6
+bpe3
+wpc7
+bpf2
+wpb8
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:22:33
+Przebieg partii: 
+wpe4
+bpd5
+wpe5
+bpd4
+wpe6
+bpd3
+wpf7
+bpc2
+wpg8
+bpb1
+Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:22:33
+Przebieg partii: 
+wpe4
+bpd5
+wpe5
+bpd4
+wpe6
+bpd3
+wpf7
+bpc2
+wpg8
+bpb1
+wpd4
+bpe5
+wpe5
