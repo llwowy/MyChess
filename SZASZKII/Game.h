@@ -94,6 +94,11 @@ private:
 	sf::Sprite CzarnyPionSprite;
 
 	sf::Text KoniecText;//sprite
+	sf::Text Restart;//sprite
+	sf::Text HistoriaGry;//sprite
+
+	bool restart = false;
+	bool historiaGry = false;
 
 	//GRA
 	std::vector<Piece*> PawnsVec;
