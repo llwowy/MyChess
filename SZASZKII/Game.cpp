@@ -865,17 +865,17 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
             counter++;
         }
 
-        if (counter == 8 ) {
+        if (counter == 8) {
 
             WhiteWin = true;
-
+            PlayChess == false;
             for (auto &el : _PawnsVec) {
                 if (el->get_Piece_color() == White)
 
                     el->dance(Game::counter);
-
+      
             }
-
+        
         }
  
     }
@@ -993,7 +993,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         if (counterr == 8) {
          
             BlackWin = true;
-
+            PlayChess == false;
             for (auto el : _PawnsVec) {
                 if (el->get_Piece_color() == Black)
 
