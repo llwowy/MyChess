@@ -45,6 +45,23 @@ void Game::play() {
 
     }
 }
+        
+            drawAllOnBoard(window);
+            Pressed();
+            window->display();
+        
+    
+    if (WhiteWin == true || BlackWin == true) {
+        PlayChess = false;
+        readyKoniec();
+        while (KoniecWindow->isOpen())
+        {
+            allKoniecEvents();
+
+            drawAllOnKoniec(KoniecWindow);
+            KoniecWindow->display();
+        }
+    }
 }
 
 void Game::start_txt() {
@@ -52,7 +69,7 @@ void Game::start_txt() {
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
-    partia << std::endl << std::endl << "Partia szachowa z dnia: " << __DATE__ << __TIME__ << std::endl;
+    partia << std::endl << std::endl << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl;
 
     partia.close();
 }
@@ -335,7 +352,7 @@ void Game::readyMenuBackground() {
 
 void Game::readyKoniecBackground()
 {
-    if (!teksturaKoniec.loadFromFile("Grafika/scroll/pngs/medium.png")) { //tekstura dolnego zwoju
+    if (!teksturaKoniec.loadFromFile("Grafika/cat.jpg")) { //tekstura dolnego zwoju
         std::cout << "load koniec tlo Texture failed" << std::endl;
         system("pause");
     }
@@ -399,7 +416,7 @@ void Game::readyGame() {
 
 
 void Game::readyFonsts() {
-    if (!Menufont.loadFromFile("Fonts/amontesa/Amontesa.ttf")) { //czcionka menu
+    if (!Menufont.loadFromFile("Fonts/8bit/1.ttf")) { //czcionka menu
         std::cout << "load font failed" << std::endl;
         system("pause");
     }
@@ -407,27 +424,27 @@ void Game::readyFonsts() {
     Text.setFont(Menufont);
     Text.setString("Play Chess");
     Text.setFillColor(sf::Color::Black);
-    Text.setCharacterSize(60);
+    Text.setCharacterSize(80);
     Text.setPosition(1120/2 - 200 ,1120/2 - 150);
 
     Conf1.setFont(Menufont);
-    Conf1.setString("Black&White");
+    Conf1.setString("Black & White");
     Conf1.setFillColor(sf::Color::White);
-    Conf1.setCharacterSize(60);
+    Conf1.setCharacterSize(80);
     Conf1.setPosition(1120 / 2 - 240, 1120 / 2 +10);
 
     Conf2.setFont(Menufont);
-    Conf2.setString("Green&Blue");
+    Conf2.setString("Green & Blue");
     Conf2.setFillColor(sf::Color::Blue);
-    Conf2.setCharacterSize(60);
+    Conf2.setCharacterSize(80);
     Conf2.setPosition(1120 / 2 - 210, 1120 / 2 + 150);
 
     //Napis koñcowy
     KoniecText.setFont(Menufont);
-    KoniecText.setString(";-; Better player wins ;-;");
-    KoniecText.setFillColor(sf::Color::Red);
-    KoniecText.setCharacterSize(80);
-    KoniecText.setPosition(KoniecWindow_width / 2 - 210, KoniecWindow_height / 2 + 150);
+    KoniecText.setString("Better player wins! ;)");
+    KoniecText.setFillColor(sf::Color::White);
+    KoniecText.setCharacterSize(70);
+    KoniecText.setPosition(KoniecWindow_width / 2 - 290, KoniecWindow_height / 2 + 150);
 
 }
 
@@ -782,14 +799,14 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         }
 
         if (counter == 8 ) {
-         
-          //  std::cout << "Checkmate, White wins"; //WRZUCIC EKRAN WYGRANEJ DLA BIALEGO
-          
+
+            WhiteWin = true;
+
             for (auto &el : _PawnsVec) {
                 if (el->get_Piece_color() == White)
 
                     el->dance(Game::counter);
-                    
+
             }
 
         }
@@ -908,7 +925,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
 
         if (counterr == 8) {
          
-          //  std::cout << "Checkmate, Black wins"; //WRZUCIC EKRAN WYGRANEJ DLA CZARNEGO
+            BlackWin = true;
 
             for (auto el : _PawnsVec) {
                 if (el->get_Piece_color() == Black)

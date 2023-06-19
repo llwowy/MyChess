@@ -25,7 +25,7 @@ private:
 	float MenuWindow_height = 1120;
 
 	float KoniecWindow_width = 1120;
-	float KoniecWindow_height = 1397;
+	float KoniecWindow_height = 1120;
 
 	float skalaXBoard = 7;
 	float skalaYBoard = 7;
@@ -57,9 +57,6 @@ private:
 	bool madeQB6 = false;
 	bool madeQB7 = false;
 	bool madeQB8 = false;
-
-	bool WhiteWon = false;
-	bool BlackWon = false;
 
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
