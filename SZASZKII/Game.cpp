@@ -552,9 +552,23 @@ void Game::drawAllOnBoard(sf::RenderWindow* window) {
     }
 }
 
+void Game::meow() {
+    
+
+    if (!buffer.loadFromFile("Grafika/cat.wav"))
+    {
+        std::cout << "Nieznaleziono dzwieku";
+    }
+
+
+    sound.setBuffer(buffer);
+
+    sound.play();
+}
+
 void Game::allKoniecEvents() {
     sf::Event KoniecEventy;
-
+    
     while (KoniecWindow->pollEvent(KoniecEventy)) {
         if (KoniecEventy.type == sf::Event::Closed)
             KoniecWindow->close();
@@ -583,6 +597,7 @@ void Game::allGameEvents() {
         else if (BoardEventy.type == sf::Event::KeyPressed) {
             if (BoardEventy.key.code == sf::Keyboard::Escape) {
                 window->close();
+                meow();
             }
         }
     }

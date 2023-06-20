@@ -11,13 +11,18 @@
 #include "BoardTile.h"
 #include <fstream>
 #include <Windows.h>
-
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 using Board = std::vector<BoardTile*>;
 
 class Game
 {
 private:
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 	float Window_width = 1120;
 	float Window_height = 1120;
@@ -124,6 +129,7 @@ private:
 public:
 
 	Game();
+	void meow();
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
 	void drawAllOnKoniec(sf::RenderWindow* window);
