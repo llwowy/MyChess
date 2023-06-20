@@ -506,3 +506,12 @@ wpe4
 bpf5
 wqh5
 bnc6
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:39:16
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+

@@ -763,7 +763,7 @@ void Game::Pressed() {
             for (auto& el : PawnsVec) {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
-                el->unchosen(Mouse_pos);
+                el->unchosen();
             }
         }
     }
@@ -773,7 +773,7 @@ void Game::Pressed() {
             for (auto& el : PawnsVec) {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
-                el->unchosen(Mouse_pos);
+                el->unchosen();
             }
         }
     }
