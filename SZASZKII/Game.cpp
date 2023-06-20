@@ -6,6 +6,7 @@ void Game::play() {
     //MENU
     MenuWindow->setFramerateLimit(60);
         while (MenuWindow->isOpen()) {
+            MenuWindow->setSize(sf::Vector2u(MenuWindow_width, MenuWindow_height));
             allMenuEvents();
             drawAllOnMenu(MenuWindow);
             MenuWindow->display();
@@ -16,7 +17,7 @@ void Game::play() {
         readyGame();
 
             while (window->isOpen()) {
-
+                window->setSize(sf::Vector2u(Window_width, Window_height));
                 allGameEvents();
                 drawAllOnBoard(window);
                 Pressed();
@@ -35,7 +36,8 @@ void Game::play() {
         play_chess == false;
         readyKoniec();
         while (KoniecWindow->isOpen())
-        {
+
+        {   KoniecWindow->setSize(sf::Vector2u(KoniecWindow_width, KoniecWindow_height));
             allKoniecEvents();
             drawAllOnKoniec(KoniecWindow);
             KoniecWindow->display();
