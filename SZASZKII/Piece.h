@@ -28,7 +28,7 @@ private:
 	bool colorBlueAndGreen = NULL;
 	bool BandW;
 	bool GandB;
-
+	bool can_be_chosen = true;
 	static bool last_move_was_Black;
 	
 protected:
@@ -66,6 +66,8 @@ public:
 	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void unchosen();
+	void cant_be_chosen_f();
+	void can_be_chosen_f();
 	void Pick_up(const sf::Vector2i& mouse_position);
 	void Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position);
 

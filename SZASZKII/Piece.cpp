@@ -38,11 +38,13 @@ void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) 
 }
 
 void  Piece::select() {
-	if (get_Piece_color() == Black && last_move_was_Black == false) {
-		is_selected = true;
-	}
-	else if (get_Piece_color() == White && last_move_was_Black == true) {
-		is_selected = true;
+	if (can_be_chosen) {
+		if (get_Piece_color() == Black && last_move_was_Black == false) {
+			is_selected = true;
+		}
+		else if (get_Piece_color() == White && last_move_was_Black == true) {
+			is_selected = true;
+		}
 	}
 }
 
@@ -109,7 +111,13 @@ void Piece::unchosen() {
 	unselect();
 }
 
+void Piece::cant_be_chosen_f() {
+	can_be_chosen = false;
+}
 
+void Piece::can_be_chosen_f() {
+	can_be_chosen = true;
+}
 
 void Piece::Pick_up(const sf::Vector2i& mouse_position) {
 	if (is_selected) {
@@ -117,8 +125,6 @@ void Piece::Pick_up(const sf::Vector2i& mouse_position) {
 
 	}
 }
-
-
 
 void Piece::append_move(std::string move) {
 
@@ -131,7 +137,6 @@ void Piece::append_move(std::string move) {
 	partia.close();
 
 }
-
 
 void Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position) {
 	if (is_selected) {
@@ -146,7 +151,6 @@ void Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_pos
 		}
 	}
 }
-
 
 bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {

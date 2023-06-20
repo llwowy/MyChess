@@ -333,7 +333,6 @@ bool Queen::take_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vector2f
 	}
 }
 
-//rook marktiles + bishop marktiles
 void Queen::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	sf::Vector2f Piece_pos = getPosition();
 

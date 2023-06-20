@@ -506,3 +506,183 @@ wpe4
 bpf5
 wqh5
 bnc6
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:39:16
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:47:12
+Przebieg partii: 
+wpd4
+bpe5
+wpe5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:47:12
+Przebieg partii: 
+wpe4
+bpe5
+wnf3
+bnc6
+wbc4
+bnf6
+wng5
+bpd5
+wpd5
+bnd5
+wnf7
+bkf7
+wqf3
+bke8
+wbd5
+bpa6
+wqf7
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa6 bpb7 bpc7  bpe5  bpg7 bph7 bra8 brh8 bnc6  bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2  wpf2 wpg2 wph2 wra1 wrh1 wnb1  wbc1 wbd5 wke1 wqf7 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:47:12
+Przebieg partii: 
+wpe4
+bpf6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:54:14
+Przebieg partii: 
+wpd3
+bpf6
+wpe3
+bpc6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc6 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd3 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  13:54:14
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:06:14
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:08:39
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:08:39
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:22:19
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:22:19
+Przebieg partii: 
+wpe4
+bpf5
+wpf5
+bpc6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc6 bpd7 bpe7  bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpf5 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:22:19
+Przebieg partii: 
+wpd3
+bpc6
+wph3
+bqa5
+Wygra³y czarne! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc6 bpd7 bpe7 bpf7 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqa5 wpa2 wpb2 wpc2 wpd3 wpe2 wpf2 wpg2 wph3 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqd1 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:29:56
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:29:56
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:29:56
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:29:56
+Przebieg partii: 
+wpd3
+bpc6
+wpg3
+bqa5
+Wygra³y czarne! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc6 bpd7 bpe7 bpf7 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqa5 wpa2 wpb2 wpc2 wpd3 wpe2 wpf2 wpg3 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqd1 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:36:56
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:36:56
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:38:28
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:38:28
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:41:09
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:42:20
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:43:38
+Przebieg partii: 
+wpe3
+bpf6
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  14:43:38
+Przebieg partii: 

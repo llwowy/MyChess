@@ -14,7 +14,6 @@ King::King(const std::string& _id, const Piece_colors _color, Piece_types _Piece
 	setScale(7, 7);
 }
 
-
 void King::dance(int &counter) {
 
 
@@ -66,7 +65,6 @@ void King::dance(int &counter) {
 		}
 	
 }
-
 
 void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 	if (get_is_selected()) {

@@ -13,5 +13,6 @@ public:
 	bool take_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void dance(int &counter) override;
+
 	~Queen() {};
 };

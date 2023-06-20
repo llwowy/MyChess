@@ -57,6 +57,14 @@ private:
 	bool madeQB6 = false;
 	bool madeQB7 = false;
 	bool madeQB8 = false;
+	bool BlackAndWhite = true;
+	bool GreenAndBlue = false;
+	bool WhiteWin = false;
+	bool BlackWin = false;
+	bool play_chess = false;
+	bool restart = false;
+	float timer;
+	int counter;
 
 	Board board; // == std::vector<BoardTile*>& board
 	std::pair<std::string, std::string> Choosed_colors;
@@ -66,6 +74,9 @@ private:
 	sf::Event BoardEventy;
 	sf::Event MenuEventy;
 	sf::Event KoniecEventy;
+
+	sf::Clock clock;
+	sf::Time time = clock.getElapsedTime();
 	//GRA
 	sf::Texture teksturaTla;
 	sf::Sprite BoardSprite;
@@ -83,7 +94,6 @@ private:
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
 	sf::Text History;//sprite
-	bool play_chess = false;
 	//KONIEC
 	sf::Texture teksturaKoniec;
 	sf::Sprite KoniecSprite;
@@ -97,26 +107,16 @@ private:
 	sf::Text KoniecText;//sprite
 	sf::Text Restart;//sprite
 	
-
-	bool restart = false;
-
-
 	//GRA
 	std::vector<Piece*> PawnsVec;
 	sf::Vector2i Mouse_pos;
 
 	sf::Clock clockMenu;//zegar do animacji
 	sf::Time timeMenu;
-	float timer;
-	int counter;
-
-	bool BlackAndWhite = true;
-	bool GreenAndBlue = false;
-	bool WhiteWin = false;
-	bool BlackWin = false;
 
 public:
 
+	Game();
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
 	void drawAllOnKoniec(sf::RenderWindow* window);
@@ -134,17 +134,17 @@ public:
 	void allKoniecEvents();
 	void LoadBoard(Board& board);
 	void Pressed();
+	void if_end_block_Pieces(const bool WhiteWon, const bool BlackWon, std::vector<Piece*>& _PawnsVec);
+	void set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec);
+	bool check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon);
+	void Game_clock(sf::Clock _clock, sf::Time _time, float _timer);
 	friend bool Piece::get_play_chess();
-
-	Game() {
-		readyMenu();
-		readyFonsts();
-	};
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
-	void is_staleMate(std::vector<Piece*> _PawnsVec);
 	void start_txt();
 	void end_txt();
+
+	~Game() {};
 };
 
 std::ostream& operator<<(std::ostream& os, std::vector<Piece*> PawnsVec);

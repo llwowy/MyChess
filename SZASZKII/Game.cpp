@@ -4,7 +4,6 @@
 
 void Game::play() {
     //MENU
-    sf::Clock clock;
     MenuWindow->setFramerateLimit(60);
         while (MenuWindow->isOpen()) {
             allMenuEvents();
@@ -13,47 +12,40 @@ void Game::play() {
         }
     //SZASZKII
         if (play_chess == true) {
-  LoadBoard(board);
-    readyGame();
+        LoadBoard(board);
+        readyGame();
 
-    while (window->isOpen())
-    {
+            while (window->isOpen()) {
 
-        allGameEvents();
-        drawAllOnBoard(window);
-        Pressed();
-        window->display();
-        clockMenu.restart();
-
-
-        sf::Time time = clock.getElapsedTime();
-
-        timer += clock.restart().asSeconds();
-
-        if (timer > 0.2) {
-            counter++;
-           timer = 0;
-        } 
-        clock.restart();
-       
-    }
-}
-       
-        
-    
-    if (WhiteWin == true || BlackWin == true) {
+                allGameEvents();
+                drawAllOnBoard(window);
+                Pressed();
+                window->display();
+                clockMenu.restart();
+                timer += clock.restart().asSeconds();
+                if (timer > 0.2) {
+                 counter++;
+                  timer = 0;
+                } 
+                clock.restart();
+                if_end_block_Pieces(WhiteWin, BlackWin, PawnsVec);
+            }
+        }
+        if (check_whether_Black_or_white_win(WhiteWin, BlackWin)) {
         play_chess == false;
         readyKoniec();
         while (KoniecWindow->isOpen())
         {
             allKoniecEvents();
-
             drawAllOnKoniec(KoniecWindow);
             KoniecWindow->display();
         }
-        std::cout<<PawnsVec;
-       
     }
+}
+
+Game::Game() {
+    readyMenu();
+    readyFonsts();
 }
 
 void Game::start_txt() {
@@ -410,6 +402,7 @@ void Game::readyGame() {
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
     start_txt();
+    set_that_Piece_can_be_chosen(PawnsVec);
 }
 
 
@@ -744,7 +737,6 @@ void Game::Pressed() {
 
     is_King_checked(board, Mouse_pos, PawnsVec);
     is_Pawn_promoted(board, PawnsVec);
-    is_staleMate(PawnsVec);
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {
         if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
@@ -763,7 +755,7 @@ void Game::Pressed() {
             for (auto& el : PawnsVec) {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
-                el->unchosen(Mouse_pos);
+                el->unchosen();
             }
         }
     }
@@ -773,7 +765,7 @@ void Game::Pressed() {
             for (auto& el : PawnsVec) {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
-                el->unchosen(Mouse_pos);
+                el->unchosen();
             }
         }
     }
@@ -1245,10 +1237,25 @@ void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*>
     }
 }
 
-void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
-    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
-        return -_piece->get_Piece_type() != K; });
-    if (itr == _PawnsVec.end()) {
-        std::cout << "Stalemate";
+void Game::if_end_block_Pieces(const bool WhiteWon, const bool BlackWon, std::vector<Piece*>& _PawnsVec) {
+    if (WhiteWon || BlackWon) {
+        for (auto& el : _PawnsVec) {
+            el->cant_be_chosen_f();
+        }
+    }
+}
+
+void Game::set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec) {
+    for (auto& el : _PawnsVec) {
+        el->can_be_chosen_f();
+    }
+}
+
+bool Game::check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon) {
+    if (WhiteWon || BlackWon) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
