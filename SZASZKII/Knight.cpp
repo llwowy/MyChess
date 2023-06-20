@@ -97,8 +97,6 @@ void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 
 	}
 
-
-
 }
 
 

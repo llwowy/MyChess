@@ -1,58 +1,82 @@
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  19:07:26
-Przebieg partii: 
-wpe4
-bpf5
-wpa4
-bpb5
-wpb5
-bpa6
-wpa6
-bna6
-wra6
-bra6
-wqh5
-Wygra³y bia³e! 
-Koñcowa konfiguracja szachownicy: 
-  bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra6 brh8  bng8 bbc8 bbf8 bke8 bqd8  wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2  wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
-
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:12:57
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  11:57:11
 Przebieg partii: 
 wpe4
 bpf5
 wqh5
-bpf4
-wpe5
 Wygra³y bia³e! 
 Koñcowa konfiguracja szachownicy: 
-bpa7 bpb7 bpc7 bpd7 bpe7 bpf4 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe5 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:15:07
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  11:57:11
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  11:57:11
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:00:59
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:00:59
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:03:24
+Przebieg partii: 
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:04:44
 Przebieg partii: 
 wpe4
 bpf5
 wqh5
-bpf4
-wpe5
-bpg6
-wqg6
-bpg6
 Wygra³y bia³e! 
 Koñcowa konfiguracja szachownicy: 
-bpa7 bpb7 bpc7 bpd7 bpe7 bpf4  bpg6 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe5 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1  
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
 
-Partia szachowa z dnia: Jun 19 2023. Partia rozpoczê³a siê o:  20:15:07
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:05:31
 Przebieg partii: 
 wpe4
 bpf5
-wpa3
-bpd5
-wpa4
-bqd6
-wpa5
-bqe5
-wpa6
-bqe4
-Wygra³y czarne! 
+wqh5
+Wygra³y bia³e! 
 Koñcowa konfiguracja szachownicy: 
-bpa7 bpb7 bpc7 bpd5 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqe4 wpa6 wpb2 wpc2 wpd2  wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqd1 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:06:59
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:07:43
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:08:13
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:09:21
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 20 2023. Partia rozpoczê³a siê o:  12:09:46
+Przebieg partii: 
+wpe4
+bpf5
+wqh5
+Wygra³y bia³e! 
+Koñcowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
 

@@ -82,7 +82,7 @@ private:
 	sf::Text Title;//sprite
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
-	bool PlayChess = false;
+	bool play_chess = false;
 	//KONIEC
 	sf::Texture teksturaKoniec;
 	sf::Sprite KoniecSprite;
@@ -104,13 +104,12 @@ private:
 	float timer;
 	int counter;
 
-public:
-
 	bool BlackAndWhite = true;
 	bool GreenAndBlue = false;
-
 	bool WhiteWin = false;
 	bool BlackWin = false;
+
+public:
 
 	void drawAllOnBoard(sf::RenderWindow* window);
 	void drawAllOnMenu(sf::RenderWindow* window);
@@ -127,10 +126,10 @@ public:
 	void allGameEvents();
 	void allMenuEvents();
 	void allKoniecEvents();
-	void GenerateBoard();
-	void GeneratePawns();
 	void LoadBoard(Board& board);
 	void Pressed();
+	friend bool Piece::get_play_chess();
+
 	Game() {
 		readyMenu();
 		readyFonsts();

@@ -18,12 +18,13 @@ void Game::play() {
         }
 
     //SZASZKII
-        if (PlayChess = true) {
+        if (play_chess == true) {
   LoadBoard(board);
 
     readyGame();
     while (window->isOpen())
     {
+
         allGameEvents();
 
         drawAllOnBoard(window);
@@ -45,14 +46,14 @@ void Game::play() {
 
     }
 }
-        
+       
             drawAllOnBoard(window);
             Pressed();
             window->display();
         
     
     if (WhiteWin == true || BlackWin == true) {
-        PlayChess = false;
+       
         readyKoniec();
         while (KoniecWindow->isOpen())
         {
@@ -62,7 +63,7 @@ void Game::play() {
             KoniecWindow->display();
         }
         std::cout<<PawnsVec;
-        end_txt();
+        play_chess == false;
     }
 }
 
@@ -359,18 +360,6 @@ void Game::readyMenuBackground() {
     MenuSprite.setTexture(teksturaMenu);
     MenuSprite.setScale(skalaXMenu, skalaYMenu);
 
-    if (!upperScroll.loadFromFile("Grafika/scroll/pngs/parts/upper.png")) {
-        std::cout << "load upperscroll Texture failed" << std::endl;
-        system("pause");
-    }
-    upperScrollSprite.setTexture(upperScroll);
-    
-
-    if (!lowerScroll.loadFromFile("Grafika/scroll/pngs/parts/lower.png")) {
-        std::cout << "load lowerscroll Texture failed" << std::endl;
-        system("pause");
-    }
-    lowerScrollSprite.setTexture(lowerScroll);
 }
 
 void Game::readyKoniecBackground()
@@ -400,7 +389,6 @@ void Game::readyKoniecBackground()
     CzarnyPionSprite.setScale(-19, 19);
     CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
 
-    std::cout << "Tlo zaladowane" << std::endl;
 }
 
 
@@ -414,7 +402,7 @@ void Game::readyMenu() {
 void Game::readyKoniec() {
     readyKoniecBackground();
     KoniecWindow = new sf::RenderWindow(sf::VideoMode(KoniecWindow_width, KoniecWindow_height), "Congratulations!!");
-
+    end_txt();
 }
 
 
@@ -433,7 +421,6 @@ void Game::readyGame() {
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
     start_txt();
-
 }
 
 
@@ -566,8 +553,8 @@ void Game::allMenuEvents() {
             if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
                 if (Text.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
                     std::cout << "Pressed\n";
-                     PlayChess = true;
-                    if (PlayChess = true) {
+                     play_chess = true;
+                    if (play_chess = true) {
                         MenuWindow->close();
                     }
                 }
@@ -868,7 +855,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         if (counter == 8) {
 
             WhiteWin = true;
-            PlayChess == false;
+            play_chess == false;
             for (auto &el : _PawnsVec) {
                 if (el->get_Piece_color() == White)
 
@@ -993,7 +980,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
         if (counterr == 8) {
          
             BlackWin = true;
-            PlayChess == false;
+            play_chess == false;
             for (auto el : _PawnsVec) {
                 if (el->get_Piece_color() == Black)
 

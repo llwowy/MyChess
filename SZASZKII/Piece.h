@@ -49,9 +49,9 @@ public:
 	bool get_is_selected();
 	bool get_BandW();
 	bool get_GandB();
-
+	bool get_play_chess();
 	std::string print_move(sf::Vector2f position);
-
+	
 	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
 	virtual void move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};
 	virtual void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {};

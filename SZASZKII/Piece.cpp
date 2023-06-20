@@ -20,6 +20,7 @@ sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 void Piece::dance(int &counter){};
 
+
 bool Piece::get_BandW() { return BandW; };
 
 bool Piece::get_GandB() { return GandB; };
@@ -123,6 +124,7 @@ void Piece::append_move(std::string move) {
 	partia.close();
 
 }
+
 
 void Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position) {
 	if (is_selected) {
