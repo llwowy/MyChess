@@ -94,6 +94,12 @@ private:
 	sf::Texture tekCzarnyPion;
 	sf::Sprite CzarnyPionSprite;
 
+	sf::Texture tekZielonyPion;
+	sf::Sprite ZielonyPionSprite;
+
+	sf::Texture tekNiebieskiPion;
+	sf::Sprite NiebieskiPionSprite;
+
 	sf::Text KoniecText;//sprite
 	sf::Text Restart;//sprite
 	

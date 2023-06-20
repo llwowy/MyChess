@@ -360,7 +360,7 @@ void Game::readyKoniecBackground()
     KoniecSprite.setTexture(teksturaKoniec);
 
 
-    if (!tekBialyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
+    if (!tekBialyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
         std::cout << "load koniec bialy pion Texture failed" << std::endl;
         system("pause");
     }
@@ -369,7 +369,9 @@ void Game::readyKoniecBackground()
     BialyPionSprite.setTextureRect(sf::IntRect(0, 96, 16, 16)); //bialy
     BialyPionSprite.setScale(-19, 19);
     BialyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
-    if (!tekCzarnyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) { //tekstura dolnego zwoju
+
+
+    if (!tekCzarnyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
         std::cout << "load koniec czarny pion Texture failed" << std::endl;
         system("pause");
     }
@@ -377,6 +379,26 @@ void Game::readyKoniecBackground()
     CzarnyPionSprite.setTextureRect(sf::IntRect(80, 96, 16, 16)); //czarny
     CzarnyPionSprite.setScale(-19, 19);
     CzarnyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
+
+
+    if (!tekZielonyPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
+        std::cout << "load koniec czarny pion Texture failed" << std::endl;
+        system("pause");
+    }
+    ZielonyPionSprite.setTexture(tekZielonyPion);
+    ZielonyPionSprite.setTextureRect(sf::IntRect(80, 0, 16, 16));//zielony
+    ZielonyPionSprite.setScale(-19, 19);
+    ZielonyPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
+
+
+    if (!tekNiebieskiPion.loadFromFile("Grafika/ChessTextures/Chess Pieces.png")) {
+        std::cout << "load koniec czarny pion Texture failed" << std::endl;
+        system("pause");
+    }
+    NiebieskiPionSprite.setTexture(tekNiebieskiPion);
+    NiebieskiPionSprite.setTextureRect(sf::IntRect(0, 0, 16, 16)); //niebieski
+    NiebieskiPionSprite.setScale(-19, 19);
+    NiebieskiPionSprite.setPosition(KoniecWindow_width / 2 - 280, KoniecWindow_height / 2 + 10);
 
 }
 
@@ -518,8 +540,10 @@ void Game::drawAllOnMenu(sf::RenderWindow* window) {
 
 void Game::drawAllOnKoniec(sf::RenderWindow* window) {
     window->draw(KoniecSprite);
-    if (WhiteWin == true) { window->draw(BialyPionSprite); }
-    if (BlackWin == true){ window->draw(CzarnyPionSprite); }
+    if (WhiteWin == true && BlackAndWhite == true) { window->draw(BialyPionSprite); }
+    if (BlackWin == true && BlackAndWhite == true){ window->draw(CzarnyPionSprite); }
+    if (WhiteWin == true && GreenAndBlue == true) { window->draw(NiebieskiPionSprite); }
+    if (BlackWin == true && GreenAndBlue == true) { window->draw(ZielonyPionSprite); }
     window->draw(KoniecText);
     window->draw(Restart);
   
