@@ -35,6 +35,12 @@ void Game::play() {
            timer = 0;
         } 
         clock.restart();
+        if (WhiteWin == true || BlackWin == true) {
+            if (counter == 30) {
+                window->close();
+                
+            }
+        }
 
 
     }
