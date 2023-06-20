@@ -141,14 +141,13 @@ public:
 	void allKoniecEvents();
 	void LoadBoard(Board& board);
 	void Pressed();
-	void if_end_block_Pieces(const bool WhiteWon, const bool BlackWon, std::vector<Piece*>& _PawnsVec);
+	void if_end_block_Pieces(bool WhiteWon, bool BlackWon, std::vector<Piece*>& _PawnsVec);
 	void set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec);
-	bool check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon);
-	void Game_clock(sf::Clock _clock, sf::Time _time, float _timer);
+	bool check_whether_Black_or_white_win(bool WhiteWon, bool BlackWon);
 	void read_file(std::string file_name_txt);
 	friend bool Piece::get_play_chess();
-	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
-	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
+	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
+	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void start_txt();
 	void end_txt();
 

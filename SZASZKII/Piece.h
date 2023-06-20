@@ -63,8 +63,8 @@ public:
 	void append_move(std::string move);
 	void select();
 	void unselect();
-	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
-	void King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
+	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
+	void King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
 	void unchosen();
 	void cant_be_chosen_f();
 	void can_be_chosen_f();
@@ -73,9 +73,9 @@ public:
 
 	bool take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
-	bool take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
-	bool take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
-	bool collider_for_King(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos);
+	bool take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
+	bool take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
+	bool collider_for_King(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 
 	virtual ~Piece() {};
 };

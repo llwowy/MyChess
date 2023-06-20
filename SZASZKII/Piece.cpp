@@ -66,7 +66,7 @@ void  Piece::unselect() {
 	}
 }
 
-void Piece::chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Piece::chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	sf::FloatRect rectangle_bounds = getGlobalBounds();
 	if (rectangle_bounds.left <= mouse_position.x && rectangle_bounds.left + rectangle_bounds.width >= mouse_position.x &&
 		rectangle_bounds.top <= mouse_position.y && rectangle_bounds.top + rectangle_bounds.height >= mouse_position.y) {
@@ -75,7 +75,7 @@ void Piece::chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_po
 	}
 }
 
-void Piece::King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Piece::King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	
 	if (get_Piece_color() == Black && get_Piece_type() == K) {
 		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
@@ -434,7 +434,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 	}
 }
 
-bool Piece::take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -576,7 +576,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*> _PawnsVec, sf::Vec
 	}
 }
 
-bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});
@@ -718,7 +718,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*> _PawnsVec, sf::Vec
 	}
 }
 
-bool Piece::collider_for_King(std::vector<Piece*> _PawnsVec, sf::Vector2f selected_Tile_pos) {
+bool Piece::collider_for_King(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
 		});

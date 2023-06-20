@@ -563,6 +563,7 @@ void Game::allKoniecEvents() {
                 if (Restart.getGlobalBounds().contains(sf::Mouse::getPosition(*KoniecWindow).x, sf::Mouse::getPosition(*KoniecWindow).y)) {
                     std::cout << "Restart Pressed\n";
                     KoniecWindow->close();
+                    PawnsVec.clear();
                     Game* g = new Game;
                     g->play();
                     restart = true;
@@ -767,7 +768,7 @@ void Game::Pressed() {
     }
 }
 
-void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 
     King_White_checked = false;
     King_Black_checked = false;
@@ -1021,7 +1022,7 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, const sf::Vector2i& 
     }
 }
 
-void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*> _PawnsVec) {
+void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*>& _PawnsVec) {
     auto it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
         return Tile->get_Tile_id() == "a8"; });
     if (it != _board.end()){
@@ -1233,7 +1234,7 @@ void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*>
     }
 }
 
-void Game::if_end_block_Pieces(const bool WhiteWon, const bool BlackWon, std::vector<Piece*>& _PawnsVec) {
+void Game::if_end_block_Pieces(bool WhiteWon, bool BlackWon, std::vector<Piece*>& _PawnsVec) {
     if (WhiteWon || BlackWon) {
         for (auto& el : _PawnsVec) {
             el->cant_be_chosen_f();
@@ -1247,7 +1248,7 @@ void Game::set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec) {
     }
 }
 
-bool Game::check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon) {
+bool Game::check_whether_Black_or_white_win(bool WhiteWon, bool BlackWon) {
     if (WhiteWon || BlackWon) {
         return true;
     }

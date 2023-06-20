@@ -183,7 +183,7 @@ bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 	}
 }
 
-void King::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+void King::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 	sf::Vector2f Piece_pos = getPosition();
 
 	if (get_Piece_color() == White) {

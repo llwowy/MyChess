@@ -75,7 +75,7 @@ void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 				Tile->get_Tile_position().y <= mouse_position.y && Tile->get_Tile_position().y + Tile->get_Tile_size().y >= mouse_position.y);
 			});
 
-		if (it != board.end() && collider(_PawnsVec, (*it)->get_Tile_position()) && (
+		if (it != board.end() &&  (
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -1 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 1 * 112) ||
@@ -84,7 +84,7 @@ void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_posi
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 2 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -2 * 112) ||
 			(*it)->get_Tile_position() == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -2 * 112)
-			)) {
+			)  && collider(_PawnsVec, (*it)->get_Tile_position())) {
 			setPosition((*it)->get_Tile_position());		
 			std::cout << print_move(getPosition()) << std::endl;
 			append_move(print_move(getPosition()));
