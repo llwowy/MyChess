@@ -114,10 +114,6 @@ void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_pos
 		}
 	}
 
-
-
-
-
 void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {

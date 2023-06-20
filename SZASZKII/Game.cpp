@@ -4,7 +4,6 @@
 
 void Game::play() {
     //MENU
-    sf::Clock clock;
     MenuWindow->setFramerateLimit(60);
         while (MenuWindow->isOpen()) {
             allMenuEvents();
@@ -13,55 +12,48 @@ void Game::play() {
         }
     //SZASZKII
         if (play_chess == true) {
-  LoadBoard(board);
-    readyGame();
+        LoadBoard(board);
+        readyGame();
 
-    while (window->isOpen())
-    {
+            while (window->isOpen()) {
 
-        allGameEvents();
-        drawAllOnBoard(window);
-        Pressed();
-        window->display();
-        clockMenu.restart();
-
-
-        sf::Time time = clock.getElapsedTime();
-
-        timer += clock.restart().asSeconds();
-
-        if (timer > 0.2) {
-            counter++;
-           timer = 0;
-        } 
-        clock.restart();
-       
-    }
-}
-       
-        
-    
-    if (WhiteWin == true || BlackWin == true) {
+                allGameEvents();
+                drawAllOnBoard(window);
+                Pressed();
+                window->display();
+                clockMenu.restart();
+                timer += clock.restart().asSeconds();
+                if (timer > 0.2) {
+                 counter++;
+                  timer = 0;
+                } 
+                clock.restart();
+                if_end_block_Pieces(WhiteWin, BlackWin, PawnsVec);
+            }
+        }
+        if (check_whether_Black_or_white_win(WhiteWin, BlackWin)) {
         play_chess == false;
         readyKoniec();
         while (KoniecWindow->isOpen())
         {
             allKoniecEvents();
-
             drawAllOnKoniec(KoniecWindow);
             KoniecWindow->display();
         }
-        std::cout<<PawnsVec;
-       
     }
 }
 
-void Game::start_txt() {
+Game::Game() {
+    readyMenu();
+    readyFonsts();
+}
 
+void Game::start_txt() {
+    std::system("cls");
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
-    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl << "Przebieg partii: " << std::endl;
+    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczela sie o: " << __TIME__ << std::endl << "Przebieg partii: " << std::endl<< "\n";
 
     partia.close();
 }
@@ -71,17 +63,19 @@ void Game::end_txt() {
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
+    partia << std::endl;
+
     if (WhiteWin == true) {
-        partia << "Wygra³y bia³e! ";
+        partia << "Wygraly biale! ";
     }
     else if (BlackWin == true) {
-        partia << "Wygra³y czarne! ";
+        partia << "Wygraly czarne! ";
     }
     else  {
         partia << "Remis! ";
     }
 
-    partia << std::endl <<"Koñcowa konfiguracja szachownicy: " << std::endl << PawnsVec << std::endl << std::endl;
+    partia << std::endl << std::endl <<"Koncowa konfiguracja szachownicy: " << std::endl << PawnsVec << std::endl << std::endl;
     partia.close();
 }
 
@@ -97,7 +91,6 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
         else if (el->get_Piece_color() == 1 || el->get_Piece_color() == 3) {
             color = "b";
         }
-
 
         std::string type;
 
@@ -119,7 +112,6 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
         else if (el->get_Piece_type() == K) {
             type = "k";
         }
-
 
         std::string pos;
 
@@ -432,6 +424,7 @@ void Game::readyGame() {
     window = new sf::RenderWindow(sf::VideoMode(Window_width, Window_height), "MyChess");
     loadPawns();
     start_txt();
+    set_that_Piece_can_be_chosen(PawnsVec);
 }
 
 
@@ -593,6 +586,21 @@ void Game::allGameEvents() {
 
 }
 
+void Game::read_file(std::string file_name_txt){
+    std::ifstream dziennik(file_name_txt);
+    std::system("cls");
+    if (dziennik.is_open()) {
+        std::string line;
+        while (std::getline(dziennik, line)) {
+            std::cout << line << std::endl;
+        }
+        dziennik.close();
+    }
+    else {
+        std::cout << "Nie mozna otworzyc pliku." << std::endl;
+    }
+}
+
 void Game::allMenuEvents() {
     sf::Event MenuEventy;
 
@@ -638,54 +646,11 @@ void Game::allMenuEvents() {
         if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
             if (History.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
                 std::cout << "History\n";
-
-
-
-
+                read_file("Dziennik_rozegranych_partii.txt");
             }
         }
     }
 }
-
-//zmaiana
-
-
-//void Game::LoadBoard(Board& board) {
-//    const std::vector<std::string> positions = {
-//        "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-//        "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-//        "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-//        "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-//        "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-//        "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-//        "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-//        "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
-//    };
-//
-//    for (const std::string& position : positions) {
-//        board.push_back(new BoardTile(16 * skalaXBoard, 16 * skalaYBoard, position));
-//        skalaXBoard += 16;
-//        if (skalaXBoard > 128) {
-//            skalaXBoard = 16;
-//            skalaYBoard += 16;
-//        }
-//    }
-//}
-
-//void Game::LoadBoard(Board& board) {
-//    std::string columns = "abcdefgh";
-//    std::string rows = "87654321";
-//
-//    for (char column : columns) {
-//        for (char row : rows) {
-//            int x = (column - 'a') * skalaXBoard;
-//            int y = (row - '1') * skalaYBoard;
-//            std::string position = std::string(1, column) + std::string(1, row);
-//
-//            board.push_back(new BoardTile(x, y, position));
-//        }
-//    }
-//}
 
 
 void Game::LoadBoard(Board& board) {
@@ -768,7 +733,6 @@ void Game::Pressed() {
 
     is_King_checked(board, Mouse_pos, PawnsVec);
     is_Pawn_promoted(board, PawnsVec);
-    is_staleMate(PawnsVec);
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {
         if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
@@ -1269,10 +1233,25 @@ void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*>
     }
 }
 
-void Game::is_staleMate(std::vector<Piece*> _PawnsVec) {
-    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
-        return -_piece->get_Piece_type() != K; });
-    if (itr == _PawnsVec.end()) {
-        std::cout << "Stalemate";
+void Game::if_end_block_Pieces(const bool WhiteWon, const bool BlackWon, std::vector<Piece*>& _PawnsVec) {
+    if (WhiteWon || BlackWon) {
+        for (auto& el : _PawnsVec) {
+            el->cant_be_chosen_f();
+        }
+    }
+}
+
+void Game::set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec) {
+    for (auto& el : _PawnsVec) {
+        el->can_be_chosen_f();
+    }
+}
+
+bool Game::check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon) {
+    if (WhiteWon || BlackWon) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
