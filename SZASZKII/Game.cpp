@@ -546,23 +546,13 @@ void Game::allKoniecEvents() {
                 if (Restart.getGlobalBounds().contains(sf::Mouse::getPosition(*KoniecWindow).x, sf::Mouse::getPosition(*KoniecWindow).y)) {
                     std::cout << "Restart Pressed\n";
                     KoniecWindow->close();
-                    Game* g= new Game;
-                    g->play();      
+                    Game* g = new Game;
+                    g->play();
                     restart = true;
-                    
+
                 }
             }
         }
-
-        if (KoniecEventy.type == sf::Event::MouseButtonPressed) {
-            if (KoniecEventy.mouseButton.button == sf::Mouse::Left) {
-                if (HistoriaGry.getGlobalBounds().contains(sf::Mouse::getPosition(*KoniecWindow).x, sf::Mouse::getPosition(*KoniecWindow).y)) {
-                    std::cout << "HistoriaGry Pressed\n";
-                    historiaGry = true;
-                }
-            }
-        }
-
     }
 }
 

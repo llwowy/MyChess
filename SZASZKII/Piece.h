@@ -62,10 +62,10 @@ public:
 
 	void append_move(std::string move);
 	void select();
-	void unselect(const sf::Vector2i& mouse_position);
+	void unselect();
 	void chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
-	void unchosen(const sf::Vector2i& mouse_position);
+	void unchosen();
 	void Pick_up(const sf::Vector2i& mouse_position);
 	void Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_position);
 

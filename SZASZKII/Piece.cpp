@@ -47,7 +47,7 @@ void  Piece::select() {
 }
 
 
-void  Piece::unselect(const sf::Vector2i& mouse_position) {
+void  Piece::unselect() {
 	if (is_selected) {
 		if (get_Piece_color() == Black) {
 			if (get_Starting_Piece_pos() != getPosition()) {
@@ -105,8 +105,8 @@ void Piece::King_chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mou
 	}
 }
 
-void Piece::unchosen(const sf::Vector2i& mouse_position) {
-	unselect(mouse_position);
+void Piece::unchosen() {
+	unselect();
 }
 
 
