@@ -10,6 +10,7 @@
 #include <iostream>
 #include "BoardTile.h"
 #include <fstream>
+#include <Windows.h>
 
 
 using Board = std::vector<BoardTile*>;
@@ -134,6 +135,7 @@ public:
 	void allKoniecEvents();
 	void LoadBoard(Board& board);
 	void Pressed();
+	void read_file(std::string file_name_txt);
 	friend bool Piece::get_play_chess();
 
 	Game() {

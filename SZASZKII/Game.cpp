@@ -57,11 +57,11 @@ void Game::play() {
 }
 
 void Game::start_txt() {
-
+    std::system("cls");
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
-    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczê³a siê o:  " << __TIME__ << std::endl << "Przebieg partii: " << std::endl;
+    partia  << "Partia szachowa z dnia: " << __DATE__ << ". Partia rozpoczela sie o: " << __TIME__ << std::endl << "Przebieg partii: " << std::endl<< "\n";
 
     partia.close();
 }
@@ -71,17 +71,19 @@ void Game::end_txt() {
     std::ofstream partia;
     partia.open("Dziennik_rozegranych_partii.txt", std::ios::app);
 
+    partia << std::endl;
+
     if (WhiteWin == true) {
-        partia << "Wygra³y bia³e! ";
+        partia << "Wygraly biale! ";
     }
     else if (BlackWin == true) {
-        partia << "Wygra³y czarne! ";
+        partia << "Wygraly czarne! ";
     }
     else  {
         partia << "Remis! ";
     }
 
-    partia << std::endl <<"Koñcowa konfiguracja szachownicy: " << std::endl << PawnsVec << std::endl << std::endl;
+    partia << std::endl << std::endl <<"Koncowa konfiguracja szachownicy: " << std::endl << PawnsVec << std::endl << std::endl;
     partia.close();
 }
 
@@ -97,7 +99,6 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
         else if (el->get_Piece_color() == 1 || el->get_Piece_color() == 3) {
             color = "b";
         }
-
 
         std::string type;
 
@@ -119,7 +120,6 @@ std::ostream& operator<<(std::ostream& os,  std::vector<Piece*> PawnsVec) {
         else if (el->get_Piece_type() == K) {
             type = "k";
         }
-
 
         std::string pos;
 
@@ -569,6 +569,21 @@ void Game::allGameEvents() {
 
 }
 
+void Game::read_file(std::string file_name_txt){
+    std::ifstream dziennik(file_name_txt);
+    std::system("cls");
+    if (dziennik.is_open()) {
+        std::string line;
+        while (std::getline(dziennik, line)) {
+            std::cout << line << std::endl;
+        }
+        dziennik.close();
+    }
+    else {
+        std::cout << "Nie mozna otworzyc pliku." << std::endl;
+    }
+}
+
 void Game::allMenuEvents() {
     sf::Event MenuEventy;
 
@@ -614,54 +629,11 @@ void Game::allMenuEvents() {
         if (MenuEventy.mouseButton.button == sf::Mouse::Left) {
             if (History.getGlobalBounds().contains(sf::Mouse::getPosition(*MenuWindow).x, sf::Mouse::getPosition(*MenuWindow).y)) {
                 std::cout << "History\n";
-
-
-
-
+                read_file("Dziennik_rozegranych_partii.txt");
             }
         }
     }
 }
-
-//zmaiana
-
-
-//void Game::LoadBoard(Board& board) {
-//    const std::vector<std::string> positions = {
-//        "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-//        "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-//        "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-//        "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-//        "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-//        "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-//        "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-//        "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
-//    };
-//
-//    for (const std::string& position : positions) {
-//        board.push_back(new BoardTile(16 * skalaXBoard, 16 * skalaYBoard, position));
-//        skalaXBoard += 16;
-//        if (skalaXBoard > 128) {
-//            skalaXBoard = 16;
-//            skalaYBoard += 16;
-//        }
-//    }
-//}
-
-//void Game::LoadBoard(Board& board) {
-//    std::string columns = "abcdefgh";
-//    std::string rows = "87654321";
-//
-//    for (char column : columns) {
-//        for (char row : rows) {
-//            int x = (column - 'a') * skalaXBoard;
-//            int y = (row - '1') * skalaYBoard;
-//            std::string position = std::string(1, column) + std::string(1, row);
-//
-//            board.push_back(new BoardTile(x, y, position));
-//        }
-//    }
-//}
 
 
 void Game::LoadBoard(Board& board) {
