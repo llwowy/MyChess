@@ -42,6 +42,8 @@ public:
 	Piece_types get_Piece_type();
 
 	Piece_colors get_Piece_color();
+
+	void set_last_move_was_black(bool b);
 	
 	std::string get_Piece_id();
 	sf::Vector2f get_position();

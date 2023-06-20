@@ -20,6 +20,9 @@ sf::Vector2f Piece::get_Starting_Piece_pos() { return Starting_Piece_pos; }
 
 void Piece::dance(int &counter){};
 
+void Piece::set_last_move_was_black(bool b) {
+	last_move_was_Black = b;
+}
 
 bool Piece::get_BandW() { return BandW; };
 
@@ -29,6 +32,9 @@ void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) 
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
 		return Tile->get_Tile_id() == Tile_id; });
 	setPosition((*it)->get_Tile_position());
+	if (get_Piece_type() != Q) {
+		set_last_move_was_black(true);
+	}
 }
 
 void  Piece::select() {

@@ -36,7 +36,7 @@ private:
 	float skalaXKoniec = 1.04;//1.039 tak dokladnie
 	float skalaYKoniec = 1.04;//1.13937 tak dokladnie
 
-	bool last_move_was_Black = true;
+	
 	bool King_White_checked = false;
 	bool King_Black_checked = false;
 
@@ -82,6 +82,7 @@ private:
 	sf::Text Title;//sprite
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
+	sf::Text History;//sprite
 	bool play_chess = false;
 	//KONIEC
 	sf::Texture teksturaKoniec;
