@@ -100,6 +100,7 @@ private:
 	sf::Text Conf1;//sprite
 	sf::Text Conf2;//sprite
 	sf::Text History;//sprite
+	sf::Text Exit;
 	//KONIEC
 	sf::Texture teksturaKoniec;
 	sf::Sprite KoniecSprite;
