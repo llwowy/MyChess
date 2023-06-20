@@ -4,29 +4,22 @@
 
 void Game::play() {
     //MENU
-
-
     sf::Clock clock;
-
     MenuWindow->setFramerateLimit(60);
-
-
         while (MenuWindow->isOpen()) {
             allMenuEvents();
             drawAllOnMenu(MenuWindow);
             MenuWindow->display();
         }
-
     //SZASZKII
         if (play_chess == true) {
   LoadBoard(board);
-
     readyGame();
+
     while (window->isOpen())
     {
 
         allGameEvents();
-
         drawAllOnBoard(window);
         Pressed();
         window->display();
@@ -431,30 +424,31 @@ void Game::readyFonsts() {
         system("pause");
     }
     else { std::cout << "Loaded\n"; }
-
+    ///Napis Menu
     Title.setFont(Menufont);
     Title.setString("8-bit Chess");
     Title.setFillColor(sf::Color::White);
     Title.setCharacterSize(130);
     Title.setPosition(1120 / 2 - 350, 1120 / 2 - 380);
-
+    ///Napis Menu
     Text.setFont(Menufont);
     Text.setString("- Play Chess");
     Text.setFillColor(sf::Color::White);
     Text.setCharacterSize(80);
     Text.setPosition(1120/2 - 260 ,1120/2 - 150);
-
+    ///Napis Menu
     Conf1.setFont(Menufont);
     Conf1.setString("- Black & White");
     Conf1.setFillColor(sf::Color::White);
     Conf1.setCharacterSize(80);
     Conf1.setPosition(1120 / 2 - 260, 1120 / 2 );
-
+    ///Napis Menu
     Conf2.setFont(Menufont);
     Conf2.setString("- Green & Blue");
     Conf2.setFillColor(sf::Color::White);
     Conf2.setCharacterSize(80);
     Conf2.setPosition(1120 / 2 - 260, 1120 / 2 + 150);
+
 
     //Napis koñcowy
     KoniecText.setFont(Menufont);
@@ -463,6 +457,19 @@ void Game::readyFonsts() {
     KoniecText.setCharacterSize(70);
     KoniecText.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 + 150);
 
+    //Napis koñcowy
+    Restart.setFont(Menufont);
+    Restart.setString("- Restart");
+    Restart.setFillColor(sf::Color::White);
+    Restart.setCharacterSize(70);
+    Restart.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 - 450);
+
+    //Napis koñcowy
+    HistoriaGry.setFont(Menufont);
+    HistoriaGry.setString("d;-;b Przebieg partii d;-;b");
+    HistoriaGry.setFillColor(sf::Color::White);
+    HistoriaGry.setCharacterSize(70);
+    HistoriaGry.setPosition(KoniecWindow_width / 2 - 320, KoniecWindow_height / 2 - 200);
 }
 
 
@@ -517,6 +524,8 @@ void Game::drawAllOnKoniec(sf::RenderWindow* window) {
     if (WhiteWin == true) { window->draw(BialyPionSprite); }
     if (BlackWin == true){ window->draw(CzarnyPionSprite); }
     window->draw(KoniecText);
+    window->draw(Restart);
+    window->draw(HistoriaGry);
 
 }
 
@@ -528,9 +537,31 @@ void Game::drawAllOnBoard(sf::RenderWindow* window) {
 }
 
 void Game::allKoniecEvents() {
+    sf::Event KoniecEventy;
+
     while (KoniecWindow->pollEvent(KoniecEventy)) {
         if (KoniecEventy.type == sf::Event::Closed)
             KoniecWindow->close();
+
+
+        if (KoniecEventy.type == sf::Event::MouseButtonPressed) {
+            if (KoniecEventy.mouseButton.button == sf::Mouse::Left) {
+                if (Restart.getGlobalBounds().contains(sf::Mouse::getPosition(*KoniecWindow).x, sf::Mouse::getPosition(*KoniecWindow).y)) {
+                    std::cout << "Reset Pressed\n";
+                    restart = true;
+                }
+            }
+        }
+
+        if (KoniecEventy.type == sf::Event::MouseButtonPressed) {
+            if (KoniecEventy.mouseButton.button == sf::Mouse::Left) {
+                if (HistoriaGry.getGlobalBounds().contains(sf::Mouse::getPosition(*KoniecWindow).x, sf::Mouse::getPosition(*KoniecWindow).y)) {
+                    std::cout << "HistoriaGry Pressed\n";
+                    historiaGry = true;
+                }
+            }
+        }
+
     }
 }
 

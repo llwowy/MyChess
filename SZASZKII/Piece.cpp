@@ -54,6 +54,7 @@ void  Piece::unselect(const sf::Vector2i& mouse_position) {
 			}
 		}
 		is_selected = false;
+		Starting_Piece_pos = getPosition();
 	}
 }
 
