@@ -10,6 +10,7 @@
 #include <iostream>
 #include "BoardTile.h"
 #include <fstream>
+#include <Windows.h>
 
 
 using Board = std::vector<BoardTile*>;
@@ -138,6 +139,7 @@ public:
 	void set_that_Piece_can_be_chosen(std::vector<Piece*>& _PawnsVec);
 	bool check_whether_Black_or_white_win(const bool WhiteWon, const bool BlackWon);
 	void Game_clock(sf::Clock _clock, sf::Time _time, float _timer);
+	void read_file(std::string file_name_txt);
 	friend bool Piece::get_play_chess();
 	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec);
