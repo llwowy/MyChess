@@ -29,6 +29,7 @@ private:
 	bool BandW;
 	bool GandB;
 	bool can_be_chosen = true;
+	bool can_cover = false;
 	static bool last_move_was_Black;
 	
 protected:
@@ -52,6 +53,8 @@ public:
 	bool get_BandW();
 	bool get_GandB();
 	bool get_play_chess();
+	bool get_can_cover();
+	void set_can_cover(bool b);
 	std::string print_move(sf::Vector2f position);
 	
 	virtual void set_Piece(const std::vector<BoardTile*> board, std::string Tile_id);
@@ -76,6 +79,7 @@ public:
 	bool take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool collider_for_King(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
+	virtual bool possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) { return 0; }
 
 	virtual ~Piece() {};
 };

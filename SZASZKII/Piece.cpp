@@ -28,17 +28,24 @@ bool Piece::get_BandW() { return BandW; };
 
 bool Piece::get_GandB() { return GandB; };
 
+bool Piece::get_can_cover() { return can_cover; }
+
+void Piece::set_can_cover(bool b) {
+	can_cover = b;
+}
+
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
 		return Tile->get_Tile_id() == Tile_id; });
 	setPosition((*it)->get_Tile_position());
+	Starting_Piece_pos = getPosition();
 	if (get_Piece_type() != Q) {
 		set_last_move_was_black(true);
 	}
 }
 
 void  Piece::select() {
-	if (can_be_chosen) {
+	if (can_be_chosen || can_cover) {
 		if (get_Piece_color() == Black && last_move_was_Black == false) {
 			is_selected = true;
 		}

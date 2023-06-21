@@ -304,3 +304,28 @@ void Pawn::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _Pawn
 		}
 	}
 }
+
+bool Pawn::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
+	if (get_Piece_color() == White) {
+		if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112)) {
+			return true;
+		}
+		/*else if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112)) {
+			return true;
+		}*/
+		else {
+			return false;
+		}
+	}
+	else if (get_Piece_color() == Black) {
+		if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112)) {
+			return true;
+		}
+		/*else if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112)) {
+			return true;
+		}*/
+		else {
+			return false;
+		}
+	}
+}

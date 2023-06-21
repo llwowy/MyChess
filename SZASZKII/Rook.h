@@ -12,6 +12,7 @@ public:
 	void take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
 	bool collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos);
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
+	bool possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec);
 	void dance(int &counter) override;
 
 	~Rook() {};

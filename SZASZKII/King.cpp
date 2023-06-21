@@ -479,3 +479,20 @@ bool King::left_castling_condition(std::vector<BoardTile*>& board, std::vector<P
 		return false;
 	}
 }
+
+bool King::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
+	/*if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, 1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0 * 112, -1 * 112)) {
+		return true;
+	}
+	else {
+		return false;
+	}*/
+	return false;
+}

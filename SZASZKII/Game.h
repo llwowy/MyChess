@@ -153,11 +153,18 @@ public:
 	bool check_whether_Black_or_white_win(bool WhiteWon, bool BlackWon);
 	void read_file(std::string file_name_txt);
 	friend bool Piece::get_play_chess();
-	void is_King_checked(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
+	void is_King_checked(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void start_txt();
 	void end_txt();
 	void delete_Piecees(std::vector<Piece*>& _PawnsVec);
+
+	void is_cover_possible(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
+	bool check_if_White_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_other_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+
+	void is_check_blockable(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
 
 	~Game() {};
 };

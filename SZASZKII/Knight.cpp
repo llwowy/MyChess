@@ -233,3 +233,46 @@ void Knight::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _Pa
 		}
 	}
 }
+
+bool Knight::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
+	if (collider_for_functions(_PawnsVec, Tile_pos) && (Tile_pos == getPosition() + sf::Vector2f(2 * 112, 1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -1 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 2 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 2 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -2 * 112) ||
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -2 * 112))) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Knight::collider_for_functions(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if (itr != _PawnsVec.end()) {
+		if (get_Piece_color() == Black) {
+			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (get_Piece_color() == White) {
+			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	else {
+		return true;
+	}
+}

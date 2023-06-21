@@ -383,3 +383,403 @@ Przebieg partii:
 wpd4
 bpe5
 wpe5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:12:50
+Przebieg partii: 
+
+wpe3
+bpg5
+wqe2
+bpf6
+wqf3
+bnh6
+wqh5
+bng4
+wqg6
+bpg6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:12:50
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpg6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:15:33
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpg5
+wqg4
+bpa6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:20:09
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:20:09
+Przebieg partii: 
+
+wpe3
+bnh6
+wpa3
+bpf6
+wpa4
+bpg5
+wqh5
+bnf7
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:22:40
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpg5
+wqh5
+
+Wygraly biale! 
+
+Koncowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg5 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:22:40
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpg5
+wqf3
+bnh6
+wqh5
+bnf7
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:22:40
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:34:24
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpg5
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:34:24
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+
+Wygraly biale! 
+
+Koncowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:34:24
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpg5
+wqf3
+bnh6
+wqh5
+bnf7
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wpd3
+bpg5
+wpa3
+bnh6
+wqh5
+bnf5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpb6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 18:42:17
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:04:52
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:05:34
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:05:34
+Przebieg partii: 
+
+wpe3
+bpf6
+wpc3
+bpg5
+wqh5
+
+Wygraly biale! 
+
+Koncowa konfiguracja szachownicy: 
+bpa7 bpb7 bpc7 bpd7 bpe7 bpf6 bpg5 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc3 wpd2 wpe3 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
+
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:07:21
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:07:57
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:10:13
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:11:38
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bpf6
+wqe2
+bpg5
+wqf3
+bnh6
+wqh5
+bnf7
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bpa6
+wqe2
+bpb6
+wpb3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bpd6
+wqe2
+bkd7
+wqd1
+bnc6
+wqg4
+bpe6
+wqf3
+bke8
+wqg4
+bne7
+wqf3
+bbd7
+wpa3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:13:26
+Przebieg partii: 
+
+wpe3
+bnf6
+wqe2
+bnd5
+wqf3
+bnf4
+wqe2
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:31:01
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:35:55
+Przebieg partii: 
+
+wpe3
+bpf6
+wpa3
+bpb6
+wpa4
+bbb7
+wpa5
+bbd5
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:38:07
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:40:35
+Przebieg partii: 
+
+wpe3
+bpf6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:41:51
+Przebieg partii: 
+
+wpe3
+bpf6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:41:51
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:47:49
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:48:14
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:48:54
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:49:21
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:52:27
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:53:50
+Przebieg partii: 
+
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:54:38
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpa6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:55:52
+Przebieg partii: 
+
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:56:08
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpg6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 19:56:41
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 20:39:11
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpe5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 20:40:03
+Przebieg partii: 
+
+wpe3
+bpf6
+wqh5
+bpg6
+wqc5
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 20:43:16
+Przebieg partii: 
+
+wpe3
+bpf6
+wbe2
+bpa6
+wbh5
+bpg6
+wbg6
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 20:43:16
+Przebieg partii: 
+
+wpe3
+bpf6
+wbd3
+bpa6
+wbg6
