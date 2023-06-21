@@ -377,3 +377,9 @@ Wygraly biale!
 Koncowa konfiguracja szachownicy: 
 bpa7 bpb7 bpc7 bpd7 bpe7 bpf5 bpg7 bph7 bra8 brh8 bnb8 bng8 bbc8 bbf8 bke8 bqd8 wpa2 wpb2 wpc2 wpd2 wpe4 wpf2 wpg2 wph2 wra1 wrh1 wnb1 wng1 wbc1 wbf1 wke1 wqh5 
 
+Partia szachowa z dnia: Jun 21 2023. Partia rozpoczela sie o: 17:45:11
+Przebieg partii: 
+
+wpd4
+bpe5
+wpe5

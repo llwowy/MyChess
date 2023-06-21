@@ -157,6 +157,7 @@ public:
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void start_txt();
 	void end_txt();
+	void delete_Piecees(std::vector<Piece*>& _PawnsVec);
 
 	~Game() {};
 };

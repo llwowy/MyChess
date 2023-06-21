@@ -66,7 +66,7 @@ void King::dance(int &counter) {
 	
 }
 
-void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::King::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -159,7 +159,6 @@ bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
-				_PawnsVec.erase(itr);
 				return true;
 			}
 			else {
@@ -170,7 +169,6 @@ bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
-				_PawnsVec.erase(itr);
 				return true;
 			}
 			else {
@@ -288,7 +286,7 @@ void King::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _Pawn
 	}
 }
 
-bool King::right_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+bool King::right_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 
 	if (get_Piece_color() == White && get_Starting_Piece_pos() == sf::Vector2f(560, 896)) {
 		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
@@ -373,7 +371,7 @@ bool King::right_castling_condition(std::vector<BoardTile*>& board, std::vector<
 	}
 }
 
-bool King::left_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*> _PawnsVec) {
+bool King::left_castling_condition(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
 
 	if (get_Piece_color() == White && get_Starting_Piece_pos() == sf::Vector2f(560, 896)) {
 		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {

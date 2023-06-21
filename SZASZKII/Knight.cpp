@@ -68,7 +68,7 @@ void Knight::dance(int &counter) {
 
 }
 
-void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Knight::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -106,7 +106,6 @@ bool Knight::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
-				_PawnsVec.erase(itr);
 				return true;
 			}
 			else {
@@ -117,7 +116,6 @@ bool Knight::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
 				(*itr)->setPosition(0, 0);
 				(*itr)->scale(0, 0);
-				_PawnsVec.erase(itr);
 				return true;
 			}
 			else {

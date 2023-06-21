@@ -764,9 +764,10 @@ void Game::Pressed() {
     for (auto& el : PawnsVec) {
         el->mark_Tiles(board, PawnsVec);
     }
-
+    
     is_King_checked(board, Mouse_pos, PawnsVec);
     is_Pawn_promoted(board, PawnsVec);
+    delete_Piecees(PawnsVec);
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {
         if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
@@ -1287,5 +1288,13 @@ bool Game::check_whether_Black_or_white_win(bool WhiteWon, bool BlackWon) {
     }
     else {
         return false;
+    }
+}
+
+void Game::delete_Piecees(std::vector<Piece*>& _PawnsVec) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+        return _piece->getPosition() == sf::Vector2f(0, 0); });
+    if (itr != _PawnsVec.end()) {
+        _PawnsVec.erase(itr);
     }
 }

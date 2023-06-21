@@ -68,7 +68,7 @@ void Pawn::dance(int &counter) {
 
 }
 
-void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::Pawn::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -146,7 +146,7 @@ bool Pawn::collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vector2f selec
 	}
 }
 
-void Pawn::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Pawn::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&
@@ -196,7 +196,6 @@ bool Pawn::take_Left_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vect
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(-112, 112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0,0);
-			_PawnsVec.erase(itr);
 			return true;
 		}
 		else {
@@ -216,7 +215,6 @@ bool Pawn::take_Right_collider_for_Black(std::vector<Piece*>& _PawnsVec, sf::Vec
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(112, 112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);
-			_PawnsVec.erase(itr);
 			return true;
 		}
 		else {
@@ -236,7 +234,6 @@ bool Pawn::take_Left_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vect
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(-112, -112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);
-			_PawnsVec.erase(itr);
 			return true;
 		}
 		else {
@@ -256,7 +253,6 @@ bool Pawn::take_Right_collider_for_White(std::vector<Piece*>& _PawnsVec, sf::Vec
 		if ((*itr)->getPosition() == get_Starting_Piece_pos() + sf::Vector2f(112, -112)) {
 			(*itr)->setPosition(0, 0);
 			(*itr)->scale(0, 0);
-			_PawnsVec.erase(itr);
 			return true;
 		}
 		else {

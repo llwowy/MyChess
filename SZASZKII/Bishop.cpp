@@ -66,7 +66,7 @@ void Bishop::dance(int &counter) {
 
 }
 
-void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	
 		if (get_is_selected()) {
 			auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
@@ -114,7 +114,7 @@ void::Bishop::move(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_pos
 		}
 	}
 
-void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*> _PawnsVec) {
+void Bishop::take(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
 	if (get_is_selected()) {
 		auto it = std::find_if(board.begin(), board.end(), [mouse_position](BoardTile* Tile) {
 			return (Tile->get_Tile_position().x <= mouse_position.x && Tile->get_Tile_position().x + Tile->get_Tile_size().x >= mouse_position.x &&

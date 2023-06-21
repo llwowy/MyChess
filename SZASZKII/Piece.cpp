@@ -206,7 +206,6 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -229,7 +228,6 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -252,7 +250,6 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -275,7 +272,6 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -347,7 +343,6 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -370,7 +365,6 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -393,7 +387,6 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -416,7 +409,6 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -489,7 +481,6 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -512,7 +503,6 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -535,7 +525,6 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -558,7 +547,6 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -631,7 +619,6 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -654,7 +641,6 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -677,7 +663,6 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -700,7 +685,6 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
 					(*itr)->setPosition(0, 0);
 					(*itr)->scale(0, 0);
-					_PawnsVec.erase(itr);
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
