@@ -605,8 +605,6 @@ void Game::allGameEvents() {
         else if (BoardEventy.type == sf::Event::KeyPressed) {
             if (BoardEventy.key.code == sf::Keyboard::Escape) {
                 window->close();
-                Game* g = new Game;
-                g->play();
             }
         }
     }
