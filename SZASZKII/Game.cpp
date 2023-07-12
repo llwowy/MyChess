@@ -765,13 +765,14 @@ void Game::Pressed() {
         el->mark_Tiles(board, PawnsVec);
         el->can_be_chosen_f();
         el->set_can_cover(false);
+        el->set_tied(false);
+        el->set_delectable(false);
+        el->set_can_be_deleted(true);
     }
     
-    //is_King_checked(board, PawnsVec);
-    
     is_Pawn_promoted(board, PawnsVec);
-    delete_Piecees(PawnsVec);
     is_cover_possible(board, PawnsVec);
+    stalemate(board, PawnsVec);
 
     if (BoardEventy.type == sf::Event::MouseButtonPressed) {
         if (BoardEventy.mouseButton.button == sf::Mouse::Left) {
@@ -791,6 +792,8 @@ void Game::Pressed() {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
                 el->unchosen();
+                el->legal_move_avoider(board, PawnsVec);
+                el->update_Piece_position();
             }
         }
     }
@@ -801,9 +804,12 @@ void Game::Pressed() {
                 el->move(board, Mouse_pos, PawnsVec);
                 el->take(board, Mouse_pos, PawnsVec);
                 el->unchosen();
+                el->legal_move_avoider(board, PawnsVec);
+                el->update_Piece_position();
             }
         }
     }
+    delete_Piecees(PawnsVec);
 }
 
 void Game::is_King_checked(std::vector<BoardTile*>& _board, std::vector<Piece*>& _PawnsVec) {
@@ -1060,6 +1066,15 @@ void Game::is_King_checked(std::vector<BoardTile*>& _board, std::vector<Piece*>&
     }
 }
 
+void Game::stalemate(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* piece) {
+        return piece->get_Piece_type() != K; });
+    if (itr == _PawnsVec.end() && staleMate == false) {
+        std::cout << "\nStaleMate\n";
+        staleMate = true;
+    }
+}
+
 void Game::is_Pawn_promoted(std::vector<BoardTile*>& _board, std::vector<Piece*>& _PawnsVec) {
     auto it = std::find_if(_board.begin(), _board.end(), [](BoardTile* Tile) {
         return Tile->get_Tile_id() == "a8"; });
@@ -1297,8 +1312,8 @@ bool Game::check_whether_Black_or_white_win(bool WhiteWon, bool BlackWon) {
 
 void Game::delete_Piecees(std::vector<Piece*>& _PawnsVec) {
     auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
-        return _piece->getPosition() == sf::Vector2f(0, 0); });
-    if (itr != _PawnsVec.end()) {
+        return _piece->get_delectable() == true; });
+    if (itr != _PawnsVec.end() && (*itr)->get_can_be_deleted() == true) {
         _PawnsVec.erase(itr);
     }
 }
@@ -1310,30 +1325,65 @@ auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
 auto Black_king_pos = std::find_if(_board.begin(), _board.end(), [itr](BoardTile* Tile) {
     return Tile->get_Tile_position() == (*itr)->getPosition(); });
 
-bool covered = false;
+auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+    return _piece->get_Piece_type() == K && _piece->get_Piece_color() == White; });
 
-if (Black_king_pos != _board.end()) {
+auto White_king_pos = std::find_if(_board.begin(), _board.end(), [itr1](BoardTile* Tile) {
+    return Tile->get_Tile_position() == (*itr1)->getPosition(); });
+
+bool covered = false;
+bool can_be_taken = false;
+int countr = 0;
+
+
+if (Black_king_pos != _board.end() && White_king_pos != _board.end()) {
     if ((*Black_king_pos)->get_Tile_marked_for_White()) {
+
+        for (auto& el : _PawnsVec) {
+            el->set_can_be_deleted(false);
+            if (el->_collider_for_tie_WhiteRook(_PawnsVec, (*Black_king_pos)->get_Tile_position()) != NULL) {
+                el->_collider_for_tie_WhiteRook(_PawnsVec, (*Black_king_pos)->get_Tile_position())->set_tied(true);
+            }
+            if (el->_collider_for_tie_WhiteBishop(_PawnsVec, (*Black_king_pos)->get_Tile_position()) != NULL) {
+                el->_collider_for_tie_WhiteBishop(_PawnsVec, (*Black_king_pos)->get_Tile_position())->set_tied(true);
+            }
+        }
 
         for (int i = 112; i != 8 * 112;) {
             auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
                 return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(i, i); });
             if (it1 != _board.end()) {
+                if(check_if_White_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())){
+                    break;
+                }
                 if ((*it1)->get_Tile_marked_for_White()) {
                     if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
                         int j = i;
                         while (j != 0) {
                             auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
                                 return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, j); });
-                            for (auto& el : _PawnsVec) {
-                                el->cant_be_chosen_f();
-                                if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec)) {
-                                    el->set_can_cover(true);
-                                    covered = true;
-                                    break;
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
                                 }
+                                j -= 112;
                             }
-                            j -= 112;
                         }
                         if (covered == false) {
                             is_King_checked(_board, _PawnsVec);
@@ -1342,24 +1392,291 @@ if (Black_king_pos != _board.end()) {
                     }
                 }
                 else {
-                    int j = i;
-                    while (j != 0) {
-                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
-                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, j); });
-                        for (auto& el : _PawnsVec) {
-                            el->cant_be_chosen_f();
-                            if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec)) {
-                                el->set_can_cover(true);
-                                covered = true;
-                                break;
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
                             }
                         }
-                        j -= 112;
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
                     }
-                    if (covered == false) {
-                        is_King_checked(_board, _PawnsVec);
-                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-i, i); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
                     break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(i, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-i, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
                 }
             }
             else {
@@ -1370,11 +1687,1703 @@ if (Black_king_pos != _board.end()) {
 
 
 
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(i, 0); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, i); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-i, 0); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_White_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_White()) {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_White_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(0, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+                auto it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, 1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, 1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, -1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, -1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, 1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, 1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, -1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, -1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 2 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 2 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 2 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 2 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, -2 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, -2 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, -2 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, -2 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Pawn_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                it1 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 1 * 112); });
+                if (it1 != _board.end()) {
+                    if (check_if_White_Pawn_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        auto it2 = std::find_if(_board.begin(), _board.end(), [Black_king_pos](BoardTile* Tile) {
+                            return Tile->get_Tile_position() == (*Black_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 1 * 112); });
+                        if (it2 != _board.end()) {
+                            for (auto& el : _PawnsVec) {
+                                if (el->get_Piece_type() != K) {
+                                    el->cant_be_chosen_f();
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                                if (el->get_Piece_color() == Black && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                    el->set_can_cover(true);
+                                    can_be_taken = true;
+                                }
+                            }
+                        }
+                        if (can_be_taken == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                    }
+                }
+
+                if (countr > 1) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+
+    }
+    else if ((*White_king_pos)->get_Tile_marked_for_Black()) {
+        for (auto& el : _PawnsVec) {
+            el->set_can_be_deleted(false);
+            if (el->_collider_for_tie_BlackRook(_PawnsVec, (*White_king_pos)->get_Tile_position()) != NULL) {
+                el->_collider_for_tie_BlackRook(_PawnsVec, (*White_king_pos)->get_Tile_position())->set_tied(true);
+            }
+            if (el->_collider_for_tie_BlackBishop(_PawnsVec, (*White_king_pos)->get_Tile_position()) != NULL) {
+                el->_collider_for_tie_BlackBishop(_PawnsVec, (*White_king_pos)->get_Tile_position())->set_tied(true);
+            }
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(i, i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-i, i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(i, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-i, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_diagonal_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(i, 0); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-i, 0); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-j, 0); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        for (int i = 112; i != 8 * 112;) {
+            auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos, i](BoardTile* Tile) {
+                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, -i); });
+            if (it1 != _board.end()) {
+                if (check_if_Black_not_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                    break;
+                }
+                if ((*it1)->get_Tile_marked_for_Black()) {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+                else {
+                    if (check_if_Black_perpendicular_Piece_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                        countr++;
+                        auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                            return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                        if (itr1 != _PawnsVec.end()) {
+                            (*itr1)->set_can_be_deleted(true);
+                        }
+                        int j = i;
+                        while (j != 0) {
+                            auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos, j](BoardTile* Tile) {
+                                return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(0, -j); });
+                            if (it2 != _board.end()) {
+                                for (auto& el : _PawnsVec) {
+                                    if (el->get_Piece_type() != K) {
+                                        el->cant_be_chosen_f();
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move((*it2)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                    if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                                        el->set_can_cover(true);
+                                        covered = true;
+                                    }
+                                }
+                                j -= 112;
+                            }
+                        }
+                        if (covered == false) {
+                            is_King_checked(_board, _PawnsVec);
+                        }
+                        break;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+            i += 112;
+        }
+
+        auto it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, 1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, 1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, -1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(2 * 112, -1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, 1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, 1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, -1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-2 * 112, -1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 2 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 2 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 2 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 2 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, -2 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, -2 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, -2 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Knight_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, -2 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Pawn_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(-1 * 112, 1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        it1 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+            return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 1 * 112); });
+        if (it1 != _board.end()) {
+            if (check_if_Black_Pawn_is_here(_PawnsVec, (*it1)->get_Tile_position())) {
+                countr++;
+                auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [it1](Piece* piece) {
+                    return piece->get_Starting_Piece_pos() == (*it1)->get_Tile_position(); });
+                if (itr1 != _PawnsVec.end()) {
+                    (*itr1)->set_can_be_deleted(true);
+                }
+                auto it2 = std::find_if(_board.begin(), _board.end(), [White_king_pos](BoardTile* Tile) {
+                    return Tile->get_Tile_position() == (*White_king_pos)->get_Tile_position() + sf::Vector2f(1 * 112, 1 * 112); });
+                if (it2 != _board.end()) {
+                    for (auto& el : _PawnsVec) {
+                        if (el->get_Piece_type() != K) {
+                            el->cant_be_chosen_f();
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                        if (el->get_Piece_color() == White && el->possible_move_take((*it1)->get_Tile_position(), _PawnsVec) && el->get_Piece_type() != K && el->get_tied() == false) {
+                            el->set_can_cover(true);
+                            can_be_taken = true;
+                        }
+                    }
+                }
+                if (can_be_taken == false) {
+                    is_King_checked(_board, _PawnsVec);
+                }
+            }
+        }
+
+        if (countr > 1) {
+            is_King_checked(_board, _PawnsVec);
+        }
     }
 }
-
-
 }
+
+void Game::tie(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec, Piece*& piece, const sf::Vector2f& king_pos) {
+    
+}
+
 
 bool Game::check_if_White_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
     auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
@@ -1408,11 +3417,11 @@ bool Game::check_if_White_perpendicular_Piece_is_here(std::vector<Piece*>& _Pawn
     }
 }
 
-bool Game::check_if_White_other_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+bool Game::check_if_White_Knight_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
     auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
         return _piece->getPosition() == Tile_pos; });
     if (itr != _PawnsVec.end()) {
-        if ((*itr)->get_Piece_color() == White && ((*itr)->get_Piece_type() == P || (*itr)->get_Piece_type() == K || (*itr)->get_Piece_type() == N)) {
+        if ((*itr)->get_Piece_color() == White && ((*itr)->get_Piece_type() == N)) {
             return true;
         }
         else {
@@ -1424,29 +3433,160 @@ bool Game::check_if_White_other_Piece_is_here(std::vector<Piece*>& _PawnsVec, co
     }
 }
 
-//void Game::is_check_blockable(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
-//
-//    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
-//        return _piece->get_Piece_type() == K && _piece->get_Piece_color() == Black; });
-//
-//    auto Black_king_pos = std::find_if(_board.begin(), _board.end(), [itr](BoardTile* Tile) {
-//        return Tile->get_Tile_position() == (*itr)->getPosition(); });
-//
-//    if ((*Black_king_pos)->get_Tile_marked_for_White()) {
-//        for (auto& el : PawnsVec) {
-//            el->move(_board, mouse_position, _PawnsVec);
-//            el->take(_board, mouse_position, _PawnsVec);
-//            el->unchosen();
-//            if ((*Black_king_pos)->get_Tile_marked_for_White()) {
-//                el->return_move();
-//            }
-//        }
-//    }
-//    else {
-//        for (auto& el : PawnsVec) {
-//            el->move(board, Mouse_pos, PawnsVec);
-//            el->take(board, Mouse_pos, PawnsVec);
-//            el->unchosen();
-//        }
-//    }
-//}
+bool Game::check_if_White_Pawn_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() == P) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_White_not_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == White && ((*itr)->get_Piece_type() != B && (*itr)->get_Piece_type() != Q)) {
+            return true;
+        }
+        else if ((*itr)->get_Piece_color() == Black) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_White_not_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == White && ((*itr)->get_Piece_type() != R && (*itr)->get_Piece_type() != R1 && (*itr)->get_Piece_type() != Q)) {
+            return true;
+        }
+        else if ((*itr)->get_Piece_color() == Black) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
+bool Game::check_if_Black_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && ((*itr)->get_Piece_type() == B || (*itr)->get_Piece_type() == Q)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_Black_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && ((*itr)->get_Piece_type() == R || (*itr)->get_Piece_type() == R1 || (*itr)->get_Piece_type() == Q)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_Black_Knight_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && ((*itr)->get_Piece_type() == N)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_Black_Pawn_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() == P) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_Black_not_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && ((*itr)->get_Piece_type() != B && (*itr)->get_Piece_type() != Q)) {
+            return true;
+        }
+        else if ((*itr)->get_Piece_color() == White) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+bool Game::check_if_Black_not_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos) {
+    auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [Tile_pos](Piece* _piece) {
+        return _piece->getPosition() == Tile_pos; });
+    if (itr != _PawnsVec.end()) {
+        if ((*itr)->get_Piece_color() == Black && ((*itr)->get_Piece_type() != R && (*itr)->get_Piece_type() != R1 && (*itr)->get_Piece_type() != Q)) {
+            return true;
+        }
+        else if ((*itr)->get_Piece_color() == White) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+

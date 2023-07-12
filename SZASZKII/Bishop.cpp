@@ -147,7 +147,7 @@ bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 
 	if (itr == _PawnsVec.end()) {
 		if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y > 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
 					});
@@ -163,9 +163,9 @@ bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 			}
 		}
 		else if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y < 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
-					return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+					return selected_Tile_pos + sf::Vector2f(-i, i) == _piece->getPosition();
 					});
 
 				if (itr1 != _PawnsVec.end()) {
@@ -180,7 +180,7 @@ bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 			}
 		}
 		else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y > 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
 					});
@@ -197,7 +197,7 @@ bool Bishop::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile
 			}
 		}
 		else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y < 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
 					});
@@ -350,8 +350,9 @@ void Bishop::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _Pa
 	}
 }
 
-bool Bishop::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
-	if (collider(_PawnsVec, Tile_pos) && (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+bool Bishop::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*>& _PawnsVec) {
+	if 
+		((Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
@@ -378,8 +379,17 @@ bool Bishop::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _Pa
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 5 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
-		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112))) {
-		return true;
+		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)))
+	{
+		if (get_Piece_color() == Black && (collider(_PawnsVec, Tile_pos) || _collider_for_BlackBishop(_PawnsVec, Tile_pos))) {
+			return true;
+		}
+		else if (get_Piece_color() == White && (collider(_PawnsVec, Tile_pos) || _collider_for_WhiteBishop(_PawnsVec, Tile_pos))) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
 		return false;

@@ -34,6 +34,28 @@ void Piece::set_can_cover(bool b) {
 	can_cover = b;
 }
 
+bool Piece::get_tied() { return tied; }
+
+void Piece::set_tied(bool b) {
+	tied = b;
+}
+
+bool Piece::get_delectable() {
+	return deletable;
+}
+
+void Piece::set_delectable(bool b) {
+	deletable = b;
+}
+
+bool Piece::get_can_be_deleted() {
+	return can_be_deleted;
+}
+
+void Piece::set_can_be_deleted(bool b) {
+	can_be_deleted = b;
+}
+
 void Piece::set_Piece(const std::vector<BoardTile*> board, std::string Tile_id) {
 	auto it = std::find_if(board.begin(), board.end(), [Tile_id](BoardTile* Tile) {
 		return Tile->get_Tile_id() == Tile_id; });
@@ -58,6 +80,7 @@ void  Piece::select() {
 
 void  Piece::unselect() {
 	if (is_selected) {
+
 		if (get_Piece_color() == Black) {
 			if (get_Starting_Piece_pos() != getPosition()) {
 				last_move_was_Black = true;
@@ -69,8 +92,11 @@ void  Piece::unselect() {
 			}
 		}
 		is_selected = false;
-		Starting_Piece_pos = getPosition();
 	}
+}
+
+void Piece::update_Piece_position() {
+	Starting_Piece_pos = getPosition();
 }
 
 void Piece::chosen(std::vector<BoardTile*>& _board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec) {
@@ -159,6 +185,52 @@ void Piece::Landing(std::vector<BoardTile*> board, const sf::Vector2i& mouse_pos
 	}
 }
 
+void Piece::legal_move_avoider(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec) {
+	if (last_move_was_Black == true) {
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_type() == K && _piece->get_Piece_color() == Black; });
+
+		auto Black_king_pos = std::find_if(board.begin(), board.end(), [itr](BoardTile* Tile) {
+			return Tile->get_Tile_position() == (*itr)->getPosition(); });
+
+		for (auto& el : board) {
+			el->set_Tile_marked_for_Black(false);
+			el->set_Tile_marked_for_White(false);
+		}
+		for (auto& el : _PawnsVec) {
+			if (el->get_delectable() == false) {
+				el->mark_Tiles(board, _PawnsVec);
+			}
+		}
+		if ((*Black_king_pos)->get_Tile_marked_for_White() == true) {
+			setPosition(Starting_Piece_pos);
+			last_move_was_Black = false;
+		}
+	}
+	else if (last_move_was_Black == false) {
+
+		auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [](Piece* _piece) {
+			return _piece->get_Piece_type() == K && _piece->get_Piece_color() == White; });
+
+		auto White_king_pos = std::find_if(board.begin(), board.end(), [itr](BoardTile* Tile) {
+			return Tile->get_Tile_position() == (*itr)->getPosition(); });
+
+		for (auto& el : board) {
+			el->set_Tile_marked_for_Black(false);
+			el->set_Tile_marked_for_White(false);
+		}
+		for (auto& el : _PawnsVec) {
+			if (el->get_delectable() == false) {
+				el->mark_Tiles(board, _PawnsVec);
+			}
+		}
+		if ((*White_king_pos)->get_Tile_marked_for_Black() == true) {
+			setPosition(Starting_Piece_pos);
+			last_move_was_Black = true;
+		}
+	}
+}
+
 bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
 		return selected_Tile_pos == _piece->getPosition();
@@ -211,8 +283,7 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -233,8 +304,7 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -255,8 +325,7 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -277,8 +346,7 @@ bool Piece::take_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -348,8 +416,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -370,8 +437,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -392,8 +458,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -414,8 +479,7 @@ bool Piece::take_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vect
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -486,8 +550,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -508,8 +571,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -530,8 +592,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -552,8 +613,7 @@ bool Piece::take_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == Black) {
@@ -624,8 +684,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -646,8 +705,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i -= 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -668,8 +726,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -690,8 +747,7 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 					i += 112;
 				}
 				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
-					(*itr)->setPosition(0, 0);
-					(*itr)->scale(0, 0);
+					(*itr)->deletable = true;
 					return true;
 				}
 				else if ((*itr)->get_Piece_color() == White) {
@@ -708,6 +764,1033 @@ bool Piece::take_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Ve
 		return false;
 	}
 }
+
+
+bool Piece::_collider_for_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			bool found_obstacle = false;
+
+			if (chosen_pos.x - starting_pos.x > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.y - starting_pos.y - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.y - starting_pos.y + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool Piece::_collider_for_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			bool found_obstacle = false;
+
+			if (chosen_pos.x - starting_pos.x > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.y - starting_pos.y - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.y - starting_pos.y + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool Piece::_collider_for_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			bool found_obstacle = false;
+
+			if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == White) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == Black) {
+					return false;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool Piece::_collider_for_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() != K) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			bool found_obstacle = false;
+
+			if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i -= 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						found_obstacle = true;
+						return false;
+						break;
+					}
+					i += 112;
+				}
+				if (found_obstacle == false && (*itr)->get_Piece_color() == Black) {
+					return true;
+				}
+				else if ((*itr)->get_Piece_color() == White) {
+					return false;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+
+Piece* Piece::_collider_for_tie_BlackRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() == K && (get_Piece_type() == R || get_Piece_type() == R1 || get_Piece_type() == Q)) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			int counter = 0;
+			Piece* pie = NULL;
+
+			if (chosen_pos.x - starting_pos.x > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.y - starting_pos.y - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.y - starting_pos.y + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return NULL;
+		}
+	}
+	else {
+		return NULL;
+	}
+}
+
+Piece* Piece::_collider_for_tie_WhiteRook(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(0, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() == K && (get_Piece_type() == R || get_Piece_type() == R1 || get_Piece_type() == Q)) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			int counter = 0;
+			Piece* pie = NULL;
+
+			if (chosen_pos.x - starting_pos.x > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.y - starting_pos.y - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.y - starting_pos.y + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return NULL;
+		}
+	}
+	else {
+		return NULL;
+	}
+}
+
+Piece* Piece::_collider_for_tie_BlackBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() == K && (get_Piece_type() == B || get_Piece_type() == Q)) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos();
+			int counter = 0;
+			Piece* pie = NULL;
+
+			if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == White){
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return NULL;
+		}
+	}
+	else {
+		return NULL;
+	}
+}
+
+Piece* Piece::_collider_for_tie_WhiteBishop(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
+	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {
+		return selected_Tile_pos == _piece->getPosition();
+		});
+	if ((
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, 7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, -2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, -3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, -4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(5 * 112, -5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(6 * 112, -6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(7 * 112, -7 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-2 * 112, 2 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-3 * 112, 3 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-4 * 112, 4 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 5 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 6 * 112) ||
+		selected_Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 7 * 112)
+		)) {
+		if (itr != _PawnsVec.end() && (*itr)->get_Piece_type() == K && (get_Piece_type() == B || get_Piece_type() == Q)) {
+			sf::Vector2f chosen_pos = selected_Tile_pos;
+			sf::Vector2f starting_pos = get_Starting_Piece_pos(); 
+			int counter = 0;
+			Piece* pie = NULL;
+
+			if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x > 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i -= 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y > 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, -i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+			else if (chosen_pos.x - starting_pos.x < 0 && chosen_pos.y - starting_pos.y < 0) {
+				for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
+					auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
+						return selected_Tile_pos - sf::Vector2f(i, i) == _piece->getPosition();
+						});
+
+					if (itr1 != _PawnsVec.end()) {
+						pie = *itr1;
+						counter++;
+					}
+					i += 112;
+				}
+				if (counter == 1 && (*itr)->get_Piece_color() == Black) {
+					return pie;
+				}
+				else {
+					return NULL;
+				}
+			}
+		}
+		else {
+			setPosition(get_Starting_Piece_pos());
+			return NULL;
+		}
+	}
+	else {
+		return NULL;
+	}
+}
+
 
 bool Piece::collider_for_King(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_pos) {
 	auto itr = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos](Piece* _piece) {

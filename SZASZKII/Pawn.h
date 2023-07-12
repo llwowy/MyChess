@@ -16,7 +16,8 @@ public:
 	bool take_Left_collider_for_White(std::vector<Piece*>& PawnsVec, sf::Vector2f selected_Tile_pos);
 	bool take_Right_collider_for_White(std::vector<Piece*>& PawnsVec, sf::Vector2f selected_Tile_pos);
 	void mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
-	bool possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec);
+	bool possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*>& _PawnsVec);
+	bool possible_move_take(const sf::Vector2f& Tile_pos, std::vector<Piece*>& _PawnsVec);
 	void dance(int &counter) override;
 	~Pawn() {};
 };

@@ -157,8 +157,7 @@ bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 	if (itr != _PawnsVec.end()) {
 		if (get_Piece_color() == Black) {
 			if ((*itr)->get_Piece_color() == White && (*itr)->get_Piece_type() != K) {
-				(*itr)->setPosition(0, 0);
-				(*itr)->scale(0, 0);
+				(*itr)->set_delectable(true);
 				return true;
 			}
 			else {
@@ -167,8 +166,7 @@ bool King::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 		}
 		else if (get_Piece_color() == White) {
 			if ((*itr)->get_Piece_color() == Black && (*itr)->get_Piece_type() != K) {
-				(*itr)->setPosition(0, 0);
-				(*itr)->scale(0, 0);
+				(*itr)->set_delectable(true);
 				return true;
 			}
 			else {
@@ -480,8 +478,8 @@ bool King::left_castling_condition(std::vector<BoardTile*>& board, std::vector<P
 	}
 }
 
-bool King::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
-	/*if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
+bool King::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*>& _PawnsVec) {
+	if (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 1 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, 1 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-1 * 112, -1 * 112) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, -1 * 112) ||
@@ -493,6 +491,5 @@ bool King::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _Pawn
 	}
 	else {
 		return false;
-	}*/
-	return false;
+	}
 }

@@ -152,7 +152,7 @@ bool Rook::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 
 	if (itr == _PawnsVec.end()) {
 		if (chosen_pos.x - starting_pos.x > 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x - 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
 					});
@@ -168,7 +168,7 @@ bool Rook::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 			}
 		}
 		else if (chosen_pos.x - starting_pos.x < 0) {
-			for (int i = chosen_pos.x - starting_pos.x; i != 0;) {
+			for (int i = chosen_pos.x - starting_pos.x + 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(i, 0) == _piece->getPosition();
 					});
@@ -185,7 +185,7 @@ bool Rook::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 			}
 		}
 		else if (chosen_pos.y - starting_pos.y > 0) {
-			for (int i = chosen_pos.y - starting_pos.y; i != 0;) {
+			for (int i = chosen_pos.y - starting_pos.y - 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
 					});
@@ -202,7 +202,7 @@ bool Rook::collider(std::vector<Piece*>& _PawnsVec, sf::Vector2f selected_Tile_p
 			}
 		}
 		else if (chosen_pos.y - starting_pos.y < 0) {
-			for (int i = chosen_pos.y - starting_pos.y; i != 0;) {
+			for (int i = chosen_pos.y - starting_pos.y + 112; i != 0;) {
 				auto itr1 = std::find_if(_PawnsVec.begin(), _PawnsVec.end(), [selected_Tile_pos, i](Piece* _piece) {
 					return selected_Tile_pos - sf::Vector2f(0, i) == _piece->getPosition();
 					});
@@ -356,8 +356,8 @@ void Rook::mark_Tiles(std::vector<BoardTile*>& board, std::vector<Piece*>& _Pawn
 	}
 }
 
-bool Rook::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _PawnsVec) {
-	if (collider(_PawnsVec, Tile_pos) && (Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
+bool Rook::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*>& _PawnsVec) {
+	if ((Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(1 * 112, 0) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(2 * 112, 0) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(3 * 112, 0) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(4 * 112, 0) ||
@@ -385,7 +385,15 @@ bool Rook::possible_move(const sf::Vector2f& Tile_pos, std::vector<Piece*> _Pawn
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-5 * 112, 0) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-6 * 112, 0) ||
 		Tile_pos == get_Starting_Piece_pos() + sf::Vector2f(-7 * 112, 0))) {
-		return true;
+		if (get_Piece_color() == Black && (collider(_PawnsVec, Tile_pos) || _collider_for_BlackRook(_PawnsVec, Tile_pos))) {
+			return true;
+		}
+		else if (get_Piece_color() == White && (collider(_PawnsVec, Tile_pos) || _collider_for_WhiteRook(_PawnsVec, Tile_pos))) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
 		return false;

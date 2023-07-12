@@ -69,6 +69,7 @@ private:
 	bool BlackWin = false;
 	bool play_chess = false;
 	bool restart = false;
+	bool staleMate = false;
 	float timer;
 	int counter;
 
@@ -154,18 +155,30 @@ public:
 	void read_file(std::string file_name_txt);
 	friend bool Piece::get_play_chess();
 	void is_King_checked(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
+	void stalemate(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void is_Pawn_promoted(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
 	void start_txt();
 	void end_txt();
 	void delete_Piecees(std::vector<Piece*>& _PawnsVec);
 
 	void is_cover_possible(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec);
-	bool check_if_White_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	void tie(std::vector<BoardTile*>& board, std::vector<Piece*>& _PawnsVec, Piece*& piece, const sf::Vector2f& Tile_pos);
+	bool check_if_White_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& king_pos);
 	bool check_if_White_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
-	bool check_if_White_other_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_Pawn_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_Knight_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_not_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_White_not_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
 
-	void is_check_blockable(std::vector<BoardTile*>& board, const sf::Vector2i& mouse_position, std::vector<Piece*>& _PawnsVec);
+	bool check_if_Black_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& king_pos);
+	bool check_if_Black_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_Black_Pawn_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_Black_Knight_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_Black_not_diagonal_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	bool check_if_Black_not_perpendicular_Piece_is_here(std::vector<Piece*>& _PawnsVec, const sf::Vector2f& Tile_pos);
+	
 
+	
 	~Game() {};
 };
 
